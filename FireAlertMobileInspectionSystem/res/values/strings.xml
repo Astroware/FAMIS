@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Fire Alert Mobile Inspection System</string>
+    <string name="title_activity_login_screen">LoginScreen</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    
+    <string name="title_activity_client_screen">ClientScreen</string>
+    <string name="title_activity_location_screen">LocationScreen</string>
+    <string name="title_activity_equipment_screen">EquipmentScreen</string>
+    <string name="title_activity_extinguisher_form">ExtinguisherForm</string>
+    
+    <string name="customer_title">Current Clients</string>
+    <string name="customer1">Fake Company Inc.</string>
+    <string name="customer2">We are Fake Too</string>
+    <string name="customer3">Fakity Fake Fake</string>
+    <string name="customer4">Nothing is real</string>
+    <string name="selectbutton">Select</string>
+    <string name="firsttitle">Login Screen</string>
+     <string name="username">Please Enter Your Username</string>
+    <string name="password">Please Enter Your Password</string>
+
+</resources>

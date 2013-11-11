@@ -1,0 +1,115 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/backgroundbiggertoolbar"
+    tools:context=".LoginScreen" >
+	<TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="28dp"
+        android:layout_alignParentBottom="false"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="41dp"
+        android:layout_marginTop="2dp"
+        android:text="Login Screen"
+        android:textColor="@android:color/white"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/textViewusername"
+        android:layout_width="wrap_content"
+        android:layout_height="38dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="46dp"
+        android:text="@string/username"
+        android:textColorHint="@android:color/black"
+        android:textColorLink="@android:color/black"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/editTextusername"
+        android:layout_width="122dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textViewusername"
+        android:layout_alignRight="@+id/textViewusername"
+        android:layout_below="@+id/textViewusername"
+        android:ems="10"
+        android:inputType="textPersonName" >
+
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:id="@+id/textViewpassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/editTextusername"
+        android:layout_below="@+id/editTextusername"
+        android:layout_marginTop="17dp"
+        android:text="@string/password"
+        android:textColorHint="@android:color/black"
+        android:textColorLink="@android:color/black"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/editTextpassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textViewpassword"
+        android:layout_alignRight="@+id/textViewpassword"
+        android:layout_below="@+id/textViewpassword"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:inputType="textPassword" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignBottom="@+id/textView1"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@android:color/transparent"
+        android:paddingLeft="0dp"
+        android:paddingTop="0dp" >
+    </Button>
+
+    <EditText
+        android:id="@+id/editText1"
+        android:layout_width="110dp"
+        android:layout_height="25dp"
+        android:singleLine="true"
+        android:layout_alignBottom="@+id/textView1"
+        android:layout_toLeftOf="@+id/button2"
+        android:background="@android:color/transparent"
+        android:hint="Welcome"
+        android:paddingBottom="5dp"
+        android:paddingLeft="15dp"
+        android:textColorHint="@android:color/black"
+        android:textSize="12sp" />
+
+    <Button
+        android:id="@+id/button2"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="25dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textView1"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="@android:color/transparent" />
+
+    <Button
+        android:id="@+id/btnsubmit"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_alignLeft="@+id/editTextpassword"
+        android:layout_alignRight="@+id/editTextpassword"
+        android:layout_below="@+id/editTextpassword"
+        android:layout_marginTop="59dp"
+        android:background="@drawable/submit_button" />
+
+</RelativeLayout>

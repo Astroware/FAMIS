@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true" 
+    android:focusableInTouchMode="true"
+    android:background="@drawable/backgroundbiggertoolbar"
+    tools:context=".Equipment_screen" >
+
+    <Button
+        android:id="@+id/buttonbacktolocation"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@android:color/transparent"
+        android:paddingLeft="0dp"
+        android:paddingTop="0dp" />
+    <Button
+        android:id="@+id/buttonentermanally"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="25dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textView1"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="@android:color/transparent" />
+	<!--<ScrollView
+	    android:layout_width="match_parent"
+        android:layout_height="match_parent">-->
+    <TableLayout
+        android:id="@+id/make_rooms_here"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="30dp">
+       <TableRow
+            android:id="@+id/floor_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center" >
+
+            <TextView
+                android:id="@+id/floorNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_span="1"
+                android:gravity="center"
+                android:text="Floor 1"
+                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:typeface="normal" />
+        </TableRow>
+
+     </TableLayout>
+	<!--</ScrollView>-->
+    <EditText
+        android:id="@+id/entermanually"
+        android:layout_width="110dp"
+        android:layout_height="25dp"
+        android:layout_alignBaseline="@+id/textView1"
+        android:layout_alignBottom="@+id/textView1"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="22dp"
+        android:background="@android:color/transparent"
+        android:ems="10"
+        android:hint="Manually Enter ID"
+        android:paddingBottom="5dp"
+        android:paddingLeft="dp"
+        android:singleLine="true"
+        android:textColorHint="@android:color/black"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="28dp"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/buttonbacktolocation"
+        android:text="Equipment List"
+        android:textColor="@android:color/white"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/inspectiondone"
+        android:layout_width="125dp"
+        android:layout_height="50dp"
+        android:layout_alignLeft="@+id/textView1"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="46dp"
+        android:background="@drawable/submit_button" />
+
+</RelativeLayout>
