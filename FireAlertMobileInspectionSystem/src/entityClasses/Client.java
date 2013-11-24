@@ -8,7 +8,7 @@ public class Client implements Serializable {
 	private String m_name;
 	private String m_address;
 	
-	public ClientContract m_clientContract;
+	public List<ClientContract> m_clientContract;
 	public List<ServiceAddress> m_serviceAddress;
 	
 	public Client(String id, String name, String address) {

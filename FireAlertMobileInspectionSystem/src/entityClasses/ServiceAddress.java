@@ -13,12 +13,14 @@ public class ServiceAddress implements Serializable{
 	private String m_country;
 	private String m_inspectorId;
 	private String m_testTimeStamp;
+	private String m_contractId;
+	private int m_contractNo;
 	private Boolean m_complete;
 	
 	public List<Floor> m_floors;
 	
 	public ServiceAddress(String id, String address, String postalCode, String contact, String city, 
-							String province, String country, String inspectorId, String testTimeStamp) {
+							String province, String country, String inspectorId, String contractId, int contractNo) {
 		m_id = id;
 		m_address = address;
 		m_postalCode = postalCode;
@@ -28,6 +30,8 @@ public class ServiceAddress implements Serializable{
 		m_country = country;
 		m_inspectorId = inspectorId;
 		m_testTimeStamp = null;
+		m_contractId = contractId;
+		m_contractNo = contractNo;
 	}
 	
 	public Boolean isComplete() {
@@ -81,6 +85,14 @@ public class ServiceAddress implements Serializable{
 	
 	public String getTestTimeStamp() {
 		return m_testTimeStamp;
+	}
+	
+	public String getContractId() {
+		return m_contractId;
+	}
+	
+	public int getContractNo() {
+		return m_contractNo;
 	}
 	
 	//------------------------------------Sets----------------------------------------------
