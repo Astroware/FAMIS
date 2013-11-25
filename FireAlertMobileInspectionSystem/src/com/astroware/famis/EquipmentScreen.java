@@ -128,7 +128,7 @@ public class EquipmentScreen extends Activity {
 		//parse # first
 		floor.m_rooms = new ArrayList<Room>();
 		for (int i=0; i<1/*# of rooms in floor*/; i++) {
-			floor.m_rooms.add(new Room("R1", 0));
+			floor.m_rooms.add(new Room("R1", "0"));
 			parseRoom(floor.m_rooms.get(i));
 		}
 	}

@@ -40,7 +40,7 @@ public class LocationScreen extends Activity {
 	public void locationParse(Client currentClient) {
 		currentClient.m_serviceAddress = new ArrayList<ServiceAddress>();
 		currentClient.m_serviceAddress.add(new ServiceAddress("S1","123 Sesame Street","N6G 2P4", "", "London", 
-																"Ontario", "Canada","ID001","20131009 09:49PM"));
+																"Ontario", "Canada","ID001","20131009 09:49PM", 1234));
 	}
 	
 	//Create a an array of buttons for each location under the current client. Each button will be the same and will have 

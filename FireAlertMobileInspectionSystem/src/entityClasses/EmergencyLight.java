@@ -1,7 +1,5 @@
 package entityClasses;
 
-import java.util.ArrayList;
-
 public class EmergencyLight extends Device {
 	private String m_location;
 	private int m_model;
@@ -19,15 +17,6 @@ public class EmergencyLight extends Device {
 		m_numHeads = numHeads;
 		m_totalPower = totalPower;
 		m_voltage = voltage;
-		constructElements();
-	}
-	
-	//TODO
-	public void constructElements() {
-		super.m_inspectionElements = new ArrayList<InspectionElement>();
-		//assuming inspection elements are constant across the board
-		super.m_inspectionElements.add(new InspectionElement("Requires Service or Repairt", super.getDeviceType()));
-		super.m_inspectionElements.add(new InspectionElement("Operation Confirmed", super.getDeviceType()));
 	}
 
 	public String getLocation() {

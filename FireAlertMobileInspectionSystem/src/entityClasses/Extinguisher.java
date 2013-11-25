@@ -1,7 +1,5 @@
 package entityClasses;
 
-import java.util.ArrayList;
-
 public class Extinguisher extends Device {
 	private int m_size;
 	private String m_type;
@@ -17,21 +15,6 @@ public class Extinguisher extends Device {
 		m_model = model;
 		m_serialNo = serialNo;
 		m_manufacturingDate = manufacturingDate;
-		constructElements();
-	}
-	
-	public void constructElements() {
-		super.m_inspectionElements = new ArrayList<InspectionElement>();
-		//assuming inspection elements are constant across the board
-		super.m_inspectionElements.add(new InspectionElement("Hydro Test", super.getDeviceType()));
-		super.m_inspectionElements.add(new InspectionElement("6 Year Insp", super.getDeviceType()));
-		super.m_inspectionElements.add(new InspectionElement("Weight", super.getDeviceType()));
-		super.m_inspectionElements.add(new InspectionElement("Bracket", super.getDeviceType()));
-		super.m_inspectionElements.add(new InspectionElement("Gauge", super.getDeviceType()));
-		super.m_inspectionElements.add(new InspectionElement("Pull Pin", super.getDeviceType()));
-		super.m_inspectionElements.add(new InspectionElement("Signage", super.getDeviceType()));
-		super.m_inspectionElements.add(new InspectionElement("Collar", super.getDeviceType()));
-		super.m_inspectionElements.add(new InspectionElement("Hose", super.getDeviceType()));
 	}
 	
 	//-----------------------------gets-------------------------------------

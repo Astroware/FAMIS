@@ -18,11 +18,11 @@ public class InspectionElement {
 		EMPTY, PASS, FAIL, GOOD, POOR, NA, YES, NO
 	}
 	
-	public InspectionElement(String name, DeviceType deviceType) {
+	public InspectionElement(String name, DeviceType deviceType, String result, String testNote) {
 		m_name = name;
 		m_deviceType = deviceType;
-		m_testResult = Result.EMPTY;
-		m_testNote = null;
+		m_testResult = getResult(result);
+		m_testNote = testNote;
 		m_complete = false;
 		
 		switch (m_deviceType) {
@@ -54,6 +54,51 @@ public class InspectionElement {
 		}
 		
 		return m_complete;
+	}
+	
+	public Result getResult(String result)
+	{
+		if(result.equalsIgnoreCase(""))
+		{
+			return Result.EMPTY;
+		}
+		
+		if(result.equalsIgnoreCase("PASS"))
+		{
+			return Result.PASS;
+		}
+		
+		if(result.equalsIgnoreCase("FAIL"))
+		{
+			return Result.FAIL;
+		}
+		
+		if(result.equalsIgnoreCase("GOOD"))
+		{
+			return Result.GOOD;
+		}
+		
+		if(result.equalsIgnoreCase("POOR"))
+		{
+			return Result.POOR;
+		}
+		
+		if(result.equalsIgnoreCase("NA"))
+		{
+			return Result.NA;
+		}
+		
+		if(result.equalsIgnoreCase("YES"))
+		{
+			return Result.YES;
+		}
+		
+		if(result.equalsIgnoreCase("NO"))
+		{
+			return Result.NO;
+		}
+		else
+			return Result.EMPTY;
 	}
 	
 	//---------------------------------gets---------------------------------------------
