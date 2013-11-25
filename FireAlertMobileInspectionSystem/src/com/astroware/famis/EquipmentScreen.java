@@ -25,10 +25,6 @@ import android.widget.TextView;
 import android.widget.TableRow.LayoutParams;
 
 public class EquipmentScreen extends Activity {
-	
-	private ServiceAddress currentLocation;
-	private List<Floor> floors;
-	private int times = 0;
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -43,12 +39,12 @@ public class EquipmentScreen extends Activity {
         //Create a button that will allow the user to submit the inspection
         Button submitInspection =(Button)findViewById(R.id.inspectiondone);
         
-        //Receiving the intent and the passed ServiceAddress object from the previous activity
+        //Receiving the intent and the passed index for the location of the selected ServiceAddress from the previous activity
         Intent in = getIntent();
-        currentLocation = (ServiceAddress)in.getSerializableExtra("selectedLocation");
-        
-        //The xml document will be parsed for all floors that are at the current service location
-        floors= parseLocation(currentLocation);
+        int locationIndex = in.getIntExtra("selectedLocation", -1);
+	    if (locationIndex != -1) {
+	    	EquipmentControl.getInstance().setLocation(locationIndex);
+	    }
         
         //This scanner object is created so that its listener is running during this activity
         Scanner scanner = new Scanner(); 
@@ -72,15 +68,10 @@ public class EquipmentScreen extends Activity {
 					//TODO: Move this code into a function so that it can be called from here and
 					//from the Scanner class (onReceive function)
 					
-					Intent fillform = new Intent();
-					Bundle bundle = new Bundle();
+					EquipmentControl.getInstance().setFloor(0);
 					
-					bundle.putSerializable("device", floors.get(0).m_rooms.get(0).m_devices.get(0));
-					
-					fillform.putExtras(bundle);
-					fillform.setClass(EquipmentScreen.this, ExtinguisherForm.class);
-					
-					startActivity(fillform);
+					Intent in = new Intent(EquipmentScreen.this, ExtinguisherForm.class);
+					startActivity(in);
 					overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
 					
 				}
@@ -91,10 +82,11 @@ public class EquipmentScreen extends Activity {
         
 
 	protected void onStart() {
-		times=times+1;
 		super.onStart();
 		Scanner scanner = new Scanner();
-        createTables(floors.get(0));	
+		//TODO: This needs to be changed so that it is not hard coded
+		EquipmentControl.getInstance().setFloor(0);
+        createTables();	
 	}
 	
 	//This class is used to retrieve the input from the bar code scanner
@@ -182,10 +174,11 @@ public class EquipmentScreen extends Activity {
 	
 	//Rhys - can you comment each block in this section?
 	//The spacing also needs to be fixed for this activity
-	public void createTables(Floor floor) {
+	public void createTables() {
 		
-		for (int i=0; i<floor.m_rooms.size();i++) {
-		 	
+		for (int i=0; i<EquipmentControl.getInstance().getRoomListSize(); i++) {
+			EquipmentControl.getInstance().setRoom(i);
+			
 			TableLayout MainLayout = (TableLayout)findViewById(R.id.make_rooms_here);
 		 	MainLayout.removeAllViewsInLayout();
 			
@@ -198,7 +191,7 @@ public class EquipmentScreen extends Activity {
 		 	titleRow.setGravity(android.view.Gravity.CENTER);
 		 	
 		 	TextView title = new TextView(this);
-		 	title.setText("Room : "+floor.m_rooms.get(i).getId());
+		 	title.setText("Room : " + EquipmentControl.getInstance().getRoom().getId());
 		 	title.setGravity(android.view.Gravity.CENTER);
 		 	title.setTextSize(25);
 		 	title.setTypeface(null, Typeface.BOLD_ITALIC);
@@ -230,22 +223,23 @@ public class EquipmentScreen extends Activity {
 		 	subtitleRow.addView(subtitlePassOrFail, lp);
 		 	MainLayout.addView(subtitleRow, lp);
 	        
-		 	for (int j=0;j<floor.m_rooms.get(i).m_devices.size();j++) {  
+		 	for (int j=0; j<EquipmentControl.getInstance().getDeviceListSize(); j++) {
+		 		EquipmentControl.getInstance().setDevice(j);
 	        	
 		 		TableRow currentRow = new TableRow(this);
 	        	
 		 		TextView equipmentName = new TextView(this);
 	        	equipmentName.setGravity(android.view.Gravity.CENTER);
-	        	equipmentName.setText(floor.m_rooms.get(i).m_devices.get(j).toString()+" ");
+	        	equipmentName.setText(EquipmentControl.getInstance().getDevice().toString());
 	        	equipmentName.setTextSize(15);
 	        	
 	        	TextView location = new TextView(this);
-	        	location.setText(floor.m_rooms.get(i).m_devices.get(j).getLocation());
+	        	location.setText(EquipmentControl.getInstance().getDevice().getLocation());
 	        	location.setGravity(android.view.Gravity.CENTER);
 	        	location.setTextSize(15);
 	        	
 	        	Button checkOrX = new Button(this);
-	        	if (/*floor.m_rooms.get(i).m_devices.get(j).isComplete()*/times>=2 && j==0) {
+	        	if (EquipmentControl.getInstance().getDevice().isComplete()) {
 	        		checkOrX.setText("Complete");
 	        	}
 	        	else {

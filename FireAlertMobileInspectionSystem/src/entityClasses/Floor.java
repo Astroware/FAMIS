@@ -1,5 +1,6 @@
 package entityClasses;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Floor {
@@ -11,6 +12,8 @@ public class Floor {
 	public Floor(String name) {
 		m_name = name;
 		m_complete = false;
+		
+		m_rooms = new ArrayList<Room>();
 	}
 	
 	public Boolean isComplete() {

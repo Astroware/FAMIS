@@ -1,9 +1,8 @@
 package entityClasses;
 
-import java.io.Serializable;
 import entityClasses.Device.DeviceType;
 
-public class InspectionElement implements Serializable {
+public class InspectionElement {
 	private String m_name;
 	private DeviceType m_deviceType;
 	private InputType m_inputType;

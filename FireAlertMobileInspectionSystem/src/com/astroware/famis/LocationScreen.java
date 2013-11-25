@@ -3,6 +3,7 @@ package com.astroware.famis;
 import java.util.ArrayList;
 
 import controlClasses.DigitsToPixels;
+import controlClasses.LocationControl;
 
 import entityClasses.*;
 
@@ -18,8 +19,6 @@ import android.widget.Button;
 import android.widget.TableLayout;
 
 public class LocationScreen extends Activity {
-
-	private Client currentClient;
 	private ArrayList<Button> locationButtons;
 	
 	@Override
@@ -28,14 +27,13 @@ public class LocationScreen extends Activity {
 		setContentView(R.layout.activity_location_screen);
 	
 
-	//Receive the intent from the previous activity and retrieve the passed Client object
-    Intent in =getIntent();
-    currentClient = (Client)in.getSerializableExtra("selectedClient");
-    
-    //The following function will parse the xml document for all locations associated with the current client selected
-    locationParse(currentClient);
-    createButtons();
-	
+		//Receive the intent from the previous activity and retrieve the passed index for the selected Client object
+	    Intent in =getIntent();
+	    int clientIndex = in.getIntExtra("selectedClient", -1);
+	    if (clientIndex != -1) {
+	    	LocationControl.getInstance().setClient(clientIndex);
+	    	createButtons();
+	    }
 	}
 
 	//Currently a placeholder for the xml parse for client locations
@@ -50,10 +48,10 @@ public class LocationScreen extends Activity {
 	public void createButtons() {
 		locationButtons =  new ArrayList<Button>();
 		
-		for (int i=0; i<currentClient.m_serviceAddress.size(); i++) {
+		for (int i=0; i<LocationControl.getInstance().getLocationListSize(); i++) {
 			
 			locationButtons.add(new Button(this));
-			locationButtons.get(i).setText(currentClient.m_serviceAddress.get(i).getAddress());
+			locationButtons.get(i).setText(LocationControl.getInstance().getLocation(i).getAddress());
 			locationButtons.get(i).setBackgroundResource(R.drawable.client_button);
 			locationButtons.get(i).setTextColor(Color.parseColor("white"));
 			locationButtons.get(i).setTypeface(null, Typeface.BOLD_ITALIC);
@@ -70,7 +68,7 @@ public class LocationScreen extends Activity {
 				@Override
 				public void onClick(View v) {
 					Intent in= new Intent(LocationScreen.this, EquipmentScreen.class);
-					in.putExtra("selectedLocation", currentClient.m_serviceAddress.get(j));
+					in.putExtra("selectedLocation", j);
 					startActivity(in);
 					overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
 				}

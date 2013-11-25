@@ -1,5 +1,6 @@
 package entityClasses;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Room {
@@ -13,6 +14,8 @@ public class Room {
 		m_id = id;
 		m_no = no;
 		m_complete = false;
+		
+		m_devices = new ArrayList<Device>();
 	}
 	
 	public Boolean isComplete() {
