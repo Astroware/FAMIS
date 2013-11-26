@@ -3,11 +3,6 @@
 
 package com.astroware.famis;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import entityClasses.*;
-import entityClasses.Device.DeviceType;
 import controlClasses.*;
 
 import android.os.Bundle;
@@ -47,7 +42,7 @@ public class EquipmentScreen extends Activity {
 	    }
         
         //This scanner object is created so that its listener is running during this activity
-        Scanner scanner = new Scanner(); 
+        Scanner scanner = new Scanner();
         
         //When the user manually searches for a device, if the bar code number is found, then the
         //inspection form for that device is brought up. If the bar code number is not found,
@@ -68,9 +63,13 @@ public class EquipmentScreen extends Activity {
 					//TODO: Move this code into a function so that it can be called from here and
 					//from the Scanner class (onReceive function)
 					
+					//TODO: The floor and room sets here are hard coded and should not be
+					//TODO: The index passed is also hard coded and should not be
 					EquipmentControl.getInstance().setFloor(0);
+					EquipmentControl.getInstance().setRoom(0);
 					
 					Intent in = new Intent(EquipmentScreen.this, ExtinguisherForm.class);
+					in.putExtra("selectedDevice", 0);
 					startActivity(in);
 					overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
 					
@@ -79,13 +78,13 @@ public class EquipmentScreen extends Activity {
 		});
 	}
         
-        
-
 	protected void onStart() {
 		super.onStart();
+		//should this scanner be here? What about the one in onCreate()?
 		Scanner scanner = new Scanner();
 		//TODO: This needs to be changed so that it is not hard coded
 		EquipmentControl.getInstance().setFloor(0);
+		
         createTables();	
 	}
 	
@@ -107,67 +106,6 @@ public class EquipmentScreen extends Activity {
 				Intent in= new Intent(EquipmentScreen.this, ExtinguisherForm.class);
 				in.putExtra("message", "This Is Being Sent");
 				startActivity(in);
-			}
-		}
-	}
-		
-	//Create an array to hold all of the floors at a service address. The xml document is parsed for all the floors at 
-	//a service location and they are placed into the array
-	public List<Floor> parseLocation(ServiceAddress serviceAddress) {
-		serviceAddress.m_floors = new ArrayList<Floor>();
-		for (int i=0; i<1/*# of floors in location*/; i++) {
-			serviceAddress.m_floors.add(new Floor("First Floor"));
-			parseFloor(serviceAddress.m_floors.get(i));
-		}
-		
-		return serviceAddress.m_floors;
-	}
-	
-	//Parse the xml document for the rooms that are on each floor and add them to an array
-	public void parseFloor(Floor floor) {
-		//parse # first
-		floor.m_rooms = new ArrayList<Room>();
-		for (int i=0; i<1/*# of rooms in floor*/; i++) {
-			floor.m_rooms.add(new Room("R1", "0"));
-			parseRoom(floor.m_rooms.get(i));
-		}
-	}
-	
-	//Parse the xml document to find all devices that are in a room and put them into an array
-	public void parseRoom(Room room) {
-		//parse # first
-		room.m_devices = new ArrayList<Device>();
-		DeviceType dType;
-		for (int i=0; i<4/*# of devices in room*/; i++) {
-			
-			//note: the reference to "element" below is going to be an XML element
-			//if (element == "Extinguisher") {
-			if (i==0) {
-				dType = DeviceType.EXTINGUISHER;
-				room.m_devices.add(new Extinguisher(33101, dType, "East Stair", 10, "ABC", 
-													"Amerex", "s123", "dd/mm/yyyy"));
-			}	
-			//if (element == "Extinguisher") {
-			else if (i==1) {
-				dType = DeviceType.EXTINGUISHER;
-				room.m_devices.add(new Extinguisher(33102, dType, "Elev Lobby", 10, "ABC", 
-													"Amerex", "s123", "dd/mm/yyyy"));	
-			}	
-			//else if (element == "FireHoseCabinet") {
-			else if (i==2) {
-				dType = DeviceType.FIRE_HOSE_CABINET;
-				room.m_devices.add(new FireHoseCabinet(77207, dType, "Staircase D", "dd/mm/yyyy"));	
-			}		
-			//else if (element == "EmergencyLight") {
-			else if (i==3) {
-				dType = DeviceType.EMERGENCY_LIGHT;
-				room.m_devices.add(new EmergencyLight(88103, dType, "Some where", 2341, "Chubb",
-														4, "10W", "10V"));
-			}	
-			//else if (element == "Kitchen") {	
-			//}	
-			else {
-				//error
 			}
 		}
 	}
@@ -225,7 +163,7 @@ public class EquipmentScreen extends Activity {
 	        
 		 	for (int j=0; j<EquipmentControl.getInstance().getDeviceListSize(); j++) {
 		 		EquipmentControl.getInstance().setDevice(j);
-	        	
+		 		
 		 		TableRow currentRow = new TableRow(this);
 	        	
 		 		TextView equipmentName = new TextView(this);

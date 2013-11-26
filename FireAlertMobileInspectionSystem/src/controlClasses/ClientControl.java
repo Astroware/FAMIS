@@ -1,8 +1,5 @@
 package controlClasses;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import entityClasses.Client;
 import entityClasses.Franchisee;
 
@@ -33,15 +30,8 @@ public class ClientControl {
 	}
 	
 	public void parseXML() {
-		//TODO: uncomment this line when the XMLParse class has been completed. 
-		//franchisee = XMLParse.parseFranchisee();
-		franchisee = parseFranchisee();
-	}
-	
-	//Used as a current placeholder using hard coded xml until the parser works
-	public Franchisee parseFranchisee(){
-		Franchisee franchisee = new Franchisee(1001, "Darwin Fleming");
-		franchisee.m_clientList.add(new Client("1001-01", "North Bay Inc.", "North Bay, Muskoka, Parry Sound, Orillia"));
-		return franchisee;
+		System.out.println("Before XML Parsing");
+		franchisee = XMLParse.parseFranchisee();
+		System.out.println("After XML Parsing");
 	}
 }

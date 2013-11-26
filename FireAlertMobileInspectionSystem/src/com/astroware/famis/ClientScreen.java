@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import controlClasses.ClientControl;
 import controlClasses.DigitsToPixels;
-import entityClasses.*;
 
 import android.os.Bundle;
 import android.app.Activity;

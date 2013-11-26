@@ -1,7 +1,6 @@
 package controlClasses;
 
 import java.io.File;
-import java.io.InputStream;
 
 import org.w3c.dom.*;
 
@@ -10,6 +9,9 @@ import javax.xml.parsers.DocumentBuilder;
 
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException; 
+
+import android.os.Environment;
+import android.util.Log;
 
 import entityClasses.Client;
 import entityClasses.Device;
@@ -39,37 +41,49 @@ public class XMLParse{
 		m_doc=doc;
 	}
 	
-    public static void getDoc()
+    public static boolean getDoc()
     {
     	try
     	{
+    		//InputStream in = new FileInputStream(new File(Environment.getExternalStorageDirectory(),"InspectionData.xml"));
 
 	    	DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
 	        DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
-	        Document doc = docBuilder.parse (new File("C:\\Users\\Scott\\Desktop\\InspectionData.xml"));
+	        Document doc = docBuilder.parse (new File(Environment.getExternalStorageDirectory(),"/InspectionData.xml"));
 	        doc.getDocumentElement().normalize();
 	        m_doc=doc;
 	        
     	}catch (SAXParseException err) {
             System.out.println ("** Parsing error" + ", line " + err.getLineNumber () + ", uri " + err.getSystemId ());
             System.out.println(" " + err.getMessage ());
+            return false;
 
             }catch (SAXException e) {
             Exception x = e.getException ();
             ((x == null) ? e : x).printStackTrace ();
+            Log.w("SAXException", "not sure");
+            return false;
 
             }catch (Throwable t) {
             t.printStackTrace ();
-        }
+            Log.w("Other Exception", "not sure");
+            return false;
+            
+            }
+    	
+    	return true;
     }
     
     public static Franchisee parseFranchisee()
     {
     	Franchisee franchisee = new Franchisee(0, null);
     	
+    	//TODO: Inform the user that the XML file could not be found
+    	if(!getDoc())
+    		return franchisee;
+    	
     	String id;	
     	String name;
-        String[] splitter;
         
         NodeList listOfFranchisees = m_doc.getElementsByTagName("Franchisee");
         
@@ -80,14 +94,10 @@ public class XMLParse{
     	if(Franchisee.getNodeType() == Node.ELEMENT_NODE)
     	{
             Node nodeFranchID = Franch.getNamedItem("id");
-            String node = nodeFranchID.toString();
-            splitter = node.split("=");
-            id = splitter[1].replaceAll("[\"]", "");
+            id = nodeFranchID.getNodeValue();
             
             Node nodeFranchID2 = Franch.getNamedItem("name");
-            String node2 = nodeFranchID2.toString();
-            splitter = node2.split("=");
-            name = splitter[1].replaceAll("[\"]", "");
+            name = nodeFranchID2.getNodeValue();
             
             int intId = Integer.parseInt(id);
             franchisee = new Franchisee(intId,name);
@@ -101,7 +111,6 @@ public class XMLParse{
     	String id = "";
     	String name = "";
     	String address = "";
-        String[] splitter;
         
         NodeList listOfClients = m_doc.getElementsByTagName("Client");
         
@@ -116,20 +125,15 @@ public class XMLParse{
         	if(Client.getNodeType() == Node.ELEMENT_NODE)
         	{
         		Node ClientNodeID = ClientAttr.getNamedItem("id");
-	            String ClientIDString = ClientNodeID.toString();
-	            splitter = ClientIDString.split("=");
-	            id = splitter[1].replaceAll("[\"]", "");
+	            id = ClientNodeID.getNodeValue();
 	            
 	            Node ClientNodeID2 = ClientAttr.getNamedItem("name");
-	            String ClientIDString2 = ClientNodeID2.toString();
-	            splitter = ClientIDString2.split("=");
-	            name = splitter[1].replaceAll("[\"]", "");
+	            name = ClientNodeID2.getNodeValue();
 	            
 	            Node ClientNodeID3 = ClientAttr.getNamedItem("address");
-	            String ClientIDString3 = ClientNodeID3.toString();
-	            splitter = ClientIDString3.split("=");
-	            address = splitter[1].replaceAll("[\"]", "");
+	            address = ClientNodeID3.getNodeValue();
         	}
+        	
         	franchisee.m_clientList.add(new Client(id, name, address));
         	getServiceAddresses(franchisee.m_clientList.get(k));
         }
@@ -146,10 +150,9 @@ public class XMLParse{
     	String province="";
     	String country="";
     	String inspectorId="";
-    	String testTimeStamp="";
     	String contractId="";
-    	int contractIdInt=0;
-    	String[] splitter;
+    	String contractNo="";
+    	int contractNoInt=0;
     	
         Element contract = (Element)tempNode;
         
@@ -165,49 +168,28 @@ public class XMLParse{
 		 	if(ServiceAddress.getNodeType() == Node.ELEMENT_NODE)
 		 	{
 			    Node serviceAddNode = ServiceAddressAttrs.getNamedItem("id");
-			    String serviceAdd = serviceAddNode.toString();
-			    splitter = serviceAdd.split("=");
-			    id = splitter[1].replaceAll("[\"]", "");
+			    id = serviceAddNode.getNodeValue();
 			    
 			    Node serviceAddNode2 = ServiceAddressAttrs.getNamedItem("address");
-			    String serviceAdd2 = serviceAddNode2.toString();
-			    splitter = serviceAdd2.split("=");
-			    address = splitter[1].replaceAll("[\"]", "");
+			    address = serviceAddNode2.getNodeValue();
 			    
 			    Node serviceAddNode3 = ServiceAddressAttrs.getNamedItem("postalCode");
-			    String serviceAdd3 = serviceAddNode3.toString();
-			    splitter = serviceAdd3.split("=");
-			    postalCode = splitter[1].replaceAll("[\"]", "");
+			    postalCode = serviceAddNode3.getNodeValue();
 			    
 			    Node serviceAddNode4 = ServiceAddressAttrs.getNamedItem("contact");
-			    String serviceAdd4 = serviceAddNode4.toString();
-			    splitter = serviceAdd4.split("=");
-			    contact = splitter[1].replaceAll("[\"]", "");
+			    contact = serviceAddNode4.getNodeValue();
 			    
 			    Node serviceAddNode5 = ServiceAddressAttrs.getNamedItem("city");
-			    String serviceAdd5 = serviceAddNode5.toString();
-			    splitter = serviceAdd5.split("=");
-			    city = splitter[1].replaceAll("[\"]", ""); 
+			    city = serviceAddNode5.getNodeValue();
 			    
 			    Node serviceAddNode6 = ServiceAddressAttrs.getNamedItem("province");
-			    String serviceAdd6 = serviceAddNode6.toString();
-			    splitter = serviceAdd6.split("=");
-			    province = splitter[1].replaceAll("[\"]", ""); 
+			    province = serviceAddNode6.getNodeValue();
 			    
 			    Node serviceAddNode7 = ServiceAddressAttrs.getNamedItem("country");
-			    String serviceAdd7 = serviceAddNode7.toString();
-			    splitter = serviceAdd7.split("=");
-			    country = splitter[1].replaceAll("[\"]", ""); 
+			    country = serviceAddNode7.getNodeValue();
 			    
 			    Node serviceAddNode8 = ServiceAddressAttrs.getNamedItem("InspectorID");
-			    String serviceAdd8 = serviceAddNode8.toString();
-			    splitter = serviceAdd8.split("=");
-			    inspectorId = splitter[1].replaceAll("[\"]", ""); 
-			    
-			    Node serviceAddNode9 = ServiceAddressAttrs.getNamedItem("testTimeStamp");
-			    String serviceAdd9 = serviceAddNode9.toString();
-			    splitter = serviceAdd9.split("=");
-			    testTimeStamp = splitter[1].replaceAll("[\"]", "");
+			    inspectorId = serviceAddNode8.getNodeValue();
 			    
 			    NodeList listOfContracts = contract.getElementsByTagName("clientContract");
 		        
@@ -219,13 +201,15 @@ public class XMLParse{
 			 	if(ClientContract.getNodeType() == Node.ELEMENT_NODE)
 			 	{
 				    Node ClientContractNode = ClientContractsAttrs.getNamedItem("id");
-				    String CCIDNode = ClientContractNode.toString();
-				    splitter = CCIDNode.split("=");
-				    contractId = splitter[1].replaceAll("[\"]", "");
-				    contractIdInt = Integer.parseInt(contractId);
+				    contractId = ClientContractNode.getNodeValue();
+				    
+				    Node ClientContractNode2 = ClientContractsAttrs.getNamedItem("No");
+				    contractNo = ClientContractNode2.getNodeValue();	
+				    
+				    contractNoInt = Integer.parseInt(contractNo);
 			 	}
 		 	}
-		 	client.m_serviceAddress.add(new ServiceAddress(id, address, postalCode, contact, city, province, country, inspectorId, testTimeStamp, contractIdInt));
+		 	client.m_serviceAddress.add(new ServiceAddress(id, address, postalCode, contact, city, province, country, inspectorId, contractId, contractNoInt));
 		 	getFloors(client.m_serviceAddress.get(k));
 		}
     }
@@ -233,7 +217,6 @@ public class XMLParse{
     public static void getFloors(ServiceAddress serAdd)
     {
     	String name="";
-    	String[] splitter;
     	
     	Element floor = (Element)tempNode2;
         NodeList listOfFloors = floor.getElementsByTagName("Floor");
@@ -248,10 +231,9 @@ public class XMLParse{
 		 	if(ServiceAddress.getNodeType() == Node.ELEMENT_NODE)
 		 	{
 		 		Node ServiceAddressNode = ServiceAddressAttr.getNamedItem("name");
-			    String SerAddNode = ServiceAddressNode.toString();
-			    splitter = SerAddNode.split("=");
-			    name = splitter[1].replaceAll("[\"]", "");
+			    name = ServiceAddressNode.getNodeValue();
 		 	}
+		 	
 		 	serAdd.m_floors.add(new Floor(name));
 		 	getRooms(serAdd.m_floors.get(k));
 		}
@@ -261,10 +243,9 @@ public class XMLParse{
     {
     	String id="";
     	String No="";
-    	String[] splitter;
     	
     	Element room = (Element)tempNode3;
-        NodeList listOfRooms = room.getElementsByTagName("Floor");
+        NodeList listOfRooms = room.getElementsByTagName("Room");
         
         for(int k=0; k<listOfRooms.getLength() ; k++)
 		{
@@ -276,14 +257,10 @@ public class XMLParse{
 		 	if(RoomNode.getNodeType() == Node.ELEMENT_NODE)
 		 	{
 		 		Node Room = roomAttr.getNamedItem("id");
-			    String roomName = Room.toString();
-			    splitter = roomName.split("=");
-			    id = splitter[1].replaceAll("[\"]", "");
+			    id = Room.getNodeValue();
 			    
 			    Node Room2 = roomAttr.getNamedItem("No");
-			    String roomName2 = Room2.toString();
-			    splitter = roomName2.split("=");
-			    No = splitter[1].replaceAll("[\"]", "");
+			    No = Room2.getNodeValue();
 		 	}
 		 	floor.m_rooms.add(new Room(id, No));
 		 	getDevices(floor.m_rooms.get(k));
@@ -301,9 +278,9 @@ public class XMLParse{
     	String manufacturingDate="";
     	int exID=0;
     	int exSize=0;
-    	String[] splitter;
     	
     	Element device = (Element)tempNode4;
+    	
         NodeList listOfExtinguishers = device.getElementsByTagName("Extinguisher");
         
         for(int k=0; k<listOfExtinguishers.getLength() ; k++)
@@ -317,41 +294,29 @@ public class XMLParse{
 		 	if(exNode.getNodeType() == Node.ELEMENT_NODE)
 		 	{
 		 		Node ex = exAttr.getNamedItem("id");
-			    String exName = ex.toString();
-			    splitter = exName.split("=");
-			    id = splitter[1].replaceAll("[\"]", "");
+			    id = ex.getNodeValue();
 			    exID = Integer.parseInt(id);
 			    
 			    Node exLoc = exAttr.getNamedItem("location");
-			    String exLo = exLoc.toString();
-			    splitter = exLo.split("=");
-			    location = splitter[1].replaceAll("[\"]", "");
+			    location = exLoc.getNodeValue();
 			    
 			    Node ex3 = exAttr.getNamedItem("size");
-			    String exName3 = ex3.toString();
-			    splitter = exName3.split("=");
-			    size = splitter[1].replaceAll("[\"]", "");
+			    size = ex3.getNodeValue();
 			    exSize = Integer.parseInt(size);
 			    
 			    Node ex4 = exAttr.getNamedItem("type");
-			    String exName4 = ex4.toString();
-			    splitter = exName4.split("=");
-			    type = splitter[1].replaceAll("[\"]", "");
+			    type = ex4.getNodeValue();
 			    
 			    Node ex5 = exAttr.getNamedItem("model");
-			    String exName5 = ex5.toString();
-			    splitter = exName5.split("=");
-			    model = splitter[1].replaceAll("[\"]", "");
+			    model = ex5.getNodeValue();
 			    
 			    Node ex6 = exAttr.getNamedItem("serialNo");
-			    String exName6 = ex6.toString();
-			    splitter = exName6.split("=");
-			    serialNo = splitter[1].replaceAll("[\"]", "");
+			    serialNo = ex6.getNodeValue();
 			    
 			    Node ex7 = exAttr.getNamedItem("manufacturingDate");
-			    String exName7 = ex7.toString();
-			    splitter = exName7.split("=");
-			    manufacturingDate = splitter[1].replaceAll("[\"]", "");
+			    if (ex7!=null) {
+			    	manufacturingDate = ex7.getNodeValue();
+			    }
 		 	}
 		 	room.m_devices.add(new Extinguisher(exID, DeviceType.EXTINGUISHER, location, exSize, type, model, serialNo, manufacturingDate));
 		 	getInspectionElement(tempExNode, room.m_devices.get(k));
@@ -362,33 +327,28 @@ public class XMLParse{
         String cabLocation="";
         String cabManufacturingDate="";
         
+        int a=listOfExtinguishers.getLength();
         NodeList listOfCabinets = device.getElementsByTagName("FireHoseCabinet");
         
-        for(int k=0; k<listOfCabinets.getLength() ; k++)
+        for(int i=0, k=a; k<listOfCabinets.getLength()+a ; i++, k++)
 		{
-			Element cabinets = (Element)listOfCabinets.item(k);;
+			Element cabinets = (Element)listOfCabinets.item(i);;
 		 	NamedNodeMap cabAttr = cabinets.getAttributes();
-		 	Node cabNode = listOfCabinets.item(k);
+		 	Node cabNode = listOfCabinets.item(i);
 		 	
 		 	tempCabNode = cabNode;
 			
 		 	if(cabNode.getNodeType() == Node.ELEMENT_NODE)
 		 	{
 		 		Node cab = cabAttr.getNamedItem("id");
-			    String cabName = cab.toString();
-			    splitter = cabName.split("=");
-			    cabID = splitter[1].replaceAll("[\"]", "");
+			    cabID = cab.getNodeValue();
 			    cabIdInt = Integer.parseInt(cabID);
 			    
 			    Node cab2 = cabAttr.getNamedItem("location");
-			    String cabName2 = cab2.toString();
-			    splitter = cabName2.split("=");
-			    cabLocation = splitter[1].replaceAll("[\"]", "");
+			    cabLocation = cab2.getNodeValue();
 			    
 			    Node cab3 = cabAttr.getNamedItem("manufacturingDate");
-			    String cabName3 = cab3.toString();
-			    splitter = cabName3.split("=");
-			    cabManufacturingDate = splitter[1].replaceAll("[\"]", "");
+			    cabManufacturingDate = cab3.getNodeValue();
 		 	}
 		 	room.m_devices.add(new FireHoseCabinet(cabIdInt, DeviceType.FIRE_HOSE_CABINET, cabLocation, cabManufacturingDate));
 		 	getInspectionElement(tempCabNode, room.m_devices.get(k));
@@ -404,56 +364,42 @@ public class XMLParse{
         int lightNumHeadsInt=0;
         String totalPower="";
         String voltage="";
-        
+        int b = listOfCabinets.getLength()+a;
         NodeList listOfLights = device.getElementsByTagName("EmergencyLight");
         
-        for(int k=0; k<listOfLights.getLength() ; k++)
+        for(int i=0, k=b; k<listOfLights.getLength()+b ; i++, k++)
 		{
-			Element lights = (Element)listOfLights.item(k);;
+			Element lights = (Element)listOfLights.item(i);;
 		 	NamedNodeMap lightsAttr = lights.getAttributes();
-		 	Node lightNode = listOfLights.item(k);
+		 	Node lightNode = listOfLights.item(i);
 		 	
 		 	tempLightNode = lightNode;
 		 	
 		 	if(lightNode.getNodeType() == Node.ELEMENT_NODE)
 		 	{
 		 		Node light  = lightsAttr.getNamedItem("id");
-			    String lightName = light.toString();
-			    splitter = lightName.split("=");
-			    lightID = splitter[1].replaceAll("[\"]", "");
+			    lightID = light.getNodeValue();
 			    lightIDInt = Integer.parseInt(lightID);
 			    
 			    Node light2 = lightsAttr.getNamedItem("location");
-			    String lightName2 = light2.toString();
-			    splitter = lightName2.split("=");
-			    lightLocation = splitter[1].replaceAll("[\"]", "");
+			    lightLocation = light2.getNodeValue();
 			    
 			    Node light3 = lightsAttr.getNamedItem("model");
-			    String lightName3 = light3.toString();
-			    splitter = lightName3.split("=");
-			    lightModel = splitter[1].replaceAll("[\"]", "");
+			    lightModel = light3.getNodeValue();
 			    lightModelInt = Integer.parseInt(lightModel);
 			    
 			    Node light4 = lightsAttr.getNamedItem("make");
-			    String lightName4 = light4.toString();
-			    splitter = lightName4.split("=");
-			    lightMake = splitter[1].replaceAll("[\"]", "");
+			    lightMake = light4.getNodeValue();
 			    
 			    Node light5 = lightsAttr.getNamedItem("numHeads");
-			    String lightName5 = light5.toString();
-			    splitter = lightName5.split("=");
-			    lightNumHeads = splitter[1].replaceAll("[\"]", "");
+			    lightNumHeads = light5.getNodeValue();
 			    lightNumHeadsInt = Integer.parseInt(lightNumHeads);
 			    
 			    Node light6 = lightsAttr.getNamedItem("totalPower");
-			    String lightName6 = light6.toString();
-			    splitter = lightName6.split("=");
-			    totalPower = splitter[1].replaceAll("[\"]", "");
+			    totalPower = light6.getNodeValue();
 			    
 			    Node light7 = lightsAttr.getNamedItem("voltage");
-			    String lightName7 = light7.toString();
-			    splitter = lightName7.split("=");
-			    voltage = splitter[1].replaceAll("[\"]", "");
+			    voltage = light7.getNodeValue();
 		 	}
 		 	room.m_devices.add(new EmergencyLight(lightIDInt, DeviceType.EMERGENCY_LIGHT, lightLocation, lightModelInt, lightMake, lightNumHeadsInt, totalPower, voltage));
 		 	getInspectionElement(tempLightNode, room.m_devices.get(k));
@@ -465,10 +411,9 @@ public class XMLParse{
     	String name="";
     	String testResult="";
     	String testNote="";
-    	String[] splitter;
     	
     	Element InspecEle = (Element)node;
-    	NodeList listOfInspecEle = InspecEle.getElementsByTagName("EmergencyLight");
+    	NodeList listOfInspecEle = InspecEle.getElementsByTagName("inspectionElement");
     	
     	for(int k=0; k<listOfInspecEle.getLength() ; k++)
 		{
@@ -479,19 +424,13 @@ public class XMLParse{
 		 	if(InspecEleNode.getNodeType() == Node.ELEMENT_NODE)
 		 	{
 		 		Node InspecElement  = IEAttr.getNamedItem("name");
-			    String IEName = InspecElement.toString();
-			    splitter = IEName.split("=");
-			    name = splitter[1].replaceAll("[\"]", "");
+			    name = InspecElement.getNodeValue();
 			    
 			    Node InspecElement2  = IEAttr.getNamedItem("testResult");
-			    String IEName2 = InspecElement2.toString();
-			    splitter = IEName2.split("=");
-			    testResult = splitter[1].replaceAll("[\"]", "");
+			    testResult = InspecElement2.getNodeValue();
 			    
 			    Node InspecElement3  = IEAttr.getNamedItem("testNote");
-			    String IEName3 = InspecElement3.toString();
-			    splitter = IEName3.split("=");
-			    testNote = splitter[1].replaceAll("[\"]", "");
+			    testNote = InspecElement3.getNodeValue();
 		 	}
 		 	device.m_inspectionElements.add(new InspectionElement(name, device.getDeviceType(), testResult, testNote));
 		}
