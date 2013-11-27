@@ -15,9 +15,9 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.astroware.famis.LoginScreen"
-            android:label="@string/title_activity_login_screen" 
+            android:label="@string/title_activity_login_screen"
             android:screenOrientation="portrait" >
-               <intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -42,6 +42,15 @@
             android:name="com.astroware.famis.ExtinguisherForm"
             android:label="@string/title_activity_extinguisher_form"
             android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.astroware.famis.AccountManagementScreen"
+            android:label="@string/title_activity_account_management_screen" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 

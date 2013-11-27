@@ -3,17 +3,6 @@
     android:layout_height="match_parent"
     android:background="@drawable/backgroundbiggertoolbar"
     tools:context=".Second_screen" xmlns:android="http://schemas.android.com/apk/res/android">
-    <Button
-        android:id="@+id/button67"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_alignBottom="@+id/textView1"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:background="@android:color/transparent"
-        android:paddingLeft="0dp"
-        android:paddingTop="0dp" >
-    </Button>
 	<TextView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
@@ -48,6 +37,14 @@
        android:shrinkColumns="*"
        android:stretchColumns="*" >
 
+       <Button
+           android:id="@+id/button67"
+           android:layout_width="35dp"
+           android:layout_height="35dp"
+           android:background="@android:color/transparent"
+           android:paddingLeft="0dp"
+           android:paddingTop="0dp" />
+
 	<TableRow
 	    android:layout_width="100dp"
 	    android:layout_height="50dp"
@@ -67,14 +64,21 @@
 
    </TableLayout>
 
+   <Button
+       android:id="@+id/buttonTemp"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+       android:layout_alignLeft="@+id/customertable"
+       android:layout_alignParentBottom="true"
+       android:layout_marginBottom="49dp"
+       android:text="Temporary account manange button" />
+
    <EditText
        android:id="@+id/editText1"
        android:layout_width="100dp"
        android:layout_height="25dp"
-       android:layout_alignBaseline="@+id/buttonsearch"
-       android:layout_alignBottom="@+id/buttonsearch"
-       android:layout_marginRight="20dp"
-       android:layout_toLeftOf="@+id/buttonsearch"
+       android:layout_alignParentRight="true"
+       android:layout_alignTop="@+id/textView1"
        android:background="@android:color/transparent"
        android:ems="10"
        android:hint="Search Clients"

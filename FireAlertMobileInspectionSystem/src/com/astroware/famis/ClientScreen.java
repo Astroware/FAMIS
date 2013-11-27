@@ -37,6 +37,9 @@ public class ClientScreen extends Activity {
 			//the spacing of the dynamically created buttons. It should be removed.
 			Button client1 = (Button)findViewById(R.id.button4c);
 			
+			//placeholder for the real button
+			Button temp = (Button)findViewById(R.id.buttonTemp);
+			
 			//Create a new Franchisee object and set it equal to parse(). Parse() is a function that parses the xml document and 
 			//returns the value of the name of the franchisee in the xml document.
 			franchisee = parseFranchisee();
@@ -52,6 +55,14 @@ public class ClientScreen extends Activity {
 				//TableLayout tl = (TableLayout)findViewById(R.id.customertable);
 				//LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT);
 				//tl.addView(client2, lp);
+			
+			//goesto account management screen when pressed
+			temp.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					startActivity(new Intent (ClientScreen.this, AccountManagementScreen.class));	
+				}
+			});
 			
 			//Create a listener for when the back button is pressed
 				back.setOnClickListener(new View.OnClickListener() {
