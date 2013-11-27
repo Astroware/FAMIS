@@ -14,6 +14,7 @@ import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.Toast;
 
@@ -21,7 +22,8 @@ public class ClientScreen extends Activity {
 
 	private Franchisee franchisee;
 	private ArrayList<Button> clientButtons;
-	
+	//Create the search bar at the top of the screen
+	private EditText searchbar;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -33,9 +35,7 @@ public class ClientScreen extends Activity {
 			//Create a button that allows the user to search through the list for a specified search requirement
 			Button search = (Button)findViewById(R.id.buttonsearch);
 			
-			//Rhys - need to get rid of this button - remember this was hidden to help with 
-			//the spacing of the dynamically created buttons. It should be removed.
-			Button client1 = (Button)findViewById(R.id.button4c);
+			searchbar= (EditText)findViewById(R.id.searchbar);
 			
 			//Create a new Franchisee object and set it equal to parse(). Parse() is a function that parses the xml document and 
 			//returns the value of the name of the franchisee in the xml document.
@@ -65,26 +65,11 @@ public class ClientScreen extends Activity {
 			search.setOnClickListener(new View.OnClickListener() {	
 				@Override
 				public void onClick(View v) {
-					Toast.makeText(getApplicationContext(), "Searching...", Toast.LENGTH_LONG).show();
+					Toast.makeText(getApplicationContext(), searchbar.getText().toString().trim(), Toast.LENGTH_LONG).show();
+					createButtons();
 				}
 			});
-			client1.setOnClickListener(new View.OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					Toast.makeText(getApplicationContext(), "Client 1", Toast.LENGTH_LONG).show();
-					
-				}
-			});
-			//Rhys - I believe this goes with the previously mentioned commented code
-			//client2.setOnClickListener(new View.OnClickListener() {
-				
-			//	@Override
-			//	public void onClick(View v) {
-			//		Toast.makeText(getApplicationContext(), "Client 2", Toast.LENGTH_LONG).show();
-					
-			//	}
-			//});
+
 		}
 		
 		//Used as a current placeholder using hard coded xml until the parser works
@@ -99,33 +84,31 @@ public class ClientScreen extends Activity {
 		public void createButtons() {
 			
 			clientButtons = new ArrayList<Button>();
-			
+			TableLayout tl = (TableLayout)findViewById(R.id.customertable);
+			tl.removeAllViewsInLayout();
+			LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, DigitsToPixels.dpToPixel(50, getBaseContext()));
 			for (int i=0; i<franchisee.m_clientList.size(); i++) {
-				
-				clientButtons.add(new Button(this));
-				clientButtons.get(i).setText(franchisee.m_clientList.get(i).getName());
-				clientButtons.get(i).setBackgroundResource(R.drawable.client_button);
-				clientButtons.get(i).setTextColor(Color.parseColor("white"));
-				clientButtons.get(i).setTypeface(null, Typeface.BOLD_ITALIC);
-				clientButtons.get(i).setTextSize(20);
-				
-				TableLayout tl = (TableLayout)findViewById(R.id.customertable);
-				LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, DigitsToPixels.dpToPixel(50, getBaseContext()));
-				tl.addView(clientButtons.get(i), lp);
-				
-				//final int j was created because a final int is required inside of the onClick function
-				final int j = i;
-				
-				//create an onClick function for each clientButton that moves to the LocationScreen based on the selected client
-				clientButtons.get(i).setOnClickListener(new View.OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						Intent in= new Intent(ClientScreen.this, LocationScreen.class);
-						in.putExtra("selectedClient", franchisee.m_clientList.get(j));
-						startActivity(in);
-						overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
-					}
-				});
+				if (franchisee.m_clientList.get(i).getName().toLowerCase().startsWith(searchbar.getText().toString().toLowerCase().trim())){
+					clientButtons.add(new Button(this));
+					clientButtons.get(i).setText(franchisee.m_clientList.get(i).getName());
+					clientButtons.get(i).setBackgroundResource(R.drawable.client_button);
+					clientButtons.get(i).setTextColor(Color.parseColor("white"));
+					clientButtons.get(i).setTypeface(null, Typeface.BOLD_ITALIC);
+					clientButtons.get(i).setTextSize(20);
+					tl.addView(clientButtons.get(i), lp);
+					//final int j was created because a final int is required inside of the onClick function
+					final int j = i;
+					//create an onClick function for each clientButton that moves to the LocationScreen based on the selected client
+					clientButtons.get(i).setOnClickListener(new View.OnClickListener() {
+						@Override
+						public void onClick(View v) {
+							Intent in= new Intent(ClientScreen.this, LocationScreen.class);
+							in.putExtra("selectedClient", franchisee.m_clientList.get(j));
+							startActivity(in);
+							overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
+						}
+					});
+				}
 			}
 		}
 		

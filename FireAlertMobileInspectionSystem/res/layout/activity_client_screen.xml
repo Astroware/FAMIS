@@ -1,87 +1,74 @@
 <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/backgroundbiggertoolbar"
-    tools:context=".Second_screen" xmlns:android="http://schemas.android.com/apk/res/android">
+    android:background="@drawable/biggerbackground"
+    tools:context=".Second_screen" >
+
     <Button
         android:id="@+id/button67"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_alignBottom="@+id/textView1"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:background="@android:color/transparent"
+        android:background="@drawable/backbutton"
         android:paddingLeft="0dp"
         android:paddingTop="0dp" >
     </Button>
-	<TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="28dp"
-        android:layout_alignParentBottom="false"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="41dp"
-        android:layout_marginTop="2dp"
-        android:text="Client List"
-        android:textColor="@android:color/white"
-        android:textSize="20sp" />
+
     <Button
         android:id="@+id/buttonsearch"
         style="?android:attr/buttonStyleSmall"
-        android:layout_width="25dp"
+        android:layout_width="40dp"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/textView1"
         android:layout_alignParentRight="true"
+        android:background="@drawable/searchbutton" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="28dp"
+        android:layout_alignBottom="@+id/button67"
         android:layout_alignParentTop="true"
-        android:background="@android:color/transparent" />
+        android:layout_marginLeft="14dp"
+        android:layout_toRightOf="@+id/button67"
+        android:gravity="center_vertical"
+        android:text="Client List"
+        android:textColor="@android:color/white"
+        android:textSize="20sp" />
 
-   <TableLayout
-       android:id="@+id/customertable"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:layout_alignParentRight="true"
-       android:layout_marginBottom="30dp"
-       android:layout_marginLeft="10dp"
-       android:layout_marginTop="30dp"
-       android:baselineAligned="true"
-       android:shrinkColumns="*"
-       android:stretchColumns="*" >
-
-	<TableRow
-	    android:layout_width="100dp"
-	    android:layout_height="50dp"
-	    android:layout_marginTop="10dp" >
-
-           <Button
-               android:id="@+id/button4c"
-               android:layout_width="100dp"
-               android:layout_height="2dp"
-               android:background="@android:color/white"
-               android:text="Client 1"
-               android:textColor="@android:color/white"
-               android:textSize="20sp"
-               android:textStyle="bold|italic" />
-
-    </TableRow>
-
-   </TableLayout>
-
-   <EditText
-       android:id="@+id/editText1"
-       android:layout_width="100dp"
-       android:layout_height="25dp"
-       android:layout_alignBaseline="@+id/buttonsearch"
-       android:layout_alignBottom="@+id/buttonsearch"
-       android:layout_marginRight="20dp"
-       android:layout_toLeftOf="@+id/buttonsearch"
-       android:background="@android:color/transparent"
-       android:ems="10"
-       android:hint="Search Clients"
-       android:paddingBottom="5dp"
-       android:paddingLeft="15dp"
-       android:singleLine="true"
-       android:textColorHint="@android:color/black"
-       android:textSize="12sp" />
-
+    <EditText
+        android:id="@+id/searchbar"
+        android:layout_width="100dp"
+        android:layout_height="25dp"
+        android:layout_alignBottom="@+id/buttonsearch"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="14dp"
+        android:layout_toLeftOf="@+id/buttonsearch"
+        android:background="@drawable/searchbar"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="Search Clients"
+        android:singleLine="true"
+        android:textColorHint="@android:color/black"
+        android:textSize="13sp" >
+    </EditText>
+    <ScrollView
+      android:id="@+id/scrollView1"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent" 
+      android:layout_marginTop="40dp"
+      android:layout_marginBottom="40dp">
+        
+    <TableLayout
+        android:id="@+id/customertable"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/button67" >
+    </TableLayout>
+    
+    </ScrollView>
+    
 </RelativeLayout>

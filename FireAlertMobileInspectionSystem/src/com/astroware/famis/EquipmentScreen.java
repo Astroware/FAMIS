@@ -29,14 +29,15 @@ public class EquipmentScreen extends Activity {
 	private ServiceAddress currentLocation;
 	private List<Floor> floors;
 	private int times = 0;
-
+	private TextView floornum;
+	private int currentfloor=1;
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_equipment_screen);
-        
+        floornum = (TextView)findViewById(R.id.equipmenttitle);
+		floornum.setText("Floor "+currentfloor);
         //Create a new editable text field that will allow the user to enter a device id in manually
         final EditText enterManual = (EditText)findViewById(R.id.entermanually);
-        
         //Create a button that will allow the user to submit a manually entered device id
         Button searchManual =(Button)findViewById(R.id.buttonentermanally);
         
@@ -183,53 +184,53 @@ public class EquipmentScreen extends Activity {
 	//Rhys - can you comment each block in this section?
 	//The spacing also needs to be fixed for this activity
 	public void createTables(Floor floor) {
-		
 		for (int i=0; i<floor.m_rooms.size();i++) {
-		 	
+			//make layout of the table
 			TableLayout MainLayout = (TableLayout)findViewById(R.id.make_rooms_here);
+			//empty what was previously within this layout
 		 	MainLayout.removeAllViewsInLayout();
-			
+		 	//set how things in the new layout should appear (Parameters) and add margins
 		 	LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT);
 			LayoutParams buttonParams = new LayoutParams(DigitsToPixels.dpToPixel(50, getBaseContext()),DigitsToPixels.dpToPixel(50, getBaseContext()));
-			lp.rightMargin = DigitsToPixels.dpToPixel(10, getBaseContext());
-			lp.leftMargin =  DigitsToPixels.dpToPixel(10, getBaseContext());
+			lp.rightMargin = DigitsToPixels.dpToPixel(5, getBaseContext());
+			lp.leftMargin =  DigitsToPixels.dpToPixel(5, getBaseContext());
 		 	
+			//Make the Title Row with the name of the room
 			TableRow titleRow= new TableRow(this);
 		 	titleRow.setGravity(android.view.Gravity.CENTER);
-		 	
 		 	TextView title = new TextView(this);
 		 	title.setText("Room : "+floor.m_rooms.get(i).getId());
 		 	title.setGravity(android.view.Gravity.CENTER);
 		 	title.setTextSize(25);
 		 	title.setTypeface(null, Typeface.BOLD_ITALIC);
-		 	
 		 	titleRow.addView(title, lp);
 		 	MainLayout.addView(titleRow, lp);
 		 	
+		 	//Add the second row within the table including how what hte text should look like
 		 	TableRow subtitleRow = new TableRow(this);
 		 	TextView subtitleName = new TextView(this);
 		 	subtitleName.setText("Equipment");
 		 	subtitleName.setGravity(android.view.Gravity.CENTER);
-		 	subtitleName.setTextSize(20);
+		 	subtitleName.setTextSize(15);
 		 	subtitleName.setTypeface(null, Typeface.BOLD);
-		 	
 		 	TextView subtitleLocation = new TextView(this);
 		 	subtitleLocation.setText("Location");
 		 	subtitleLocation.setGravity(android.view.Gravity.CENTER);
-		 	subtitleLocation.setTextSize(20);
+		 	subtitleLocation.setTextSize(15);
 		 	subtitleLocation.setTypeface(null, Typeface.BOLD);
-		 	
 		 	TextView subtitlePassOrFail = new TextView(this);
 		 	subtitlePassOrFail.setText("Completed");
 		 	subtitlePassOrFail.setGravity(android.view.Gravity.CENTER);
-		 	subtitlePassOrFail.setTextSize(20);
+		 	subtitlePassOrFail.setTextSize(15);
 		 	subtitlePassOrFail.setTypeface(null, Typeface.BOLD);
 		 	
+		 	//Add the second row to the table layout
 		 	subtitleRow.addView(subtitleName, lp);
 		 	subtitleRow.addView(subtitleLocation, lp);
 		 	subtitleRow.addView(subtitlePassOrFail, lp);
 		 	MainLayout.addView(subtitleRow, lp);
 	        
+		 	//For loop adding all of the pieces of equipment into the table
 		 	for (int j=0;j<floor.m_rooms.get(i).m_devices.size();j++) {  
 	        	
 		 		TableRow currentRow = new TableRow(this);
@@ -237,12 +238,12 @@ public class EquipmentScreen extends Activity {
 		 		TextView equipmentName = new TextView(this);
 	        	equipmentName.setGravity(android.view.Gravity.CENTER);
 	        	equipmentName.setText(floor.m_rooms.get(i).m_devices.get(j).toString()+" ");
-	        	equipmentName.setTextSize(15);
+	        	equipmentName.setTextSize(12);
 	        	
 	        	TextView location = new TextView(this);
 	        	location.setText(floor.m_rooms.get(i).m_devices.get(j).getLocation());
 	        	location.setGravity(android.view.Gravity.CENTER);
-	        	location.setTextSize(15);
+	        	location.setTextSize(12);
 	        	
 	        	Button checkOrX = new Button(this);
 	        	if (/*floor.m_rooms.get(i).m_devices.get(j).isComplete()*/times>=2 && j==0) {
@@ -253,10 +254,9 @@ public class EquipmentScreen extends Activity {
 	        	}
 	        	
 	        	checkOrX.setGravity(android.view.Gravity.CENTER);
-	        	checkOrX.setTextSize(15);
+	        	checkOrX.setTextSize(12);
 	        	checkOrX.setWidth(DigitsToPixels.dpToPixel(50, getBaseContext()));
 	        	checkOrX.setHeight(DigitsToPixels.dpToPixel(50, getBaseContext()));
-	        	
 	        	currentRow.addView(equipmentName,lp);
 	        	currentRow.addView(location,lp);
 	        	currentRow.addView(checkOrX,buttonParams);

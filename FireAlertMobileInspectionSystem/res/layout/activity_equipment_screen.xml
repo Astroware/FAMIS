@@ -5,36 +5,38 @@
     android:layout_height="match_parent"
     android:focusable="true" 
     android:focusableInTouchMode="true"
-    android:background="@drawable/backgroundbiggertoolbar"
+    android:background="@drawable/biggerbackground"
     tools:context=".Equipment_screen" >
 
     <Button
         android:id="@+id/buttonbacktolocation"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:background="@android:color/transparent"
+        android:background="@drawable/backbutton"
         android:paddingLeft="0dp"
         android:paddingTop="0dp" />
     <Button
         android:id="@+id/buttonentermanally"
         style="?android:attr/buttonStyleSmall"
-        android:layout_width="25dp"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/textView1"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignBottom="@+id/equipmenttitle"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:background="@android:color/transparent" />
-	<!--<ScrollView
+        android:background="@drawable/searchbutton" />
+	<ScrollView
 	    android:layout_width="match_parent"
-        android:layout_height="match_parent">-->
+        android:layout_height="match_parent"
+		android:layout_marginTop="40dp"
+		android:layout_above="@+id/inspectiondone">
     <TableLayout
         android:id="@+id/make_rooms_here"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="30dp"
-        android:layout_marginTop="30dp">
+         >
+
        <TableRow
             android:id="@+id/floor_id"
             android:layout_width="match_parent"
@@ -55,41 +57,45 @@
         </TableRow>
 
      </TableLayout>
-	<!--</ScrollView>-->
+	</ScrollView>
+
+    <TextView
+        android:id="@+id/equipmenttitle"
+        android:layout_width="wrap_content"
+        android:layout_height="28dp"
+        android:layout_alignBottom="@+id/buttonbacktolocation"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/buttonbacktolocation"
+        android:gravity="center_vertical"
+        android:text="Equipment List"
+        android:textColor="@android:color/white"
+        android:textSize="18sp" />
+
     <EditText
         android:id="@+id/entermanually"
         android:layout_width="110dp"
         android:layout_height="25dp"
-        android:layout_alignBaseline="@+id/textView1"
-        android:layout_alignBottom="@+id/textView1"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="22dp"
-        android:background="@android:color/transparent"
+        android:layout_alignBottom="@+id/buttonentermanally"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/buttonentermanally"
+        android:background="@drawable/searchbar"
         android:ems="10"
+        android:gravity="center"
         android:hint="Manually Enter ID"
-        android:paddingBottom="5dp"
-        android:paddingLeft="dp"
         android:singleLine="true"
         android:textColorHint="@android:color/black"
-        android:textSize="12sp" />
+        android:textSize="12sp" >
 
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="28dp"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/buttonbacktolocation"
-        android:text="Equipment List"
-        android:textColor="@android:color/white"
-        android:textSize="20sp" />
+        <requestFocus />
+    </EditText>
 
     <Button
         android:id="@+id/inspectiondone"
         android:layout_width="125dp"
         android:layout_height="50dp"
-        android:layout_alignLeft="@+id/textView1"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="46dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="44dp"
         android:background="@drawable/submit_button" />
 
 </RelativeLayout>
