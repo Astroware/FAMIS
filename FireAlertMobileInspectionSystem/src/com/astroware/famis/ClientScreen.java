@@ -66,7 +66,6 @@ public class ClientScreen extends Activity {
 					createButtons();
 				}
 			});
-
 		}
 		
 		//Each client will have a new button created for them and will be displayed in the screen. These buttons will all be 
@@ -74,6 +73,7 @@ public class ClientScreen extends Activity {
 		public void createButtons() {
 			
 			clientButtons = new ArrayList<Button>();
+
 			TableLayout tl = (TableLayout)findViewById(R.id.customertable);
 			tl.removeAllViewsInLayout();
 			LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, DigitsToPixels.dpToPixel(50, getBaseContext()));

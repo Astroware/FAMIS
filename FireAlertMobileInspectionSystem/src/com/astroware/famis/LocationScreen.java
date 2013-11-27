@@ -26,10 +26,11 @@ public class LocationScreen extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_location_screen);
+		
 		searchbar = (EditText)findViewById(R.id.searchbar2);
 		Button back = (Button)findViewById(R.id.locationback);
 		Button search =(Button)findViewById(R.id.buttonsearch);
-	//Receive the intent from the previous activity and retrieve the passed Client object
+		//Receive the intent from the previous activity and retrieve the passed Client object
 		 Intent in =getIntent();
 		    int clientIndex = in.getIntExtra("selectedClient", -1);
 		    if (clientIndex != -1) {
@@ -37,34 +38,37 @@ public class LocationScreen extends Activity {
 		    	createButtons();
 		    }
 		    
-	back.setOnClickListener(new View.OnClickListener() {
-		@Override
-		public void onClick(View v) {
-			// TODO Auto-generated method stub
-			startActivity(new Intent(LocationScreen.this, ClientScreen.class));
-		}
-	});
-	
-	search.setOnClickListener(new View.OnClickListener() {
-		@Override
-		public void onClick(View v) {
-			// TODO Auto-generated method stub
-			createButtons();
-		}
-	});
+		back.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				startActivity(new Intent(LocationScreen.this, ClientScreen.class));
+			}
+		});
+		
+		search.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				createButtons();
+			}
+		});
 	
 	}
 
 	//Currently a placeholder for the xml parse for client locations
 	public void locationParse(Client currentClient) {
 		currentClient.m_serviceAddress = new ArrayList<ServiceAddress>();
-		currentClient.m_serviceAddress.add(new ServiceAddress("S1","123 Sesame Street","N6G 2P4", "", "London", "Ontario", "Canada","ID001","20131009 09:49PM", 1234));
+		
+		currentClient.m_serviceAddress.add(new ServiceAddress("S1","123 Sesame Street","N6G 2P4", "", "London", 
+																"Ontario", "Canada","ID001","20131009 09:49PM", 1234));
 	}
 	
 	//Create a an array of buttons for each location under the current client. Each button will be the same and will have 
 	//the service address on it
 	public void createButtons() {
 		locationButtons =  new ArrayList<Button>();
+
 		TableLayout tl = (TableLayout)findViewById(R.id.locationtable);
 		LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT,DigitsToPixels.dpToPixel(50, getBaseContext()));
 		tl.removeAllViews();

@@ -20,8 +20,10 @@ import android.widget.TextView;
 import android.widget.TableRow.LayoutParams;
 
 public class EquipmentScreen extends Activity {
+
 	private TextView floornum;
 	private int currentfloor=1;
+
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_equipment_screen);
@@ -114,6 +116,7 @@ public class EquipmentScreen extends Activity {
 	//Rhys - can you comment each block in this section?
 	//The spacing also needs to be fixed for this activity
 	public void createTables() {
+
 		for (int i=0; i<EquipmentControl.getInstance().getRoomListSize();i++) {
 			EquipmentControl.getInstance().setRoom(i);
 			//make layout of the table
