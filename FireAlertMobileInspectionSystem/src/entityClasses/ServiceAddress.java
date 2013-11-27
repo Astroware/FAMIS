@@ -1,9 +1,9 @@
 package entityClasses;
 
-import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-public class ServiceAddress implements Serializable{
+public class ServiceAddress {
 	private String m_id;
 	private String m_address;
 	private String m_postalCode;
@@ -32,6 +32,8 @@ public class ServiceAddress implements Serializable{
 		m_testTimeStamp = null;
 		m_contractId = contractId;
 		m_contractNo = contractNo;
+		
+		m_floors = new ArrayList<Floor>();
 	}
 	
 	public Boolean isComplete() {

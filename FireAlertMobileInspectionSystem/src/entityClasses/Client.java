@@ -1,9 +1,9 @@
 package entityClasses;
 
-import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-public class Client implements Serializable {
+public class Client {
 	private String m_id;
 	private String m_name;
 	private String m_address;
@@ -15,6 +15,8 @@ public class Client implements Serializable {
 		m_id = id;
 		m_name = name;
 		m_address = address;
+		
+		m_serviceAddress = new ArrayList<ServiceAddress>();
 	}
 	
 	public String getId() {

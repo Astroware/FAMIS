@@ -2,8 +2,8 @@ package com.astroware.famis;
 
 import java.util.ArrayList;
 
+import controlClasses.ClientControl;
 import controlClasses.DigitsToPixels;
-import entityClasses.*;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -19,8 +19,6 @@ import android.widget.TableLayout;
 import android.widget.Toast;
 
 public class ClientScreen extends Activity {
-
-	private Franchisee franchisee;
 	private ArrayList<Button> clientButtons;
 	//Create the search bar at the top of the screen
 	private EditText searchbar;
@@ -37,9 +35,8 @@ public class ClientScreen extends Activity {
 			
 			searchbar= (EditText)findViewById(R.id.searchbar);
 			
-			//Create a new Franchisee object and set it equal to parse(). Parse() is a function that parses the xml document and 
-			//returns the value of the name of the franchisee in the xml document.
-			franchisee = parseFranchisee();
+			//Parse the XML document to get all the necessary information
+			ClientControl.getInstance().parseXML();
 			
 			//Create an array of buttons that will hold all of the clients that the franchisee has
 			createButtons();
@@ -72,13 +69,6 @@ public class ClientScreen extends Activity {
 
 		}
 		
-		//Used as a current placeholder using hard coded xml until the parser works
-		public Franchisee parseFranchisee(){
-			Franchisee franchisee = new Franchisee(1001, "Darwin Fleming");
-			franchisee.m_clientList.add(new Client("1001-01", "North Bay Inc.", "North Bay, Muskoka, Parry Sound, Orillia"));
-			return franchisee;
-		}
-		
 		//Each client will have a new button created for them and will be displayed in the screen. These buttons will all be 
 		//similar and have the client name on them
 		public void createButtons() {
@@ -87,10 +77,10 @@ public class ClientScreen extends Activity {
 			TableLayout tl = (TableLayout)findViewById(R.id.customertable);
 			tl.removeAllViewsInLayout();
 			LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, DigitsToPixels.dpToPixel(50, getBaseContext()));
-			for (int i=0; i<franchisee.m_clientList.size(); i++) {
-				if (franchisee.m_clientList.get(i).getName().toLowerCase().startsWith(searchbar.getText().toString().toLowerCase().trim())){
+			for (int i=0; i<ClientControl.getInstance().getClientListSize(); i++) {
+				if (ClientControl.getInstance().getClient(i).getName().toLowerCase().startsWith(searchbar.getText().toString().toLowerCase().trim())){
 					clientButtons.add(new Button(this));
-					clientButtons.get(i).setText(franchisee.m_clientList.get(i).getName());
+					clientButtons.get(i).setText(ClientControl.getInstance().getClient(i).getName());
 					clientButtons.get(i).setBackgroundResource(R.drawable.client_button);
 					clientButtons.get(i).setTextColor(Color.parseColor("white"));
 					clientButtons.get(i).setTypeface(null, Typeface.BOLD_ITALIC);
@@ -103,7 +93,7 @@ public class ClientScreen extends Activity {
 						@Override
 						public void onClick(View v) {
 							Intent in= new Intent(ClientScreen.this, LocationScreen.class);
-							in.putExtra("selectedClient", franchisee.m_clientList.get(j));
+							in.putExtra("selectedClient", j);
 							startActivity(in);
 							overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
 						}

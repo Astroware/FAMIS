@@ -3,6 +3,7 @@ package com.astroware.famis;
 import java.util.ArrayList;
 
 import controlClasses.DigitsToPixels;
+import controlClasses.LocationControl;
 
 import entityClasses.*;
 
@@ -19,8 +20,6 @@ import android.widget.EditText;
 import android.widget.TableLayout;
 
 public class LocationScreen extends Activity {
-
-	private Client currentClient;
 	private ArrayList<Button> locationButtons;
 	private EditText searchbar;
 	@Override
@@ -31,11 +30,13 @@ public class LocationScreen extends Activity {
 		Button back = (Button)findViewById(R.id.locationback);
 		Button search =(Button)findViewById(R.id.buttonsearch);
 	//Receive the intent from the previous activity and retrieve the passed Client object
-    Intent in =getIntent();
-    currentClient = (Client)in.getSerializableExtra("selectedClient");
-    //The following function will parse the xml document for all locations associated with the current client selected
-    locationParse(currentClient);
-    createButtons();
+		 Intent in =getIntent();
+		    int clientIndex = in.getIntExtra("selectedClient", -1);
+		    if (clientIndex != -1) {
+		    	LocationControl.getInstance().setClient(clientIndex);
+		    	createButtons();
+		    }
+		    
 	back.setOnClickListener(new View.OnClickListener() {
 		@Override
 		public void onClick(View v) {
@@ -57,7 +58,7 @@ public class LocationScreen extends Activity {
 	//Currently a placeholder for the xml parse for client locations
 	public void locationParse(Client currentClient) {
 		currentClient.m_serviceAddress = new ArrayList<ServiceAddress>();
-		currentClient.m_serviceAddress.add(new ServiceAddress("S1","123 Sesame Street","N6G 2P4", "", "London", "Ontario", "Canada","ID001","20131009 09:49PM"));
+		currentClient.m_serviceAddress.add(new ServiceAddress("S1","123 Sesame Street","N6G 2P4", "", "London", "Ontario", "Canada","ID001","20131009 09:49PM", 1234));
 	}
 	
 	//Create a an array of buttons for each location under the current client. Each button will be the same and will have 
@@ -67,10 +68,10 @@ public class LocationScreen extends Activity {
 		TableLayout tl = (TableLayout)findViewById(R.id.locationtable);
 		LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT,DigitsToPixels.dpToPixel(50, getBaseContext()));
 		tl.removeAllViews();
-		for (int i=0; i<currentClient.m_serviceAddress.size(); i++) {
-			if (currentClient.m_serviceAddress.get(i).getAddress().toLowerCase().startsWith(searchbar.getText().toString().toLowerCase().trim())){
+		for (int i=0; i<LocationControl.getInstance().getLocationListSize(); i++) {
+			if (LocationControl.getInstance().getLocation(i).getAddress().toLowerCase().startsWith(searchbar.getText().toString().toLowerCase().trim())){
 				locationButtons.add(new Button(this));
-				locationButtons.get(i).setText(currentClient.m_serviceAddress.get(i).getAddress());
+				locationButtons.get(i).setText(LocationControl.getInstance().getLocation(i).getAddress());
 				locationButtons.get(i).setBackgroundResource(R.drawable.client_button);
 				locationButtons.get(i).setTextColor(Color.parseColor("white"));
 				locationButtons.get(i).setTypeface(null, Typeface.BOLD_ITALIC);
@@ -84,7 +85,7 @@ public class LocationScreen extends Activity {
 					@Override
 					public void onClick(View v) {
 						Intent in= new Intent(LocationScreen.this, EquipmentScreen.class);
-						in.putExtra("selectedLocation", currentClient.m_serviceAddress.get(j));
+						in.putExtra("selectedLocation", j);
 						startActivity(in);
 						overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
 					}
