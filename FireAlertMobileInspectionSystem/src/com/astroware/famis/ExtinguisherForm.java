@@ -6,10 +6,13 @@ package com.astroware.famis;
 import entityClasses.InspectionElement.Result;
 import com.astroware.famis.R;
 
+import controlClasses.EquipmentControl;
+
 import entityClasses.Device;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -17,8 +20,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class ExtinguisherForm extends Activity {
-
-private Device currentDevice;
 	
 	Button button1;
     Button button2; 
@@ -54,9 +55,11 @@ private Device currentDevice;
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_extinguisher_form);
 		
-		 Bundle bundle= this.getIntent().getExtras();
-	        if (bundle!=null)
-	        	currentDevice = (Device)bundle.getSerializable("device");
+		Intent in = getIntent();
+        int deviceIndex = in.getIntExtra("selectedDevice", -1);
+	    if (deviceIndex != -1) {
+	    	EquipmentControl.getInstance().setDevice(deviceIndex);
+	    }
 	        
 	        button1 = (Button)findViewById(R.id.passHydro);
 	        button2 = (Button)findViewById(R.id.failHydro);
@@ -98,8 +101,8 @@ private Device currentDevice;
 					button1.setBackgroundResource(R.drawable.check_box);
 					button2.setBackgroundResource(android.R.drawable.btn_default);
 					passOrFail[0] = "Pass";
-					currentDevice.m_inspectionElements.get(0).setTestResult(Result.PASS);
-					currentDevice.m_inspectionElements.get(0).setComplete(true);
+					EquipmentControl.getInstance().getInspectionElement(0).setTestResult(Result.PASS);
+					EquipmentControl.getInstance().getInspectionElement(0).setComplete(true);
 				}
 			});
 	        
@@ -109,8 +112,8 @@ private Device currentDevice;
 					button2.setBackgroundResource(R.drawable.fail_box);
 					button1.setBackgroundResource(android.R.drawable.btn_default);
 					passOrFail[0] = "Fail";
-					currentDevice.m_inspectionElements.get(0).setTestResult(Result.FAIL);
-					currentDevice.m_inspectionElements.get(0).setComplete(false);
+					EquipmentControl.getInstance().getInspectionElement(0).setTestResult(Result.FAIL);
+					EquipmentControl.getInstance().getInspectionElement(0).setComplete(false);
 				}
 			});
 	        
@@ -120,8 +123,10 @@ private Device currentDevice;
 					button3.setBackgroundResource(R.drawable.check_box);
 					button4.setBackgroundResource(android.R.drawable.btn_default);
 					passOrFail[1] = "Pass";
-					currentDevice.m_inspectionElements.get(1).setTestResult(Result.PASS);
-					currentDevice.m_inspectionElements.get(1).setComplete(true);
+					EquipmentControl.getInstance().getInspectionElement(1).setTestResult(Result.PASS);
+					EquipmentControl.getInstance().getInspectionElement(1).setComplete(true);
+					
+					
 				}
 			});
 	        
@@ -131,8 +136,8 @@ private Device currentDevice;
 					button4.setBackgroundResource(R.drawable.fail_box);
 					button3.setBackgroundResource(android.R.drawable.btn_default);
 					passOrFail[1] = "Fail";
-					currentDevice.m_inspectionElements.get(1).setTestResult(Result.FAIL);
-					currentDevice.m_inspectionElements.get(1).setComplete(false);
+					EquipmentControl.getInstance().getInspectionElement(1).setTestResult(Result.FAIL);
+					EquipmentControl.getInstance().getInspectionElement(1).setComplete(false);
 				}
 			});
 	        
@@ -142,8 +147,8 @@ private Device currentDevice;
 					button5.setBackgroundResource(R.drawable.check_box);
 					button6.setBackgroundResource(android.R.drawable.btn_default);
 					passOrFail[2] = "Pass";
-					currentDevice.m_inspectionElements.get(2).setTestResult(Result.PASS);
-					currentDevice.m_inspectionElements.get(2).setComplete(true);
+					EquipmentControl.getInstance().getInspectionElement(2).setTestResult(Result.PASS);
+					EquipmentControl.getInstance().getInspectionElement(2).setComplete(true);
 				}
 			});
 	        
@@ -153,8 +158,8 @@ private Device currentDevice;
 					button6.setBackgroundResource(R.drawable.fail_box);
 					button5.setBackgroundResource(android.R.drawable.btn_default);
 					passOrFail[2] = "Fail";
-					currentDevice.m_inspectionElements.get(2).setTestResult(Result.FAIL);
-					currentDevice.m_inspectionElements.get(2).setComplete(false);
+					EquipmentControl.getInstance().getInspectionElement(2).setTestResult(Result.FAIL);
+					EquipmentControl.getInstance().getInspectionElement(2).setComplete(false);
 				}
 			});
 	        
@@ -164,8 +169,10 @@ private Device currentDevice;
 					button7.setBackgroundResource(R.drawable.check_box);
 					button8.setBackgroundResource(android.R.drawable.btn_default);
 					passOrFail[3] = "Pass";
-					currentDevice.m_inspectionElements.get(3).setTestResult(Result.PASS);
-					currentDevice.m_inspectionElements.get(3).setComplete(true);
+					EquipmentControl.getInstance().getInspectionElement(3).setTestResult(Result.PASS);
+					EquipmentControl.getInstance().getInspectionElement(3).setComplete(true);
+					
+					
 				}
 			});
 	        
@@ -175,8 +182,8 @@ private Device currentDevice;
 					button8.setBackgroundResource(R.drawable.fail_box);
 					button7.setBackgroundResource(android.R.drawable.btn_default);
 					passOrFail[3] = "Fail";
-					currentDevice.m_inspectionElements.get(3).setTestResult(Result.FAIL);
-					currentDevice.m_inspectionElements.get(3).setComplete(false);
+					EquipmentControl.getInstance().getInspectionElement(3).setTestResult(Result.FAIL);
+					EquipmentControl.getInstance().getInspectionElement(3).setComplete(false);
 				}
 			});
 	        
@@ -186,8 +193,9 @@ private Device currentDevice;
 					button9.setBackgroundResource(R.drawable.check_box);
 					button10.setBackgroundResource(android.R.drawable.btn_default);
 					passOrFail[4] = "Pass";
-					currentDevice.m_inspectionElements.get(4).setTestResult(Result.PASS);
-					currentDevice.m_inspectionElements.get(4).setComplete(true);
+					EquipmentControl.getInstance().getInspectionElement(4).setTestResult(Result.PASS);
+					EquipmentControl.getInstance().getInspectionElement(4).setComplete(true);
+					
 				}
 			});
 	        
@@ -197,8 +205,8 @@ private Device currentDevice;
 					button10.setBackgroundResource(R.drawable.fail_box);
 					button9.setBackgroundResource(android.R.drawable.btn_default);
 					passOrFail[4] = "Fail";
-					currentDevice.m_inspectionElements.get(4).setTestResult(Result.FAIL);
-					currentDevice.m_inspectionElements.get(4).setComplete(false);
+					EquipmentControl.getInstance().getInspectionElement(4).setTestResult(Result.FAIL);
+					EquipmentControl.getInstance().getInspectionElement(4).setComplete(false);
 				}
 			});
 	        
@@ -208,9 +216,11 @@ private Device currentDevice;
 					button11.setBackgroundResource(R.drawable.check_box);
 					button12.setBackgroundResource(android.R.drawable.btn_default);
 					passOrFail[5] = "Pass";
-					currentDevice.m_inspectionElements.get(5).setTestResult(Result.PASS);
-					currentDevice.m_inspectionElements.get(5).setComplete(true);
+					EquipmentControl.getInstance().getInspectionElement(5).setTestResult(Result.PASS);
+					EquipmentControl.getInstance().getInspectionElement(5).setComplete(true);
 				}
+				
+				
 			});
 	        
 	        button12.setOnClickListener(new View.OnClickListener() {	
@@ -219,8 +229,8 @@ private Device currentDevice;
 					button12.setBackgroundResource(R.drawable.fail_box);
 					button11.setBackgroundResource(android.R.drawable.btn_default);
 					passOrFail[5] = "Fail";
-					currentDevice.m_inspectionElements.get(5).setTestResult(Result.FAIL);
-					currentDevice.m_inspectionElements.get(5).setComplete(false);
+					EquipmentControl.getInstance().getInspectionElement(5).setTestResult(Result.FAIL);
+					EquipmentControl.getInstance().getInspectionElement(5).setComplete(false);
 				}
 			});
 	        
@@ -230,8 +240,10 @@ private Device currentDevice;
 					button13.setBackgroundResource(R.drawable.check_box);
 					button14.setBackgroundResource(android.R.drawable.btn_default);
 					passOrFail[6] = "Pass";
-					currentDevice.m_inspectionElements.get(6).setTestResult(Result.PASS);
-					currentDevice.m_inspectionElements.get(6).setComplete(true);
+					EquipmentControl.getInstance().getInspectionElement(6).setTestResult(Result.PASS);
+					EquipmentControl.getInstance().getInspectionElement(6).setComplete(true);
+					
+					
 				}
 			});
 	        
@@ -241,8 +253,8 @@ private Device currentDevice;
 					button14.setBackgroundResource(R.drawable.fail_box);
 					button13.setBackgroundResource(android.R.drawable.btn_default);
 					passOrFail[6] = "Fail";
-					currentDevice.m_inspectionElements.get(6).setTestResult(Result.FAIL);
-					currentDevice.m_inspectionElements.get(6).setComplete(false);
+					EquipmentControl.getInstance().getInspectionElement(6).setTestResult(Result.FAIL);
+					EquipmentControl.getInstance().getInspectionElement(6).setComplete(false);
 				}
 			});
 	        
@@ -252,8 +264,10 @@ private Device currentDevice;
 					button15.setBackgroundResource(R.drawable.check_box);
 					button16.setBackgroundResource(android.R.drawable.btn_default);
 					passOrFail[7] = "Pass";
-					currentDevice.m_inspectionElements.get(7).setTestResult(Result.PASS);
-					currentDevice.m_inspectionElements.get(7).setComplete(true);
+					EquipmentControl.getInstance().getInspectionElement(7).setTestResult(Result.PASS);
+					EquipmentControl.getInstance().getInspectionElement(7).setComplete(true);
+					
+					
 				}
 			});
 	        
@@ -263,8 +277,8 @@ private Device currentDevice;
 					button16.setBackgroundResource(R.drawable.fail_box);
 					button15.setBackgroundResource(android.R.drawable.btn_default);
 					passOrFail[7] = "Fail";
-					currentDevice.m_inspectionElements.get(7).setTestResult(Result.FAIL);
-					currentDevice.m_inspectionElements.get(7).setComplete(false);
+					EquipmentControl.getInstance().getInspectionElement(7).setTestResult(Result.FAIL);
+					EquipmentControl.getInstance().getInspectionElement(7).setComplete(false);
 				}
 			});
 	        
@@ -274,8 +288,9 @@ private Device currentDevice;
 					button17.setBackgroundResource(R.drawable.check_box);
 					button18.setBackgroundResource(android.R.drawable.btn_default);
 					passOrFail[8] = "Pass";
-					currentDevice.m_inspectionElements.get(8).setTestResult(Result.PASS);
-					currentDevice.m_inspectionElements.get(8).setComplete(true);
+					EquipmentControl.getInstance().getInspectionElement(8).setTestResult(Result.PASS);
+					EquipmentControl.getInstance().getInspectionElement(8).setComplete(true);
+					
 				}
 			});
 	        
@@ -285,8 +300,8 @@ private Device currentDevice;
 					button18.setBackgroundResource(R.drawable.fail_box);
 					button17.setBackgroundResource(android.R.drawable.btn_default);
 					passOrFail[8] = "Fail";
-					currentDevice.m_inspectionElements.get(8).setTestResult(Result.FAIL);
-					currentDevice.m_inspectionElements.get(8).setComplete(false);
+					EquipmentControl.getInstance().getInspectionElement(8).setTestResult(Result.FAIL);
+					EquipmentControl.getInstance().getInspectionElement(8).setComplete(false);
 				}
 			});
 	        
@@ -294,7 +309,7 @@ private Device currentDevice;
 				@Override
 				public void onClick(View v) {
 					writeText();
-					if (currentDevice.isComplete()) {
+					if (EquipmentControl.getInstance().getDevice().isComplete()) {
 						finish();
 						overridePendingTransition(R.anim.slide_out_right, R.anim.slide_in_right);
 					}
@@ -306,15 +321,15 @@ private Device currentDevice;
 	}
 
 	public void writeText(){
-		currentDevice.m_inspectionElements.get(0).setTestNote(notes1.getText().toString().trim());
-		currentDevice.m_inspectionElements.get(1).setTestNote(notes2.getText().toString().trim());
-		currentDevice.m_inspectionElements.get(2).setTestNote(notes3.getText().toString().trim());
-		currentDevice.m_inspectionElements.get(3).setTestNote(notes4.getText().toString().trim());
-		currentDevice.m_inspectionElements.get(4).setTestNote(notes5.getText().toString().trim());
-		currentDevice.m_inspectionElements.get(5).setTestNote(notes6.getText().toString().trim());
-		currentDevice.m_inspectionElements.get(6).setTestNote(notes7.getText().toString().trim());
-		currentDevice.m_inspectionElements.get(7).setTestNote(notes8.getText().toString().trim());
-		currentDevice.m_inspectionElements.get(8).setTestNote(notes9.getText().toString().trim());
+		EquipmentControl.getInstance().getInspectionElement(0).setTestNote(notes1.getText().toString().trim());
+		EquipmentControl.getInstance().getInspectionElement(1).setTestNote(notes2.getText().toString().trim());
+		EquipmentControl.getInstance().getInspectionElement(2).setTestNote(notes3.getText().toString().trim());
+		EquipmentControl.getInstance().getInspectionElement(3).setTestNote(notes4.getText().toString().trim());
+		EquipmentControl.getInstance().getInspectionElement(4).setTestNote(notes5.getText().toString().trim());
+		EquipmentControl.getInstance().getInspectionElement(5).setTestNote(notes6.getText().toString().trim());
+		EquipmentControl.getInstance().getInspectionElement(6).setTestNote(notes7.getText().toString().trim());
+		EquipmentControl.getInstance().getInspectionElement(7).setTestNote(notes8.getText().toString().trim());
+		EquipmentControl.getInstance().getInspectionElement(8).setTestNote(notes9.getText().toString().trim());
 	}
 
 	public boolean onCreateOptionsMenu(Menu menu) {

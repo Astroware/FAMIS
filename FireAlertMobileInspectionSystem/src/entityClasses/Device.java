@@ -1,9 +1,9 @@
 package entityClasses;
 
-import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Device implements Serializable{
+public abstract class Device {
 	private int m_id;
 	private DeviceType m_deviceType;
 	private String m_location;
@@ -11,7 +11,7 @@ public abstract class Device implements Serializable{
 	
 	public List<InspectionElement> m_inspectionElements;
 	
-	public enum DeviceType implements Serializable{
+	public enum DeviceType {
 		EXTINGUISHER, FIRE_HOSE_CABINET, EMERGENCY_LIGHT
 	}
 	
@@ -20,6 +20,8 @@ public abstract class Device implements Serializable{
 		m_deviceType = deviceType;
 		m_location = location;
 		m_complete = false;
+		
+		m_inspectionElements = new ArrayList<InspectionElement>();
 	}
 	
 	public Boolean isComplete() {
