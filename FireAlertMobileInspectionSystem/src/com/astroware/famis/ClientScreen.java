@@ -54,7 +54,8 @@ public class ClientScreen extends Activity {
 				back.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					startActivity(new Intent (ClientScreen.this, LoginScreen.class));	
+					finish();
+					overridePendingTransition(R.anim.slide_out_right, R.anim.slide_in_right);
 				}
 			});
 				

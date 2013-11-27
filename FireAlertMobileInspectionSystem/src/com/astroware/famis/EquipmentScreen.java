@@ -23,17 +23,15 @@ public class EquipmentScreen extends Activity {
 
 	private TextView floornum;
 	private int currentfloor=1;
-
+	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_equipment_screen);
-        floornum = (TextView)findViewById(R.id.equipmenttitle);
-		floornum.setText("Floor "+currentfloor);
         //Create a new editable text field that will allow the user to enter a device id in manually
         final EditText enterManual = (EditText)findViewById(R.id.entermanually);
         //Create a button that will allow the user to submit a manually entered device id
         Button searchManual =(Button)findViewById(R.id.buttonentermanally);
-        
+        Button back = (Button)findViewById(R.id.buttonbacktolocation);
         //Create a button that will allow the user to submit the inspection
         Button submitInspection =(Button)findViewById(R.id.inspectiondone);
         
@@ -79,6 +77,14 @@ public class EquipmentScreen extends Activity {
 				}
 			}
 		});
+		back.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				finish();
+			    overridePendingTransition(R.anim.slide_out_right, R.anim.slide_in_right);
+			}
+		});
 	}
         
 	protected void onStart() {
@@ -116,7 +122,8 @@ public class EquipmentScreen extends Activity {
 	//Rhys - can you comment each block in this section?
 	//The spacing also needs to be fixed for this activity
 	public void createTables() {
-
+        floornum = (TextView)findViewById(R.id.equipmenttitle);
+		floornum.setText(EquipmentControl.getInstance().getFloor().getName());
 		for (int i=0; i<EquipmentControl.getInstance().getRoomListSize();i++) {
 			EquipmentControl.getInstance().setRoom(i);
 			//make layout of the table

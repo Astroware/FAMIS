@@ -19,10 +19,19 @@ public class LoginScreen extends Activity {
 	        
 	        //Creating submit button
 	        Button btn = (Button)findViewById(R.id.btnsubmit);
-	        
+	        Button back = (Button)findViewById(R.id.button1);
 	        //Creating username and password textfields
 	        final EditText usernameBox = (EditText) findViewById(R.id.editTextusername);
 	     	final EditText passwordBox = (EditText) findViewById(R.id.editTextpassword);
+			back.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					// TODO Auto-generated method stub
+					finish();
+					System.exit(0);
+				}
+			});
+			
 	     	
 	     	//Create an on click listener for when user has filled in the text fields and wants to submit
 	        btn.setOnClickListener(new View.OnClickListener() {
@@ -67,7 +76,7 @@ public class LoginScreen extends Activity {
 	        
 	    }
 
-
+	 	
 	    @Override
 	    public boolean onCreateOptionsMenu(Menu menu) {
 	        // Inflate the menu; this adds items to the action bar if it is present.

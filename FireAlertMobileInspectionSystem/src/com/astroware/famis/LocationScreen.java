@@ -42,7 +42,8 @@ public class LocationScreen extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				startActivity(new Intent(LocationScreen.this, ClientScreen.class));
+				finish();
+			    overridePendingTransition(R.anim.slide_out_right, R.anim.slide_in_right);
 			}
 		});
 		
