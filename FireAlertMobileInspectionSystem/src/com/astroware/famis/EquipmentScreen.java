@@ -54,29 +54,15 @@ public class EquipmentScreen extends Activity {
         searchManual.setOnClickListener(new View.OnClickListener() {	
 			@Override
 			public void onClick(View v) {
-				if (!(enterManual.getText().toString().equals("Manually Enter ID"))) {
+				if (!((enterManual.getText().toString().equals("Manually Enter ID")) || (enterManual.getText().toString().trim().isEmpty()))) {
 					
-					//TODO: write a function to get the text from enterManual and 
-					//search for that bar code ID in the floor (or the entire building?)
-					//and then call that function here (have the function return a boolean
-					//and make the call inside of an if statement)
-					//!!! The function will also need to be called from the onReceive function
-					//in the Scanner class
+					if (EquipmentControl.getInstance().checkDevice(enterManual.getText().toString())) {
+						openDeviceForm();
+					}
 					
-					//Make an intent to move to a new activity based on the device entered
-					//TODO: Move this code into a function so that it can be called from here and
-					//from the Scanner class (onReceive function)
-					
-					//TODO: The floor and room sets here are hard coded and should not be
-					//TODO: The index passed is also hard coded and should not be
-					EquipmentControl.getInstance().setFloor(0);
-					EquipmentControl.getInstance().setRoom(0);
-					
-					Intent in = new Intent(EquipmentScreen.this, ExtinguisherForm.class);
-					in.putExtra("selectedDevice", 0);
-					startActivity(in);
-					overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
-					
+					else {
+						Toast.makeText(getApplicationContext(), ("Device Not Found!"), Toast.LENGTH_SHORT).show();
+					}
 				}
 			}
 		});
@@ -146,9 +132,14 @@ public class EquipmentScreen extends Activity {
 				Bundle bundle = new Bundle();
 				bundle  = intent.getExtras();
 				content = bundle.getString("CONTENT");
-				Intent in= new Intent(EquipmentScreen.this, ExtinguisherForm.class);
-				in.putExtra("message", "This Is Being Sent");
-				startActivity(in);
+				
+				if (EquipmentControl.getInstance().checkDevice(content)) {
+					openDeviceForm();
+				}
+				
+				else {
+					Toast.makeText(getApplicationContext(), ("Device Not Found!"), Toast.LENGTH_SHORT).show();
+				}
 			}
 		}
 	}
@@ -246,19 +237,22 @@ public class EquipmentScreen extends Activity {
 		}
 	}
 	
-
-	
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.login_screen, menu);
         return true;
     }
     
-    
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         overridePendingTransition(R.anim.slide_out_right, R.anim.slide_in_right);
+    }
+    
+    public void openDeviceForm() {
+    	Intent in = new Intent(EquipmentScreen.this, ExtinguisherForm.class);
+		startActivity(in);
+		overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
     }
  
 }
