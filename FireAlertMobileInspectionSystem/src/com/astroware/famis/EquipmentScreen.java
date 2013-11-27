@@ -17,16 +17,19 @@ import android.widget.EditText;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.TableRow.LayoutParams;
 
 public class EquipmentScreen extends Activity {
 
 	private TextView floornum;
 	private int currentfloor=1;
+	TableLayout MainLayout;
 	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_equipment_screen);
+		MainLayout = (TableLayout)findViewById(R.id.make_rooms_here);
         //Create a new editable text field that will allow the user to enter a device id in manually
         final EditText enterManual = (EditText)findViewById(R.id.entermanually);
         //Create a button that will allow the user to submit a manually entered device id
@@ -85,6 +88,37 @@ public class EquipmentScreen extends Activity {
 			    overridePendingTransition(R.anim.slide_out_right, R.anim.slide_in_right);
 			}
 		});
+		findViewById(R.id.make_rooms_here).setOnTouchListener(new SwipeControl() {
+		    public void onSwipeLeft() {
+		    	if (currentfloor==EquipmentControl.getInstance().getFloorListSize())
+		    	{
+		    		EquipmentControl.getInstance().setFloor(0);
+		    		currentfloor =1;
+		    	}
+		    	else
+		    		
+		    	{
+		    		currentfloor+=1;
+		    		EquipmentControl.getInstance().setFloor(currentfloor-1);
+		    	}
+		    	Toast.makeText(getBaseContext(), "Right", Toast.LENGTH_SHORT).show();
+		        createTables();
+		    }
+		    public void onSwipeRight() {
+		    	if (currentfloor==1)
+		    	{
+		    		currentfloor =EquipmentControl.getInstance().getFloorListSize();
+		    		EquipmentControl.getInstance().setFloor(currentfloor-1);
+		    	}
+		    	else
+		    	{
+		    		currentfloor-=1;
+		    		EquipmentControl.getInstance().setFloor(currentfloor-1);
+		    	}
+		    	Toast.makeText(getBaseContext(), "Left", Toast.LENGTH_SHORT).show();
+		        createTables();
+		    }
+		});
 	}
         
 	protected void onStart() {
@@ -92,7 +126,7 @@ public class EquipmentScreen extends Activity {
 		//should this scanner be here? What about the one in onCreate()?
 		Scanner scanner = new Scanner();
 		//TODO: This needs to be changed so that it is not hard coded
-		EquipmentControl.getInstance().setFloor(0);
+		EquipmentControl.getInstance().setFloor(currentfloor-1);
 		
         createTables();	
 	}
@@ -122,20 +156,26 @@ public class EquipmentScreen extends Activity {
 	//Rhys - can you comment each block in this section?
 	//The spacing also needs to be fixed for this activity
 	public void createTables() {
+		
         floornum = (TextView)findViewById(R.id.equipmenttitle);
 		floornum.setText(EquipmentControl.getInstance().getFloor().getName());
-		for (int i=0; i<EquipmentControl.getInstance().getRoomListSize();i++) {
+		
+		//empty what was previously within this layout
+		if (MainLayout != null) {
+			MainLayout.removeAllViewsInLayout();
+			MainLayout.invalidate();
+		}
+		
+		//make layout of the table
+		 for (int i=0; i<EquipmentControl.getInstance().getRoomListSize();i++) {
 			EquipmentControl.getInstance().setRoom(i);
-			//make layout of the table
-			TableLayout MainLayout = (TableLayout)findViewById(R.id.make_rooms_here);
-			//empty what was previously within this layout
-		 	MainLayout.removeAllViewsInLayout();
+			
 		 	//set how things in the new layout should appear (Parameters) and add margins
-		 	LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT);
+		 	LayoutParams lp = new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.MATCH_PARENT, 1f);
+		 	LayoutParams lprow =  new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT, 1f);
 			LayoutParams buttonParams = new LayoutParams(DigitsToPixels.dpToPixel(50, getBaseContext()),DigitsToPixels.dpToPixel(50, getBaseContext()));
 			lp.rightMargin = DigitsToPixels.dpToPixel(5, getBaseContext());
 			lp.leftMargin =  DigitsToPixels.dpToPixel(5, getBaseContext());
-		 	
 			//Make the Title Row with the name of the room
 			TableRow titleRow= new TableRow(this);
 		 	titleRow.setGravity(android.view.Gravity.CENTER);
@@ -144,8 +184,8 @@ public class EquipmentScreen extends Activity {
 		 	title.setGravity(android.view.Gravity.CENTER);
 		 	title.setTextSize(25);
 		 	title.setTypeface(null, Typeface.BOLD_ITALIC);
-		 	titleRow.addView(title, lp);
-		 	MainLayout.addView(titleRow, lp);
+		 	titleRow.addView(title, lprow);
+		 	MainLayout.addView(titleRow, lprow);
 		 	
 		 	//Add the second row within the table including how what hte text should look like
 		 	TableRow subtitleRow = new TableRow(this);
@@ -166,17 +206,16 @@ public class EquipmentScreen extends Activity {
 		 	subtitlePassOrFail.setTypeface(null, Typeface.BOLD);
 		 	
 		 	//Add the second row to the table layout
-		 	subtitleRow.addView(subtitleName, lp);
-		 	subtitleRow.addView(subtitleLocation, lp);
-		 	subtitleRow.addView(subtitlePassOrFail, lp);
-		 	MainLayout.addView(subtitleRow, lp);
+		 	subtitleRow.addView(subtitleName, lprow);
+		 	subtitleRow.addView(subtitleLocation, lprow);
+		 	subtitleRow.addView(subtitlePassOrFail, lprow);
+		 	MainLayout.addView(subtitleRow, lprow);
 	        
 		 	//For loop adding all of the pieces of equipment into the table
 		 	for (int j=0; j<EquipmentControl.getInstance().getDeviceListSize(); j++) {
 		 		EquipmentControl.getInstance().setDevice(j);
 		 		
 		 		TableRow currentRow = new TableRow(this);
-	        	
 		 		TextView equipmentName = new TextView(this);
 	        	equipmentName.setGravity(android.view.Gravity.CENTER);
 	        	equipmentName.setText(EquipmentControl.getInstance().getDevice().toString());
@@ -199,11 +238,10 @@ public class EquipmentScreen extends Activity {
 	        	checkOrX.setTextSize(12);
 	        	checkOrX.setWidth(DigitsToPixels.dpToPixel(50, getBaseContext()));
 	        	checkOrX.setHeight(DigitsToPixels.dpToPixel(50, getBaseContext()));
-	        	currentRow.addView(equipmentName,lp);
-	        	currentRow.addView(location,lp);
-	        	currentRow.addView(checkOrX,buttonParams);
-			 	currentRow.setGravity(android.view.Gravity.CENTER);
-	        	MainLayout.addView(currentRow,lp);
+	        	currentRow.addView(equipmentName,lprow);
+	        	currentRow.addView(location,lprow);
+	        	currentRow.addView(checkOrX,lprow);
+	        	MainLayout.addView(currentRow,lprow);
 	        } 
 		}
 	}
