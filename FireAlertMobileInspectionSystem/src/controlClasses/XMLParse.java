@@ -1,11 +1,17 @@
 package controlClasses;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import org.w3c.dom.*;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
 
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException; 
@@ -22,6 +28,7 @@ import entityClasses.FireHoseCabinet;
 import entityClasses.Floor;
 import entityClasses.Franchisee;
 import entityClasses.InspectionElement;
+import entityClasses.Inspector;
 import entityClasses.Room;
 import entityClasses.ServiceAddress;
 
@@ -36,12 +43,18 @@ public class XMLParse{
 	private static Node tempCabNode;
 	private static Node tempLightNode;
 	
-	public static void setDoc(Document doc)
-	{
-		m_doc=doc;
+	private static final String inspectorFilePath = "/Inspectors.xml";
+	private static final String inspectionDataFilePath = "/InspectionData.xml";
+	
+	public static String getInspectorFilePath() {
+		return inspectorFilePath;
 	}
 	
-    public static boolean getDoc()
+	public static String getInspectionDataFilePath() {
+		return inspectionDataFilePath;
+	}
+	
+    public static boolean setDoc(String filePath)
     {
     	try
     	{
@@ -49,7 +62,7 @@ public class XMLParse{
 
 	    	DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
 	        DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
-	        Document doc = docBuilder.parse (new File(Environment.getExternalStorageDirectory(),"/InspectionData.xml"));
+	        Document doc = docBuilder.parse (new File(Environment.getExternalStorageDirectory(),filePath));
 	        doc.getDocumentElement().normalize();
 	        m_doc=doc;
 	        
@@ -79,8 +92,6 @@ public class XMLParse{
     	Franchisee franchisee = new Franchisee(0, null);
     	
     	//TODO: Inform the user that the XML file could not be found
-    	if(!getDoc())
-    		return franchisee;
     	
     	String id;	
     	String name;
@@ -435,4 +446,110 @@ public class XMLParse{
 		 	device.m_inspectionElements.add(new InspectionElement(name, device.getDeviceType(), testResult, testNote));
 		}
     }
+    
+    public static void getInspectors(ArrayList<Inspector> inspectors)
+	  {
+		  NodeList nList = m_doc.getElementsByTagName("Inspector");
+		  
+		  for (int i = 0; i < nList.getLength(); i++) {
+				Node nNode = nList.item(i);
+				if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+					Element eElement = (Element) nNode;
+					inspectors.add(new Inspector(getId(eElement),getName(eElement),getUsername(eElement),getPassword(eElement),getFranchiseeFlag(eElement)));
+				}
+			}
+	  }
+	  public static int getId(Element eElement)
+	  {
+		  NodeList nList = eElement.getElementsByTagName("ID");
+		  int ID = Integer.parseInt(nList.item(0).getFirstChild().getNodeValue());
+		  return ID;
+	  }
+	  public static String getName(Element eElement)
+	  {
+		  NodeList nList = eElement.getElementsByTagName("Name");
+		  String name = nList.item(0).getFirstChild().getNodeValue();
+		  return name;
+	  }
+	  public static String getUsername(Element eElement)
+	  {
+		  NodeList nList = eElement.getElementsByTagName("Username");
+		  String username = nList.item(0).getFirstChild().getNodeValue();
+		  return username;
+	  }
+	  public static String getPassword(Element eElement)
+	  {
+		  NodeList nList = eElement.getElementsByTagName("Password");
+		  String password = nList.item(0).getFirstChild().getNodeValue();
+		  return password;
+	  }
+	  public static Boolean getFranchiseeFlag(Element eElement)
+	  {
+		  NodeList nList = eElement.getElementsByTagName("FranchFlag");
+		  Boolean flag = Boolean.parseBoolean(nList.item(0).getFirstChild().getNodeValue());
+		  return flag;
+	  }
+	  public static void addInspector(Inspector ins)
+	  {  
+		  Element newInspector = m_doc.createElement("Inspector");
+			
+			NodeList root = m_doc.getElementsByTagName("InspectorList");
+			root.item(0).appendChild(newInspector);
+			
+			Element ID = m_doc.createElement("ID");
+			Text IDtext = m_doc.createTextNode(ins.getId()+"");
+			ID.appendChild(IDtext);
+			Element Name = m_doc.createElement("Name");
+			Text Nametext = m_doc.createTextNode(ins.getName());
+			Name.appendChild(Nametext);
+			Element Username = m_doc.createElement("Username");
+			Text Usernametext = m_doc.createTextNode(ins.getUsername());
+			Username.appendChild(Usernametext);
+			Element Password = m_doc.createElement("Password");
+			Text Passwordtext = m_doc.createTextNode(ins.getPassword());
+			Password.appendChild(Passwordtext);
+			Element Flag = m_doc.createElement("FranchFlag");
+			Text Flagtext = m_doc.createTextNode(ins.getFlag()+"");
+			Password.appendChild(Flagtext);
+			
+			newInspector.appendChild(ID);
+			newInspector.appendChild(Name);
+			newInspector.appendChild(Username);
+			newInspector.appendChild(Password);
+			newInspector.appendChild(Flag);
+			
+			updateDocument();
+			
+			return;
+	  }
+	  public static void removeInspector(Inspector ins)
+	  {
+		  NodeList nList = m_doc.getElementsByTagName("Inspector");
+		
+		  for (int i = 0; i < nList.getLength(); i++) {
+			  Node nNode = nList.item(i);
+			  if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+				  Element eElement = (Element) nNode;
+				  if(eElement.getFirstChild().getFirstChild().getNodeValue() == ins.getId()+"") {
+					  nNode.getParentNode().removeChild(nNode);
+				  }	
+			  }
+		  }
+		  XMLParse.updateDocument();
+		  return;
+	  }
+	  public static void updateDocument()
+	  {
+		  try{
+			 TransformerFactory transformerFactory = TransformerFactory.newInstance();
+			  Transformer transformer = transformerFactory.newTransformer();
+			  DOMSource source = new DOMSource(m_doc);
+			  StreamResult streamResult =  new StreamResult(new File(Environment.getDataDirectory(),"inspectors.xml"));
+			  
+				transformer.transform(source, streamResult);
+			} catch (TransformerException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	  }
 }
