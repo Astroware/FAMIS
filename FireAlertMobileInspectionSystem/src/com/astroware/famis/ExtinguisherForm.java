@@ -286,11 +286,11 @@ public class ExtinguisherForm extends Activity {
 		titlename2.setTypeface(null, Typeface.BOLD_ITALIC);
 		TextView pass = new TextView(this);
 	 	pass.setGravity(android.view.Gravity.CENTER);
-		pass.setText("Pass");
+		pass.setText("Yes");
 		pass.setTextSize(20);
 		pass.setTypeface(null, Typeface.BOLD_ITALIC);
 		TextView failtitle = new TextView(this);
-		failtitle.setText("Fail");
+		failtitle.setText("No");
 	 	failtitle.setGravity(android.view.Gravity.CENTER);
 		failtitle.setTextSize(20);
 		failtitle.setTypeface(null, Typeface.BOLD_ITALIC);
@@ -308,8 +308,8 @@ public class ExtinguisherForm extends Activity {
 		{
 			TableRow currentRow = new TableRow(this);
 			TextView name = new TextView(this);
-		    System.out.println("textview made:"+i);
-			name.setText(EquipmentControl.getInstance().getInspectionElement(i).getName());
+		    System.out.println("textview made:"+i+2);
+			name.setText(EquipmentControl.getInstance().getInspectionElement(i+2).getName());
 			check = new Button(this);
 			check.setWidth(DigitsToPixels.dpToPixel(50, getBaseContext()));
 			fail = new Button(this);
@@ -321,15 +321,15 @@ public class ExtinguisherForm extends Activity {
 			currentRow.addView(check, buttonParams);
 			currentRow.addView(fail, buttonParams);
 			System.out.println("three views added:"+i);
-			switch (EquipmentControl.getInstance().getInspectionElement(i).getTestResult())
+			switch (EquipmentControl.getInstance().getInspectionElement(i+2).getTestResult())
 			{
 			case PASS:
 				check.setBackgroundResource(R.drawable.check_box);
-				inspectionNote.setText(EquipmentControl.getInstance().getInspectionElement(i).getTestNote());
+				inspectionNote.setText(EquipmentControl.getInstance().getInspectionElement(i+2).getTestNote());
 				break;
 			case FAIL:
 				fail.setBackgroundResource(R.drawable.fail_box);
-				inspectionNote.setText(EquipmentControl.getInstance().getInspectionElement(i).getTestNote());
+				inspectionNote.setText(EquipmentControl.getInstance().getInspectionElement(i+2).getTestNote());
 				break;
 			default:
 				break;
@@ -351,7 +351,7 @@ public class ExtinguisherForm extends Activity {
 					column1.get(j).setWidth(DigitsToPixels.dpToPixel(50, getBaseContext()));
 					column2.get(j).setBackgroundResource(android.R.drawable.btn_default);
 					column2.get(j).setWidth(DigitsToPixels.dpToPixel(50, getBaseContext()));
-					EquipmentControl.getInstance().getInspectionElement(j).setTestResult(Result.PASS);
+					EquipmentControl.getInstance().getInspectionElement(j).setTestResult(Result.YES);
 					EquipmentControl.getInstance().getInspectionElement(j).setComplete(true);
 				}
 			});
@@ -364,8 +364,8 @@ public class ExtinguisherForm extends Activity {
 					column2.get(j).setWidth(DigitsToPixels.dpToPixel(50, getBaseContext()));
 					column1.get(j).setBackgroundResource(android.R.drawable.btn_default);
 					column1.get(j).setWidth(DigitsToPixels.dpToPixel(50, getBaseContext()));
-					EquipmentControl.getInstance().getInspectionElement(j).setTestResult(Result.FAIL);
-					EquipmentControl.getInstance().getInspectionElement(j).setComplete(false);
+					EquipmentControl.getInstance().getInspectionElement(j).setTestResult(Result.NO);
+					EquipmentControl.getInstance().getInspectionElement(j).setComplete(true);
 				}
 			});
 	        
