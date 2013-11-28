@@ -9,7 +9,7 @@
     <string name="title_activity_client_screen">ClientScreen</string>
     <string name="title_activity_location_screen">LocationScreen</string>
     <string name="title_activity_equipment_screen">EquipmentScreen</string>
-    <string name="title_activity_extinguisher_form">ExtinguisherForm</string>
+    <string name="title_activity_extinguisher_form">InspectionForm</string>
     
     <string name="customer_title">Current Clients</string>
     <string name="customer1">Fake Company Inc.</string>

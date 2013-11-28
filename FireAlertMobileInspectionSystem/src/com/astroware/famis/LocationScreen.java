@@ -73,9 +73,11 @@ public class LocationScreen extends Activity {
 		TableLayout tl = (TableLayout)findViewById(R.id.locationtable);
 		LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT,DigitsToPixels.dpToPixel(50, getBaseContext()));
 		tl.removeAllViews();
+		locationButtons.removeAll(locationButtons);
+		tl.invalidate();
 		for (int i=0; i<LocationControl.getInstance().getLocationListSize(); i++) {
-			if (LocationControl.getInstance().getLocation(i).getAddress().toLowerCase().startsWith(searchbar.getText().toString().toLowerCase().trim())){
-				locationButtons.add(new Button(this));
+			locationButtons.add(new Button(this));
+			if (LocationControl.getInstance().getLocation(i).getAddress().toLowerCase().startsWith(searchbar.getText().toString().toLowerCase().trim())){	
 				locationButtons.get(i).setText(LocationControl.getInstance().getLocation(i).getAddress());
 				locationButtons.get(i).setBackgroundResource(R.drawable.client_button);
 				locationButtons.get(i).setTextColor(Color.parseColor("white"));

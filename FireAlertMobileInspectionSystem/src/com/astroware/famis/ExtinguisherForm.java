@@ -13,13 +13,15 @@ import controlClasses.DigitsToPixels;
 import controlClasses.EquipmentControl;
 
 import entityClasses.Device;
+import entityClasses.Device.DeviceType;
+
+import entityClasses.InspectionElement.Result;
 
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.text.InputType;
-import android.text.method.KeyListener;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -50,12 +52,8 @@ public class ExtinguisherForm extends Activity {
 		column2= new ArrayList<Button>();
 		column3= new ArrayList<Button>();
 		Intent in = getIntent();
-        int deviceIndex = in.getIntExtra("selectedDevice", -1);
-	    if (deviceIndex != -1) {
-	    	EquipmentControl.getInstance().setDevice(deviceIndex);
-	    }
 	    
-	    createHoseCabinetTable();
+		selectTable();
 
 	    submit.setOnClickListener(new View.OnClickListener() {	
 			@Override
@@ -90,15 +88,29 @@ public class ExtinguisherForm extends Activity {
 			fail = new Button(this);
 			fail.setWidth(DigitsToPixels.dpToPixel(50, getBaseContext()));
 			EditText inspectionNote = new EditText(this);
-			
+			inspectionNote.setSingleLine(true);
 			System.out.println(name.getText());
+			switch (EquipmentControl.getInstance().getInspectionElement(i).getTestResult())
+			{
+			case PASS:
+				check.setBackgroundResource(R.drawable.check_box);
+				inspectionNote.setText(EquipmentControl.getInstance().getInspectionElement(i).getTestNote());
+				break;
+			case FAIL:
+				fail.setBackgroundResource(R.drawable.fail_box);
+				inspectionNote.setText(EquipmentControl.getInstance().getInspectionElement(i).getTestNote());
+				break;
+			default:
+				break;
+			}
 			currentRow.addView(name, lprow);
 			currentRow.addView(check, buttonParams);
 			currentRow.addView(fail, buttonParams);
 			System.out.println("three views added:"+i);
 			column1.add(check);
 			column2.add(fail);
-			notes.add(inspectionNote );
+			notes.add(inspectionNote);
+			inspectionNote.setTransformationMethod(null);
 			currentRow.addView(inspectionNote, new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT, 2f));
 			tl.addView(currentRow);
 			System.out.println("added current row:"+i);
@@ -108,6 +120,7 @@ public class ExtinguisherForm extends Activity {
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
+					column1.get(j).requestFocus();
 					column1.get(j).setBackgroundResource(R.drawable.check_box);
 					column1.get(j).setWidth(DigitsToPixels.dpToPixel(50, getBaseContext()));
 					column2.get(j).setBackgroundResource(android.R.drawable.btn_default);
@@ -120,6 +133,7 @@ public class ExtinguisherForm extends Activity {
 	        column2.get(i).setOnClickListener(new View.OnClickListener() {	
 				@Override
 				public void onClick(View v) {
+					column2.get(j).requestFocus();
 					column2.get(j).setBackgroundResource(R.drawable.fail_box);
 					column2.get(j).setWidth(DigitsToPixels.dpToPixel(50, getBaseContext()));
 					column1.get(j).setBackgroundResource(android.R.drawable.btn_default);
@@ -178,22 +192,40 @@ public class ExtinguisherForm extends Activity {
 		    System.out.println("textview made:"+i);
 			name.setText(EquipmentControl.getInstance().getInspectionElement(i).getName());
 			check = new Button(this);
-			check.setWidth(DigitsToPixels.dpToPixel(50, getBaseContext()));
+			check.setWidth(DigitsToPixels.dpToPixel(45, getBaseContext()));
 			fail = new Button(this);
-			fail.setWidth(DigitsToPixels.dpToPixel(50, getBaseContext()));
+			fail.setWidth(DigitsToPixels.dpToPixel(45, getBaseContext()));
 			na = new Button(this);
-			na.setWidth(DigitsToPixels.dpToPixel(50, getBaseContext()));
+			na.setWidth(DigitsToPixels.dpToPixel(45, getBaseContext()));
 			EditText inspectionNote = new EditText(this);
-			
+			inspectionNote.setSingleLine(true);
 			System.out.println(name.getText());
 			currentRow.addView(name, lprow);
 			currentRow.addView(check, buttonParams);
 			currentRow.addView(fail, buttonParams);
 			currentRow.addView(na, buttonParams);
+			switch (EquipmentControl.getInstance().getInspectionElement(i).getTestResult())
+			{
+			case GOOD:
+				check.setBackgroundResource(R.drawable.check_box);
+				inspectionNote.setText(EquipmentControl.getInstance().getInspectionElement(i).getTestNote());
+				break;
+			case POOR:
+				fail.setBackgroundResource(R.drawable.fail_box);
+				inspectionNote.setText(EquipmentControl.getInstance().getInspectionElement(i).getTestNote());
+				break;
+			case NA:
+				na.setBackgroundResource(R.drawable.fail_box);
+				inspectionNote.setText(EquipmentControl.getInstance().getInspectionElement(i).getTestNote());
+				break;
+			default:
+				break;
+			}
 			column1.add(check);
 			column2.add(fail);
 			column3.add(na);
 			notes.add(inspectionNote);
+			inspectionNote.setSingleLine(true);
 			currentRow.addView(inspectionNote, new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT, 2f));
 			tl.addView(currentRow);
 			System.out.println("added current row:"+i);
@@ -203,6 +235,7 @@ public class ExtinguisherForm extends Activity {
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
+					column1.get(j).requestFocus();
 					column1.get(j).setBackgroundResource(R.drawable.check_box);
 					column1.get(j).setWidth(DigitsToPixels.dpToPixel(50, getBaseContext()));
 					column2.get(j).setBackgroundResource(android.R.drawable.btn_default);
@@ -217,6 +250,7 @@ public class ExtinguisherForm extends Activity {
 	        column2.get(i).setOnClickListener(new View.OnClickListener() {	
 				@Override
 				public void onClick(View v) {
+					column2.get(j).requestFocus();
 					column2.get(j).setBackgroundResource(R.drawable.fail_box);
 					column2.get(j).setWidth(DigitsToPixels.dpToPixel(50, getBaseContext()));
 					column1.get(j).setBackgroundResource(android.R.drawable.btn_default);
@@ -231,6 +265,7 @@ public class ExtinguisherForm extends Activity {
 	        column3.get(i).setOnClickListener(new View.OnClickListener() {	
 				@Override
 				public void onClick(View v) {
+					column3.get(j).requestFocus();
 					column3.get(j).setBackgroundResource(R.drawable.fail_box);
 					column3.get(j).setWidth(DigitsToPixels.dpToPixel(50, getBaseContext()));
 					column2.get(j).setBackgroundResource(android.R.drawable.btn_default);
@@ -280,12 +315,25 @@ public class ExtinguisherForm extends Activity {
 			fail = new Button(this);
 			fail.setWidth(DigitsToPixels.dpToPixel(50, getBaseContext()));
 			EditText inspectionNote = new EditText(this);
-			
+			inspectionNote.setSingleLine(true);
 			System.out.println(name.getText());
 			currentRow.addView(name, lprow);
 			currentRow.addView(check, buttonParams);
 			currentRow.addView(fail, buttonParams);
 			System.out.println("three views added:"+i);
+			switch (EquipmentControl.getInstance().getInspectionElement(i).getTestResult())
+			{
+			case PASS:
+				check.setBackgroundResource(R.drawable.check_box);
+				inspectionNote.setText(EquipmentControl.getInstance().getInspectionElement(i).getTestNote());
+				break;
+			case FAIL:
+				fail.setBackgroundResource(R.drawable.fail_box);
+				inspectionNote.setText(EquipmentControl.getInstance().getInspectionElement(i).getTestNote());
+				break;
+			default:
+				break;
+			}
 			column1.add(check);
 			column2.add(fail);
 			notes.add(inspectionNote);
@@ -298,6 +346,7 @@ public class ExtinguisherForm extends Activity {
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
+					column1.get(j).requestFocus();
 					column1.get(j).setBackgroundResource(R.drawable.check_box);
 					column1.get(j).setWidth(DigitsToPixels.dpToPixel(50, getBaseContext()));
 					column2.get(j).setBackgroundResource(android.R.drawable.btn_default);
@@ -310,6 +359,7 @@ public class ExtinguisherForm extends Activity {
 	        column2.get(i+2).setOnClickListener(new View.OnClickListener() {	
 				@Override
 				public void onClick(View v) {
+					column2.get(j).requestFocus();
 					column2.get(j).setBackgroundResource(R.drawable.fail_box);
 					column2.get(j).setWidth(DigitsToPixels.dpToPixel(50, getBaseContext()));
 					column1.get(j).setBackgroundResource(android.R.drawable.btn_default);
@@ -325,36 +375,34 @@ public class ExtinguisherForm extends Activity {
 	private void createEmergencyLightTable() {
 		TableLayout tl = (TableLayout)findViewById(R.id.inspectionelementtable);
 		tl.removeAllViewsInLayout();
-
 		LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT);
 		LayoutParams lprow =  new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT, 1f);
-		LayoutParams buttonParams = new LayoutParams(DigitsToPixels.dpToPixel(50, getBaseContext()),DigitsToPixels.dpToPixel(50, getBaseContext()));TableRow titlerow = new TableRow(this);
-		
+		LayoutParams buttonParams = new LayoutParams(DigitsToPixels.dpToPixel(45, getBaseContext()),DigitsToPixels.dpToPixel(45, getBaseContext()));TableRow titlerow = new TableRow(this);
 		TableRow titleRow = new TableRow(this);
 		TextView titlename = new TextView(this);
 		titlename.setText("Test Name");
 	 	titlename.setGravity(android.view.Gravity.CENTER);
-		titlename.setTextSize(20);
+		titlename.setTextSize(15);
 		titlename.setTypeface(null, Typeface.BOLD_ITALIC);
 		TextView good = new TextView(this);
 	 	good.setGravity(android.view.Gravity.CENTER);
 		good.setText("Good");
-		good.setTextSize(20);
+		good.setTextSize(15);
 		good.setTypeface(null, Typeface.BOLD_ITALIC);
 		TextView poor = new TextView(this);
 		poor.setText("Poor");
 	 	poor.setGravity(android.view.Gravity.CENTER);
-		poor.setTextSize(20);
+		poor.setTextSize(15);
 		poor.setTypeface(null, Typeface.BOLD_ITALIC);
 		TextView titlena = new TextView(this);
 		titlena.setText("N/A");
 	 	titlena.setGravity(android.view.Gravity.CENTER);
-		titlena.setTextSize(20);
+		titlena.setTextSize(15);
 		titlena.setTypeface(null, Typeface.BOLD_ITALIC);
 		TextView titlenotes = new TextView(this);
 		titlenotes.setText("Notes");
 	 	titlenotes.setGravity(android.view.Gravity.CENTER);
-		titlenotes.setTextSize(20);
+		titlenotes.setTextSize(15);
 		titlenotes.setTypeface(null, Typeface.BOLD_ITALIC);
 		titleRow.addView(titlename, lprow);
 		titleRow.addView(good, lprow);
@@ -369,8 +417,8 @@ public class ExtinguisherForm extends Activity {
 		{
 			TableRow currentRow = new TableRow(this);
 			TextView name = new TextView(this);
-		    System.out.println("textview made:"+i);
 			name.setText(EquipmentControl.getInstance().getInspectionElement(i).getName());
+			name.setWidth(DigitsToPixels.dpToPixel(120, getBaseContext()));
 			check = new Button(this);
 			check.setWidth(DigitsToPixels.dpToPixel(50, getBaseContext()));
 			fail = new Button(this);
@@ -378,8 +426,24 @@ public class ExtinguisherForm extends Activity {
 			na = new Button(this);
 			na.setWidth(DigitsToPixels.dpToPixel(50, getBaseContext()));
 			EditText inspectionNote = new EditText(this);
-			
-			System.out.println(name.getText());
+			inspectionNote.setSingleLine(true);
+			switch (EquipmentControl.getInstance().getInspectionElement(i).getTestResult())
+			{
+			case GOOD:
+				check.setBackgroundResource(R.drawable.check_box);
+				inspectionNote.setText(EquipmentControl.getInstance().getInspectionElement(i).getTestNote());
+				break;
+			case POOR:
+				fail.setBackgroundResource(R.drawable.fail_box);
+				inspectionNote.setText(EquipmentControl.getInstance().getInspectionElement(i).getTestNote());
+				break;
+			case NA:
+				na.setBackgroundResource(R.drawable.fail_box);
+				inspectionNote.setText(EquipmentControl.getInstance().getInspectionElement(i).getTestNote());
+				break;
+			default:
+				break;
+			}
 			currentRow.addView(name, lprow);
 			currentRow.addView(check, buttonParams);
 			currentRow.addView(fail, buttonParams);
@@ -398,6 +462,7 @@ public class ExtinguisherForm extends Activity {
 				@Override
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
+					column1.get(j).requestFocus();
 					column1.get(j).setBackgroundResource(R.drawable.check_box);
 					column1.get(j).setWidth(DigitsToPixels.dpToPixel(50, getBaseContext()));
 					column2.get(j).setBackgroundResource(android.R.drawable.btn_default);
@@ -412,6 +477,7 @@ public class ExtinguisherForm extends Activity {
 	        column2.get(i).setOnClickListener(new View.OnClickListener() {	
 				@Override
 				public void onClick(View v) {
+					column2.get(j).requestFocus();
 					column2.get(j).setBackgroundResource(R.drawable.fail_box);
 					column2.get(j).setWidth(DigitsToPixels.dpToPixel(50, getBaseContext()));
 					column1.get(j).setBackgroundResource(android.R.drawable.btn_default);
@@ -426,6 +492,7 @@ public class ExtinguisherForm extends Activity {
 	        column3.get(i).setOnClickListener(new View.OnClickListener() {	
 				@Override
 				public void onClick(View v) {
+					column3.get(j).requestFocus();
 					column3.get(j).setBackgroundResource(R.drawable.fail_box);
 					column3.get(j).setWidth(DigitsToPixels.dpToPixel(50, getBaseContext()));
 					column2.get(j).setBackgroundResource(android.R.drawable.btn_default);
@@ -459,6 +526,24 @@ public class ExtinguisherForm extends Activity {
 	public void onBackPressed() {
 	    super.onBackPressed();
 	    overridePendingTransition(R.anim.slide_out_right, R.anim.slide_in_right);
+	}
+	
+	private void selectTable() {
+		switch (EquipmentControl.getInstance().getDevice().getDeviceType()) {
+		case EXTINGUISHER:
+			createExtinguisherTable();
+			break;
+		case FIRE_HOSE_CABINET:
+			createHoseCabinetTable();
+			break;
+		case EMERGENCY_LIGHT:
+			createEmergencyLightTable();
+			break;
+		default:
+			System.out.println("Invalid device type!");
+				
+			
+		}
 	}
 
 }

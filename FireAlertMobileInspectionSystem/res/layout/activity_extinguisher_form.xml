@@ -108,7 +108,7 @@
       android:layout_alignParentTop="true"
       android:layout_toRightOf="@+id/buttonback"
       android:gravity="center"
-      android:text="Extinguisher Form"
+      android:text="Inspection Form"
       android:textColor="@android:color/white"
       android:textStyle="bold" />
 

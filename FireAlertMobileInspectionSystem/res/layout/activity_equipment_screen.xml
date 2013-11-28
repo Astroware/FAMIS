@@ -90,9 +90,8 @@
         android:hint="Manually Enter ID"
         android:singleLine="true"
         android:textColorHint="@android:color/black"
-        android:textSize="12sp" >
-
-        <requestFocus />
+        android:textSize="12sp"
+        android:inputType="number" >
     </EditText>
 
     <Button

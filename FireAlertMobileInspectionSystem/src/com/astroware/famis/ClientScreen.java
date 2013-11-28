@@ -77,10 +77,12 @@ public class ClientScreen extends Activity {
 
 			TableLayout tl = (TableLayout)findViewById(R.id.customertable);
 			tl.removeAllViewsInLayout();
+			clientButtons.removeAll(clientButtons);
+			tl.invalidate();
 			LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, DigitsToPixels.dpToPixel(50, getBaseContext()));
 			for (int i=0; i<ClientControl.getInstance().getClientListSize(); i++) {
-				if (ClientControl.getInstance().getClient(i).getName().toLowerCase().startsWith(searchbar.getText().toString().toLowerCase().trim())){
-					clientButtons.add(new Button(this));
+				clientButtons.add(new Button(this));
+				if (ClientControl.getInstance().getClient(i).getName().toLowerCase().startsWith(searchbar.getText().toString().toLowerCase().trim())){	
 					clientButtons.get(i).setText(ClientControl.getInstance().getClient(i).getName());
 					clientButtons.get(i).setBackgroundResource(R.drawable.client_button);
 					clientButtons.get(i).setTextColor(Color.parseColor("white"));
