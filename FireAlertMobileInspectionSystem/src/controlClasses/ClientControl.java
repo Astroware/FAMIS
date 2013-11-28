@@ -30,6 +30,7 @@ public class ClientControl {
 	}
 	
 	public void parseXML() {
+		XMLParse.setDoc(XMLParse.getInspectionDataFilePath());
 		System.out.println("Before XML Parsing");
 		franchisee = XMLParse.parseFranchisee();
 		System.out.println("After XML Parsing");

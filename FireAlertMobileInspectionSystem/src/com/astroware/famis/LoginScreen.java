@@ -73,5 +73,4 @@ public class LoginScreen extends Activity {
         getMenuInflater().inflate(R.menu.login_screen, menu);
         return true;
     }
-	    
 }
