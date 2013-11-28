@@ -58,11 +58,9 @@ public class XMLParse{
     {
     	try
     	{
-    		//InputStream in = new FileInputStream(new File(Environment.getExternalStorageDirectory(),"InspectionData.xml"));
-
 	    	DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
 	        DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
-	        Document doc = docBuilder.parse (new File(Environment.getDataDirectory(),filePath));
+	        Document doc = docBuilder.parse (new File(Environment.getExternalStorageDirectory(),filePath));
 	        doc.getDocumentElement().normalize();
 	        m_doc=doc;
 	        
