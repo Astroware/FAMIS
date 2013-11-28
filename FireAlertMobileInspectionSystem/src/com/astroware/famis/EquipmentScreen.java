@@ -105,6 +105,19 @@ public class EquipmentScreen extends Activity {
 		        createTables();
 		    }
 		});
+		
+		submitInspection.setOnClickListener(new View.OnClickListener() {	
+			@Override
+			public void onClick(View v) {
+				if(EquipmentControl.getInstance().getLocation().isComplete()) {
+					Toast.makeText(getBaseContext(), "Submitting Inspection", Toast.LENGTH_SHORT).show();
+					finish();
+				}
+				else {
+					Toast.makeText(getBaseContext(), "Inspection not complete!", Toast.LENGTH_SHORT).show();
+				}
+			}
+		});
 	}
         
 	protected void onStart() {
