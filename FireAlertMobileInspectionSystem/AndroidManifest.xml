@@ -9,7 +9,7 @@
         android:targetSdkVersion="10" />
     
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
+    
     <application
         android:allowBackup="true"
         android:icon="@drawable/firealerticon"
@@ -28,17 +28,20 @@
         <activity
             android:name="com.astroware.famis.ClientScreen"
             android:label="@string/title_activity_client_screen"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait" 
+            android:windowSoftInputMode="adjustPan">
         </activity>
         <activity
             android:name="com.astroware.famis.LocationScreen"
             android:label="@string/title_activity_location_screen"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
             android:name="com.astroware.famis.EquipmentScreen"
             android:label="@string/title_activity_equipment_screen"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
             android:name="com.astroware.famis.ExtinguisherForm"

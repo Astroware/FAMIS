@@ -18,6 +18,16 @@ public class LoginScreen extends Activity {
         
         //Creating submit button
         Button btn = (Button)findViewById(R.id.btnsubmit);
+        Button back = (Button)findViewById(R.id.button1);
+		back.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				finish();
+				System.exit(0);
+			}
+		});
+		
         //Creating username and password textfields
         final EditText usernameBox = (EditText) findViewById(R.id.editTextusername);
      	final EditText passwordBox = (EditText) findViewById(R.id.editTextpassword);
