@@ -11,11 +11,16 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class LoginScreen extends Activity {
+    //Creating username and password textfields
+    EditText usernameBox;
+ 	EditText passwordBox;
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_screen);
-        
+   
+        usernameBox = (EditText) findViewById(R.id.editTextusername);
+        passwordBox = (EditText) findViewById(R.id.editTextpassword);
         //Creating submit button
         Button btn = (Button)findViewById(R.id.btnsubmit);
         Button back = (Button)findViewById(R.id.button1);
@@ -28,10 +33,6 @@ public class LoginScreen extends Activity {
 			}
 		});
 		
-        //Creating username and password textfields
-        final EditText usernameBox = (EditText) findViewById(R.id.editTextusername);
-     	final EditText passwordBox = (EditText) findViewById(R.id.editTextpassword);
-     	
      	//Click Listener that listen for the submit button
         btn.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -72,5 +73,11 @@ public class LoginScreen extends Activity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.login_screen, menu);
         return true;
+    }
+    @Override
+    protected void onRestart() {
+        super.onRestart();  // Always call the superclass method first
+        usernameBox.setText("");
+        passwordBox.setText("");        
     }
 }
