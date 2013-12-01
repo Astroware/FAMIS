@@ -42,6 +42,9 @@ public class ExtinguisherForm extends Activity {
 	List <Button> column1;
 	List <Button> column2;
 	List <Button> column3;
+	
+	TextView title;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -52,6 +55,10 @@ public class ExtinguisherForm extends Activity {
 		column2= new ArrayList<Button>();
 		column3= new ArrayList<Button>();
 		Intent in = getIntent();
+		
+		EquipmentControl.getInstance().getDevice().setIncomplete();
+		
+		title = (TextView)findViewById(R.id.formTitle);
 	    
 		selectTable();
 
@@ -71,6 +78,7 @@ public class ExtinguisherForm extends Activity {
 	}
 
 	private void createExtinguisherTable() {
+		title.setText("Extinguisher " + EquipmentControl.getInstance().getDevice().getId() + " Form");
 		TableLayout tl = (TableLayout)findViewById(R.id.inspectionelementtable);
 		LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT);
 		LayoutParams lprow =  new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT, 1f);
@@ -147,6 +155,7 @@ public class ExtinguisherForm extends Activity {
 	}
 
 	private void createHoseCabinetTable() {
+		title.setText("Fire Hose Cabinet " + EquipmentControl.getInstance().getDevice().getId() + " Form");
 		TableLayout tl = (TableLayout)findViewById(R.id.inspectionelementtable);
 		LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT);
 		tl.removeAllViewsInLayout();
@@ -323,11 +332,11 @@ public class ExtinguisherForm extends Activity {
 			System.out.println("three views added:"+i);
 			switch (EquipmentControl.getInstance().getInspectionElement(i+2).getTestResult())
 			{
-			case PASS:
+			case YES:
 				check.setBackgroundResource(R.drawable.check_box);
 				inspectionNote.setText(EquipmentControl.getInstance().getInspectionElement(i+2).getTestNote());
 				break;
-			case FAIL:
+			case NO:
 				fail.setBackgroundResource(R.drawable.fail_box);
 				inspectionNote.setText(EquipmentControl.getInstance().getInspectionElement(i+2).getTestNote());
 				break;
@@ -373,6 +382,7 @@ public class ExtinguisherForm extends Activity {
 	}
 	
 	private void createEmergencyLightTable() {
+		title.setText("Emergency Light " + EquipmentControl.getInstance().getDevice().getId() + " Form");
 		TableLayout tl = (TableLayout)findViewById(R.id.inspectionelementtable);
 		tl.removeAllViewsInLayout();
 		LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT);

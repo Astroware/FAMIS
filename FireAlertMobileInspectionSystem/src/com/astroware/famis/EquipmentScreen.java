@@ -56,12 +56,25 @@ public class EquipmentScreen extends Activity {
 			public void onClick(View v) {
 				if (!((enterManual.getText().toString().equals("Manually Enter ID")) || (enterManual.getText().toString().trim().isEmpty()))) {
 					
-					if (EquipmentControl.getInstance().checkDevice(enterManual.getText().toString())) {
-						openDeviceForm();
+					int barcode = 0;
+					boolean cont = true;
+					
+					try {
+						String num = enterManual.getText().toString();
+						barcode = Integer.parseInt(num.trim().replaceAll("\\s",""));
+					} catch (NumberFormatException e) {
+						Toast.makeText(getApplicationContext(), ("Number is too large!"), Toast.LENGTH_SHORT).show();
+						cont = false;
 					}
 					
-					else {
-						Toast.makeText(getApplicationContext(), ("Device Not Found!"), Toast.LENGTH_SHORT).show();
+					if (cont) {
+						if (EquipmentControl.getInstance().checkDevice(barcode)) {
+							openDeviceForm();
+						}
+						
+						else {
+							Toast.makeText(getApplicationContext(), ("Device Not Found!"), Toast.LENGTH_SHORT).show();
+						}
 					}
 				}
 			}
@@ -146,7 +159,7 @@ public class EquipmentScreen extends Activity {
 				bundle  = intent.getExtras();
 				content = bundle.getString("CONTENT");
 				
-				if (EquipmentControl.getInstance().checkDevice(content)) {
+				if (EquipmentControl.getInstance().checkDevice(Integer.parseInt(content))) {
 					openDeviceForm();
 				}
 				
