@@ -83,7 +83,7 @@ public class InspectionElement {
 			return Result.POOR;
 		}
 		
-		else if(result.equalsIgnoreCase("NA"))
+		else if(result.equalsIgnoreCase("N/A"))
 		{
 			return Result.NA;
 		}
@@ -99,6 +99,29 @@ public class InspectionElement {
 		}
 		else
 			return Result.EMPTY;
+	}
+	
+	public String getResultString() {
+		switch (m_testResult) {
+		case EMPTY:
+			return "";
+		case PASS:
+			return "Pass";
+		case FAIL:
+			return "Fail";
+		case GOOD:
+			return "Good";
+		case POOR:
+			return "Poor";
+		case NA:
+			return "N/A";
+		case YES:
+			return "Yes";
+		case NO:
+			return "No";
+		default:
+			return "";
+		}
 	}
 	
 	//---------------------------------gets---------------------------------------------
