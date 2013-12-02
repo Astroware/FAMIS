@@ -32,6 +32,7 @@ public class ServiceAddress {
 		m_testTimeStamp = null;
 		m_contractId = contractId;
 		m_contractNo = contractNo;
+		m_complete = false;
 		
 		m_floors = new ArrayList<Floor>();
 	}

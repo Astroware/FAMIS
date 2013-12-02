@@ -1,6 +1,12 @@
 package controlClasses;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
 
 import entityClasses.Inspector;
 
@@ -19,7 +25,7 @@ public class LoginControl {
 		return m_instance;
 	}
 	
-	public static void parseInspectors()
+	public static void parseInspectors() throws FileNotFoundException, SAXException, IOException, ParserConfigurationException
 	{
 		XMLParse.setDoc(XMLParse.getInspectorFilePath());
 		XMLParse.getInspectors(m_inspectors);

@@ -4,7 +4,6 @@
 package com.astroware.famis;
 
 import controlClasses.*;
-
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
@@ -13,6 +12,7 @@ import android.graphics.Typeface;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TableLayout;
@@ -58,12 +58,25 @@ public class EquipmentScreen extends Activity {
 			public void onClick(View v) {
 				if (!((enterManual.getText().toString().equals("Manually Enter ID")) || (enterManual.getText().toString().trim().isEmpty()))) {
 					
-					if (EquipmentControl.getInstance().checkDevice(enterManual.getText().toString())) {
-						openDeviceForm();
+					int barcode = 0;
+					boolean cont = true;
+					
+					try {
+						String num = enterManual.getText().toString();
+						barcode = Integer.parseInt(num.trim().replaceAll("\\s",""));
+					} catch (NumberFormatException e) {
+						Toast.makeText(getApplicationContext(), ("Number is too large!"), Toast.LENGTH_SHORT).show();
+						cont = false;
 					}
 					
-					else {
-						Toast.makeText(getApplicationContext(), ("Device Not Found!"), Toast.LENGTH_SHORT).show();
+					if (cont) {
+						if (EquipmentControl.getInstance().checkDevice(barcode)) {
+							openDeviceForm();
+						}
+						
+						else {
+							Toast.makeText(getApplicationContext(), ("Device Not Found!"), Toast.LENGTH_SHORT).show();
+						}
 					}
 				}
 			}
@@ -141,6 +154,19 @@ public class EquipmentScreen extends Activity {
 		        createTables();
 		    }
 		});
+		
+		submitInspection.setOnClickListener(new View.OnClickListener() {	
+			@Override
+			public void onClick(View v) {
+				if(EquipmentControl.getInstance().getLocation().isComplete()) {
+					Toast.makeText(getBaseContext(), "Submitting Inspection", Toast.LENGTH_SHORT).show();
+					finish();
+				}
+				else {
+					Toast.makeText(getBaseContext(), "Inspection not complete!", Toast.LENGTH_SHORT).show();
+				}
+			}
+		});
 	}
         
 	protected void onStart() {
@@ -169,7 +195,7 @@ public class EquipmentScreen extends Activity {
 				bundle  = intent.getExtras();
 				content = bundle.getString("CONTENT");
 				
-				if (EquipmentControl.getInstance().checkDevice(content)) {
+				if (EquipmentControl.getInstance().checkDevice(Integer.parseInt(content))) {
 					openDeviceForm();
 				}
 				
@@ -289,6 +315,13 @@ public class EquipmentScreen extends Activity {
     	Intent in = new Intent(EquipmentScreen.this, ExtinguisherForm.class);
 		startActivity(in);
 		overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
+    }
+    
+    public boolean onTouchEvent(MotionEvent event)
+    {
+    	InputMethodManager IMM = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+    	IMM.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+    	return true;
     }
  
 }

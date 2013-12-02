@@ -4,17 +4,18 @@ import java.util.ArrayList;
 
 import controlClasses.DigitsToPixels;
 import controlClasses.LocationControl;
-
 import entityClasses.*;
-
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TableLayout;
@@ -113,5 +114,12 @@ public class LocationScreen extends Activity {
 	    super.onBackPressed();
 	    overridePendingTransition(R.anim.slide_out_right, R.anim.slide_in_right);
 	}
+	
+	public boolean onTouchEvent(MotionEvent event)
+    {
+    	InputMethodManager IMM = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+    	IMM.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+    	return true;
+    }
 
 }

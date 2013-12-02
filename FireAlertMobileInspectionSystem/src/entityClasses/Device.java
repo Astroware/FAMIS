@@ -72,4 +72,8 @@ public abstract class Device {
 	public void setComplete() {
 		m_complete = true;
 	}
+	
+	public void setIncomplete() {
+		m_complete = false;
+	}
 }
