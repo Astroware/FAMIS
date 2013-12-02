@@ -50,7 +50,10 @@ public class LoginScreen extends Activity {
 					 Boolean contFlag = true;
 					 
 					 try {
-						LoginControl.parseInspectors();
+						 if(LoginControl.getInspectors().isEmpty())
+						 {
+							 LoginControl.parseInspectors();
+						 }
 					} catch (FileNotFoundException e) {
 						Toast.makeText(getApplicationContext(), "The user accounts file required to run this program is missing", Toast.LENGTH_SHORT).show();
 						contFlag = false;

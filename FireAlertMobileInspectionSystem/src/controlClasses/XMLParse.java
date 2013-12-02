@@ -431,10 +431,10 @@ public class XMLParse{
 				}
 			}
 	  }
-	  public static int getId(Element eElement)
+	  public static String getId(Element eElement)
 	  {
 		  NodeList nList = eElement.getElementsByTagName("ID");
-		  int ID = Integer.parseInt(nList.item(0).getFirstChild().getNodeValue());
+		  String ID = nList.item(0).getFirstChild().getNodeValue();
 		  return ID;
 	  }
 	  public static String getName(Element eElement)
@@ -497,14 +497,20 @@ public class XMLParse{
 	  public static void removeInspector(Inspector ins)
 	  {
 		  NodeList nList = m_doc.getElementsByTagName("Inspector");
+		  String id = ins.getId();
 		
 		  for (int i = 0; i < nList.getLength(); i++) {
 			  Node nNode = nList.item(i);
-			  if (nNode.getNodeType() == Node.ELEMENT_NODE) {
-				  Element eElement = (Element) nNode;
-				  if(eElement.getFirstChild().getFirstChild().getNodeValue() == ins.getId()+"") {
-					  nNode.getParentNode().removeChild(nNode);
-				  }	
+			  NodeList children = nNode.getChildNodes();
+			  for(int j = 0; j <children.getLength(); j++)
+			  {
+				  Node child = children.item(j);
+				  if(child.getNodeType() == Node.ELEMENT_NODE)
+				  {  
+					  if(child.getFirstChild().getNodeValue().equals(id)) {
+						  nNode.getParentNode().removeChild(nNode);
+					  }	
+				  }
 			  }
 		  }
 		  XMLParse.updateDocument();
@@ -516,7 +522,7 @@ public class XMLParse{
 			 TransformerFactory transformerFactory = TransformerFactory.newInstance();
 			  Transformer transformer = transformerFactory.newTransformer();
 			  DOMSource source = new DOMSource(m_doc);
-			  StreamResult streamResult =  new StreamResult(new File(Environment.getDataDirectory(),"inspectors.xml"));
+			  StreamResult streamResult =  new StreamResult(new File(Environment.getExternalStorageDirectory(),"Inspectors.xml"));
 			  
 				transformer.transform(source, streamResult);
 			} catch (TransformerException e) {
