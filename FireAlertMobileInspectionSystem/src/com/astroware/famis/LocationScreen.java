@@ -30,6 +30,7 @@ public class LocationScreen extends Activity {
 		searchbar = (EditText)findViewById(R.id.searchbar2);
 		Button back = (Button)findViewById(R.id.locationback);
 		Button search =(Button)findViewById(R.id.buttonsearch);
+		Button home = (Button)findViewById(R.id.locationhome);
 		//Receive the intent from the previous activity and retrieve the passed Client object
 		 Intent in =getIntent();
 		    int clientIndex = in.getIntExtra("selectedClient", -1);
@@ -54,7 +55,17 @@ public class LocationScreen extends Activity {
 				createButtons();
 			}
 		});
-	
+		
+		home.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(LocationScreen.this, ClientScreen.class);
+			    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			    startActivity(intent);
+				//finish();
+				//startActivity(new Intent (LocationScreen.this, ClientScreen.class));
+			}
+		});
 	}
 
 	//Currently a placeholder for the xml parse for client locations

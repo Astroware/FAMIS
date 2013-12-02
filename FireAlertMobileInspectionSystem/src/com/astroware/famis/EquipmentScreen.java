@@ -35,6 +35,19 @@ public class EquipmentScreen extends Activity {
         //Create a button that will allow the user to submit the inspection
         Button submitInspection =(Button)findViewById(R.id.inspectiondone);
         
+        Button home = (Button)findViewById(R.id.equipmenthome);
+        
+        home.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				//overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+				Intent intent = new Intent(EquipmentScreen.this, ClientScreen.class);
+			    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			    startActivity(intent);
+			    
+			}
+		});
+        
         //Receiving the intent and the passed index for the location of the selected ServiceAddress from the previous activity
         Intent in = getIntent();
         int locationIndex = in.getIntExtra("selectedLocation", -1);

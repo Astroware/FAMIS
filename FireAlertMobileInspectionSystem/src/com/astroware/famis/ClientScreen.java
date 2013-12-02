@@ -13,8 +13,10 @@ import android.graphics.Typeface;
 import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.Toast;
 
@@ -33,10 +35,22 @@ public class ClientScreen extends Activity {
 			//Create a button that allows the user to search through the list for a specified search requirement
 			Button search = (Button)findViewById(R.id.buttonsearch);
 			
+			//Button home = (Button)findViewById(R.id.clienthome);
+	        
+	        
+	        
+	        /*Spinner dropdown = (Spinner)findViewById(R.id.spinner1);
+	        String[] items = new String[]{"1","2","three"};
+	        ArrayAdapter<String>adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
+			dropdown.setAdapter(adapter);*/
+	        
 			searchbar= (EditText)findViewById(R.id.searchbar);
 			
 			//placeholder for the real button
-			Button temp = (Button)findViewById(R.id.buttonTemp);
+			
+			
+			Button temp2 = (Button)findViewById(R.id.newtemp);
+			
 			//Parse the XML document to get all the necessary information
 			ClientControl.getInstance().parseXML();
 			
@@ -53,10 +67,12 @@ public class ClientScreen extends Activity {
 				//tl.addView(client2, lp);
 			
 			//goesto account management screen when pressed
-			temp.setOnClickListener(new View.OnClickListener() {
+			
+			
+			temp2.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					startActivity(new Intent (ClientScreen.this, AccountManagementScreen.class));	
+					startActivity(new Intent (ClientScreen.this, AccountManagementScreenv3.class));	
 				}
 			});
 			
