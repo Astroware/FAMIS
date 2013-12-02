@@ -63,37 +63,37 @@ public class InspectionElement {
 			return Result.EMPTY;
 		}
 		
-		if(result.equalsIgnoreCase("PASS"))
+		else if(result.equalsIgnoreCase("PASS"))
 		{
 			return Result.PASS;
 		}
 		
-		if(result.equalsIgnoreCase("FAIL"))
+		else if(result.equalsIgnoreCase("FAIL"))
 		{
 			return Result.FAIL;
 		}
 		
-		if(result.equalsIgnoreCase("GOOD"))
+		else if(result.equalsIgnoreCase("GOOD"))
 		{
 			return Result.GOOD;
 		}
 		
-		if(result.equalsIgnoreCase("POOR"))
+		else if(result.equalsIgnoreCase("POOR"))
 		{
 			return Result.POOR;
 		}
 		
-		if(result.equalsIgnoreCase("NA"))
+		else if(result.equalsIgnoreCase("NA"))
 		{
 			return Result.NA;
 		}
 		
-		if(result.equalsIgnoreCase("YES"))
+		else if(result.equalsIgnoreCase("YES"))
 		{
 			return Result.YES;
 		}
 		
-		if(result.equalsIgnoreCase("NO"))
+		else if(result.equalsIgnoreCase("NO"))
 		{
 			return Result.NO;
 		}
