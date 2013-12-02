@@ -5,7 +5,9 @@
     android:layout_height="match_parent"
     android:background="@drawable/biggerbackground"
     android:orientation="vertical" 
-    tools:context=".Extinguisher_Form">
+    tools:context=".Extinguisher_Form"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
 
     <Button
         android:id="@+id/buttonback"
@@ -27,7 +29,9 @@
       android:layout_weight="1"
       android:scrollbars="none" 
       android:layout_marginLeft="10dp"
-	  android:layout_marginRight="10dp">
+	  android:layout_marginRight="10dp"
+	  android:focusable="true"
+      android:focusableInTouchMode="true">
 
    <TableLayout 
     	android:id="@+id/inspectionelementtable"

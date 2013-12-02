@@ -7,23 +7,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 import entityClasses.InspectionElement.Result;
+
 import com.astroware.famis.R;
 
 import controlClasses.DigitsToPixels;
 import controlClasses.EquipmentControl;
-
 import entityClasses.Device;
 import entityClasses.Device.DeviceType;
-
 import entityClasses.InspectionElement.Result;
-
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.text.InputType;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TableLayout;
@@ -554,6 +555,20 @@ public class ExtinguisherForm extends Activity {
 				
 			
 		}
+	}
+	
+	public boolean dispatchTouchEvent(MotionEvent event) {
+
+	    View v = getCurrentFocus();
+	    boolean ret = super.dispatchTouchEvent(event);
+
+	    if (v instanceof EditText) 
+	    {
+	    	v.clearFocus();
+	    	InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(getWindow().getCurrentFocus().getWindowToken(), 0);
+	    }
+	return ret;
 	}
 
 }

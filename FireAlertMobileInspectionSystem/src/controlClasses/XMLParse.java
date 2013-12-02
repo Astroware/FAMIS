@@ -60,7 +60,8 @@ public class XMLParse{
     	{
 	    	DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
 	        DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
-	        Document doc = docBuilder.parse (new File(Environment.getExternalStorageDirectory(),filePath));
+	        //Document doc = docBuilder.parse (new File(Environment.getExternalStorageDirectory(),filePath));
+	        Document doc = docBuilder.parse (new File(Environment.getDataDirectory(),filePath));
 	        doc.getDocumentElement().normalize();
 	        m_doc=doc;
 	        

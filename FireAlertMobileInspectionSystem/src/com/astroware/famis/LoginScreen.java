@@ -1,11 +1,18 @@
 package com.astroware.famis;
 
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+
 import controlClasses.LoginControl;
+import controlClasses.PasswordHash;
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -46,17 +53,29 @@ public class LoginScreen extends Activity {
 					 
 					 LoginControl.parseInspectors();
 					 if(!(LoginControl.checkLogin(username)))
-						 Toast.makeText(getApplicationContext(), "User Account Does Not Exist", Toast.LENGTH_SHORT).show();
-					 else if(password.equals(LoginControl.getCurrentInspector().getPassword()))
-					 {
-						 Toast.makeText(getApplicationContext(), ("Entering "+LoginControl.getCurrentInspector().getName()+"'s account"), Toast.LENGTH_SHORT).show();
-						 //Move into the next screen state (List of Clients) screen
-						 startActivity(new Intent (LoginScreen.this, ClientScreen.class));
-						 //Current screen will slide to the left
-						 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
-					 }
-					 else
-						 Toast.makeText(getApplicationContext(), "Incorrect Password", Toast.LENGTH_LONG).show();	
+						  Toast.makeText(getApplicationContext(), "User Account Does Not Exist", Toast.LENGTH_SHORT).show();
+					 String storedPassword = LoginControl.getCurrentInspector().getPassword();
+					 //Toast.makeText(getApplicationContext(), storedPassword, Toast.LENGTH_LONG).show();
+					 try {
+						 
+						if(PasswordHash.validatePassword(password, storedPassword) == true)
+						{
+							Toast.makeText(getApplicationContext(), ("Entering "+LoginControl.getCurrentInspector().getName()+"'s account"), Toast.LENGTH_SHORT).show();
+							//Move into the next screen state (List of Clients) screen
+							startActivity(new Intent (LoginScreen.this, ClientScreen.class));
+							//Current screen will slide to the left
+							overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
+						}
+						else
+							Toast.makeText(getApplicationContext(), "Incorrect Password", Toast.LENGTH_LONG).show();
+							
+					} catch (NoSuchAlgorithmException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (InvalidKeySpecException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}	
 					
 				 }
 				 else
@@ -79,5 +98,12 @@ public class LoginScreen extends Activity {
         super.onRestart();  // Always call the superclass method first
         usernameBox.setText("");
         passwordBox.setText("");        
+    }
+    
+    public boolean onTouchEvent(MotionEvent event)
+    {
+    	InputMethodManager IMM = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+    	IMM.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+    	return true;
     }
 }
