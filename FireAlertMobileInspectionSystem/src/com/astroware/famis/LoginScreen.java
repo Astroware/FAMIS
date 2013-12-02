@@ -50,7 +50,7 @@ public class LoginScreen extends Activity {
 					 {
 						 Toast.makeText(getApplicationContext(), ("Entering "+LoginControl.getCurrentInspector().getName()+"'s account"), Toast.LENGTH_SHORT).show();
 						 //Move into the next screen state (List of Clients) screen
-						 startActivity(new Intent (LoginScreen.this, ClientScreen.class));
+						 startActivity(new Intent (LoginScreen.this, AccountManagementScreenv3.class));
 						 //Current screen will slide to the left
 						 overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
 					 }

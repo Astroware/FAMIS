@@ -89,6 +89,7 @@ public class ExtinguisherForm extends Activity {
 			fail.setWidth(DigitsToPixels.dpToPixel(50, getBaseContext()));
 			EditText inspectionNote = new EditText(this);
 			inspectionNote.setSingleLine(true);
+			inspectionNote.setWidth(DigitsToPixels.dpToPixel(150, getBaseContext()));
 			System.out.println(name.getText());
 			switch (EquipmentControl.getInstance().getInspectionElement(i).getTestResult())
 			{
@@ -111,6 +112,7 @@ public class ExtinguisherForm extends Activity {
 			column2.add(fail);
 			notes.add(inspectionNote);
 			inspectionNote.setTransformationMethod(null);
+			inspectionNote.setWidth(DigitsToPixels.dpToPixel(150, getBaseContext()));
 			currentRow.addView(inspectionNote, new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT, 2f));
 			tl.addView(currentRow);
 			System.out.println("added current row:"+i);
@@ -175,7 +177,7 @@ public class ExtinguisherForm extends Activity {
 		titlena.setTextSize(15);
 		titlena.setTypeface(null, Typeface.BOLD_ITALIC);
 		TextView titlenotes = new TextView(this);
-		titlenotes.setText("Notes");
+		titlenotes.setText("Note");
 	 	titlenotes.setGravity(android.view.Gravity.CENTER);
 		titlenotes.setTextSize(15);
 		titlenotes.setTypeface(null, Typeface.BOLD_ITALIC);
@@ -199,6 +201,7 @@ public class ExtinguisherForm extends Activity {
 			na.setWidth(DigitsToPixels.dpToPixel(45, getBaseContext()));
 			EditText inspectionNote = new EditText(this);
 			inspectionNote.setSingleLine(true);
+			inspectionNote.setWidth(DigitsToPixels.dpToPixel(150, getBaseContext()));
 			System.out.println(name.getText());
 			currentRow.addView(name, lprow);
 			currentRow.addView(check, buttonParams);
@@ -215,7 +218,7 @@ public class ExtinguisherForm extends Activity {
 				inspectionNote.setText(EquipmentControl.getInstance().getInspectionElement(i).getTestNote());
 				break;
 			case NA:
-				na.setBackgroundResource(R.drawable.fail_box);
+				na.setBackgroundResource(R.drawable.na_box);
 				inspectionNote.setText(EquipmentControl.getInstance().getInspectionElement(i).getTestNote());
 				break;
 			default:
@@ -266,7 +269,7 @@ public class ExtinguisherForm extends Activity {
 				@Override
 				public void onClick(View v) {
 					column3.get(j).requestFocus();
-					column3.get(j).setBackgroundResource(R.drawable.fail_box);
+					column3.get(j).setBackgroundResource(R.drawable.na_box);
 					column3.get(j).setWidth(DigitsToPixels.dpToPixel(50, getBaseContext()));
 					column2.get(j).setBackgroundResource(android.R.drawable.btn_default);
 					column2.get(j).setWidth(DigitsToPixels.dpToPixel(50, getBaseContext()));
@@ -316,6 +319,7 @@ public class ExtinguisherForm extends Activity {
 			fail.setWidth(DigitsToPixels.dpToPixel(50, getBaseContext()));
 			EditText inspectionNote = new EditText(this);
 			inspectionNote.setSingleLine(true);
+			inspectionNote.setWidth(DigitsToPixels.dpToPixel(100, getBaseContext()));
 			System.out.println(name.getText());
 			currentRow.addView(name, lprow);
 			currentRow.addView(check, buttonParams);
@@ -400,7 +404,7 @@ public class ExtinguisherForm extends Activity {
 		titlena.setTextSize(15);
 		titlena.setTypeface(null, Typeface.BOLD_ITALIC);
 		TextView titlenotes = new TextView(this);
-		titlenotes.setText("Notes");
+		titlenotes.setText("Note");
 	 	titlenotes.setGravity(android.view.Gravity.CENTER);
 		titlenotes.setTextSize(15);
 		titlenotes.setTypeface(null, Typeface.BOLD_ITALIC);
@@ -427,6 +431,7 @@ public class ExtinguisherForm extends Activity {
 			na.setWidth(DigitsToPixels.dpToPixel(50, getBaseContext()));
 			EditText inspectionNote = new EditText(this);
 			inspectionNote.setSingleLine(true);
+			inspectionNote.setWidth(DigitsToPixels.dpToPixel(100, getBaseContext()));
 			switch (EquipmentControl.getInstance().getInspectionElement(i).getTestResult())
 			{
 			case GOOD:
@@ -438,7 +443,7 @@ public class ExtinguisherForm extends Activity {
 				inspectionNote.setText(EquipmentControl.getInstance().getInspectionElement(i).getTestNote());
 				break;
 			case NA:
-				na.setBackgroundResource(R.drawable.fail_box);
+				na.setBackgroundResource(R.drawable.na_box);
 				inspectionNote.setText(EquipmentControl.getInstance().getInspectionElement(i).getTestNote());
 				break;
 			default:
@@ -493,7 +498,7 @@ public class ExtinguisherForm extends Activity {
 				@Override
 				public void onClick(View v) {
 					column3.get(j).requestFocus();
-					column3.get(j).setBackgroundResource(R.drawable.fail_box);
+					column3.get(j).setBackgroundResource(R.drawable.na_box);
 					column3.get(j).setWidth(DigitsToPixels.dpToPixel(50, getBaseContext()));
 					column2.get(j).setBackgroundResource(android.R.drawable.btn_default);
 					column2.get(j).setWidth(DigitsToPixels.dpToPixel(50, getBaseContext()));

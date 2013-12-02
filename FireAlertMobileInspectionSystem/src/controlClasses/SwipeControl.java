@@ -1,13 +1,20 @@
 package controlClasses;
 
+import android.content.Context;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.GestureDetector;
-public class SwipeControl implements OnTouchListener {
+import android.widget.ScrollView;
+public class SwipeControl extends ScrollView implements OnTouchListener{
 
-    private final GestureDetector gestureDetector = new GestureDetector(new GestureListener());
+    public SwipeControl(Context context) {
+		super(context);
+		// TODO Auto-generated constructor stub
+	}
+
+	private final GestureDetector gestureDetector = new GestureDetector(new GestureListener());
 
     public boolean onTouch(final View view, final MotionEvent motionEvent) {
         return gestureDetector.onTouchEvent(motionEvent);
@@ -17,7 +24,7 @@ public class SwipeControl implements OnTouchListener {
 
         private static final int SWIPE_THRESHOLD = 25;
         private static final int SWIPE_VELOCITY_THRESHOLD = 25;
-
+        //REL_SWIPE_MAX_OFF_PATH = (int)(250.0f * dm.densityDpi / 160.0f + 0.5);
         @Override
         public boolean onDown(MotionEvent e) {
             return true;
@@ -60,9 +67,11 @@ public class SwipeControl implements OnTouchListener {
     }
 
     public void onSwipeTop() {
+    	return;
     }
 
     public void onSwipeBottom() {
+    	return;
     }
 }
 

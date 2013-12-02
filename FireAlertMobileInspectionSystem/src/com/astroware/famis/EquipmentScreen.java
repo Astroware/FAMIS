@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -35,9 +36,10 @@ public class EquipmentScreen extends Activity {
         //Create a button that will allow the user to submit a manually entered device id
         Button searchManual =(Button)findViewById(R.id.buttonentermanally);
         Button back = (Button)findViewById(R.id.buttonbacktolocation);
+        Button swiperight = (Button)findViewById(R.id.swiperight);
+        Button swipeleft = (Button)findViewById(R.id.swipeleft);
         //Create a button that will allow the user to submit the inspection
         Button submitInspection =(Button)findViewById(R.id.inspectiondone);
-        
         //Receiving the intent and the passed index for the location of the selected ServiceAddress from the previous activity
         Intent in = getIntent();
         int locationIndex = in.getIntExtra("selectedLocation", -1);
@@ -74,7 +76,43 @@ public class EquipmentScreen extends Activity {
 			    overridePendingTransition(R.anim.slide_out_right, R.anim.slide_in_right);
 			}
 		});
-		findViewById(R.id.make_rooms_here).setOnTouchListener(new SwipeControl() {
+		swiperight.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+		    	if (currentfloor==EquipmentControl.getInstance().getFloorListSize())
+		    	{
+		    		EquipmentControl.getInstance().setFloor(0);
+		    		currentfloor =1;
+		    	}
+		    	else
+		    		
+		    	{
+		    		currentfloor+=1;
+		    		EquipmentControl.getInstance().setFloor(currentfloor-1);
+		    	}
+		        createTables();
+		    }
+		});
+		swipeleft.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				if (currentfloor==1)
+		    	{
+		    		currentfloor =EquipmentControl.getInstance().getFloorListSize();
+		    		EquipmentControl.getInstance().setFloor(currentfloor-1);
+		    	}
+		    	else
+		    	{
+		    		currentfloor-=1;
+		    		EquipmentControl.getInstance().setFloor(currentfloor-1);
+		    	}
+		        createTables();
+			}
+		});
+		
+		findViewById(R.id.equipscreen).setOnTouchListener(new SwipeControl(this) {
 		    public void onSwipeLeft() {
 		    	if (currentfloor==EquipmentControl.getInstance().getFloorListSize())
 		    	{
@@ -87,7 +125,6 @@ public class EquipmentScreen extends Activity {
 		    		currentfloor+=1;
 		    		EquipmentControl.getInstance().setFloor(currentfloor-1);
 		    	}
-		    	Toast.makeText(getBaseContext(), "Right", Toast.LENGTH_SHORT).show();
 		        createTables();
 		    }
 		    public void onSwipeRight() {
@@ -101,7 +138,6 @@ public class EquipmentScreen extends Activity {
 		    		currentfloor-=1;
 		    		EquipmentControl.getInstance().setFloor(currentfloor-1);
 		    	}
-		    	Toast.makeText(getBaseContext(), "Left", Toast.LENGTH_SHORT).show();
 		        createTables();
 		    }
 		});
