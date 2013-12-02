@@ -1,24 +1,20 @@
 package controlClasses;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
-
 import org.w3c.dom.*;
-
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-
 import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException; 
-
 import android.os.Environment;
-import android.util.Log;
-
 import entityClasses.Client;
 import entityClasses.Device;
 import entityClasses.Device.DeviceType;
@@ -54,35 +50,33 @@ public class XMLParse{
 		return inspectionDataFilePath;
 	}
 	
-    public static boolean setDoc(String filePath)
+    public static void setDoc(String filePath) throws SAXException, FileNotFoundException, IOException, ParserConfigurationException
     {
-    	try
-    	{
+    	//try
+    	//{
 	    	DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
 	        DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
-	        Document doc = docBuilder.parse (new File(Environment.getDataDirectory(),filePath));
+	        Document doc = docBuilder.parse (new File(Environment.getExternalStorageDirectory(),filePath));
 	        doc.getDocumentElement().normalize();
 	        m_doc=doc;
-	        
-    	}catch (SAXParseException err) {
-            System.out.println ("** Parsing error" + ", line " + err.getLineNumber () + ", uri " + err.getSystemId ());
-            System.out.println(" " + err.getMessage ());
-            return false;
-
-            }catch (SAXException e) {
-            Exception x = e.getException ();
-            ((x == null) ? e : x).printStackTrace ();
-            Log.w("SAXException", "not sure");
-            return false;
-
-            }catch (Throwable t) {
-            t.printStackTrace ();
-            Log.w("Other Exception", "not sure");
-            return false;
-            
-            }
-    	
-    	return true;
+	           
+    	/*}
+		catch (SAXParseException err) {
+	        System.out.println ("** Parsing error" + ", line " + err.getLineNumber () + ", uri " + err.getSystemId ());
+	        System.out.println(" " + err.getMessage ());
+        }
+    	catch (SAXException e) {
+	        Exception x = e.getException ();
+	        ((x == null) ? e : x).printStackTrace ();
+	        Log.w("SAXException", "not sure");
+    	}
+    	catch (FileNotFoundException e){
+    		
+    	}
+    	catch (Throwable t) {
+	        t.printStackTrace ();
+	        Log.w("Other Exception", "not sure");
+        }*/
     }
     
     public static Franchisee parseFranchisee()

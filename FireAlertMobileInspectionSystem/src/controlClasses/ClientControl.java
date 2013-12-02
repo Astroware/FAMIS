@@ -1,5 +1,12 @@
 package controlClasses;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
+
 import entityClasses.Client;
 import entityClasses.Franchisee;
 
@@ -29,7 +36,7 @@ public class ClientControl {
 		return franchisee.m_clientList.get(i);
 	}
 	
-	public void parseXML() {
+	public static void parseXML() throws FileNotFoundException, SAXException, IOException, ParserConfigurationException {
 		XMLParse.setDoc(XMLParse.getInspectionDataFilePath());
 		System.out.println("Before XML Parsing");
 		franchisee = XMLParse.parseFranchisee();
