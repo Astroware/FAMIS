@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.Menu;
 import android.view.MotionEvent;
@@ -281,9 +282,15 @@ public class EquipmentScreen extends Activity {
 	        	
 	        	Button checkOrX = new Button(this);
 	        	if (EquipmentControl.getInstance().getDevice().isComplete()) {
+	        		checkOrX.setBackgroundResource(R.drawable.complete);
+	        		checkOrX.setTextColor(Color.WHITE);
+	        		checkOrX.setTypeface(null, Typeface.BOLD);
 	        		checkOrX.setText("Complete");
 	        	}
 	        	else {
+	        		checkOrX.setBackgroundResource(R.drawable.incomplete);
+	        		checkOrX.setTypeface(null, Typeface.BOLD);
+	        		checkOrX.setTextColor(Color.WHITE);
 	        		checkOrX.setText("Incomplete");
 	        	}
 	        	
