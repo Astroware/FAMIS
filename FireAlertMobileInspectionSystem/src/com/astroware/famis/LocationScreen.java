@@ -4,17 +4,18 @@ import java.util.ArrayList;
 
 import controlClasses.DigitsToPixels;
 import controlClasses.LocationControl;
-
 import entityClasses.*;
-
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TableLayout;
@@ -30,7 +31,6 @@ public class LocationScreen extends Activity {
 		searchbar = (EditText)findViewById(R.id.searchbar2);
 		Button back = (Button)findViewById(R.id.locationback);
 		Button search =(Button)findViewById(R.id.buttonsearch);
-		Button home = (Button)findViewById(R.id.locationhome);
 		//Receive the intent from the previous activity and retrieve the passed Client object
 		 Intent in =getIntent();
 		    int clientIndex = in.getIntExtra("selectedClient", -1);
@@ -55,17 +55,7 @@ public class LocationScreen extends Activity {
 				createButtons();
 			}
 		});
-		
-		home.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(LocationScreen.this, ClientScreen.class);
-			    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			    startActivity(intent);
-				//finish();
-				//startActivity(new Intent (LocationScreen.this, ClientScreen.class));
-			}
-		});
+	
 	}
 
 	//Currently a placeholder for the xml parse for client locations
@@ -84,9 +74,11 @@ public class LocationScreen extends Activity {
 		TableLayout tl = (TableLayout)findViewById(R.id.locationtable);
 		LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT,DigitsToPixels.dpToPixel(50, getBaseContext()));
 		tl.removeAllViews();
+		locationButtons.removeAll(locationButtons);
+		tl.invalidate();
 		for (int i=0; i<LocationControl.getInstance().getLocationListSize(); i++) {
-			if (LocationControl.getInstance().getLocation(i).getAddress().toLowerCase().startsWith(searchbar.getText().toString().toLowerCase().trim())){
-				locationButtons.add(new Button(this));
+			locationButtons.add(new Button(this));
+			if (LocationControl.getInstance().getLocation(i).getAddress().toLowerCase().startsWith(searchbar.getText().toString().toLowerCase().trim())){	
 				locationButtons.get(i).setText(LocationControl.getInstance().getLocation(i).getAddress());
 				locationButtons.get(i).setBackgroundResource(R.drawable.client_button);
 				locationButtons.get(i).setTextColor(Color.parseColor("white"));
@@ -122,5 +114,12 @@ public class LocationScreen extends Activity {
 	    super.onBackPressed();
 	    overridePendingTransition(R.anim.slide_out_right, R.anim.slide_in_right);
 	}
+	
+	public boolean onTouchEvent(MotionEvent event)
+    {
+    	InputMethodManager IMM = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+    	IMM.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+    	return true;
+    }
 
 }

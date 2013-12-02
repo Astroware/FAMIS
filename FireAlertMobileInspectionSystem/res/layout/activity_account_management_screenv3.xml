@@ -1,0 +1,96 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/biggerbackground"
+    tools:context=".AccountManagementScreenv3" >
+
+    <Button
+        android:id="@+id/accountback"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignBottom="@+id/accountsearch"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/backbutton" />
+
+    <Button
+        android:id="@+id/accountsearch"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/searchbutton" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="150dp"
+        android:layout_height="match_parent"
+        android:layout_alignBottom="@+id/accountback"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/editText1"
+        android:layout_toRightOf="@+id/accountback"
+        android:text="Account List"
+        android:gravity="center"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@android:color/white"
+        android:textSize="20sp" />
+
+    <EditText
+        android:id="@+id/editText1"
+        android:layout_width="100dp"
+        android:layout_height="25dp"
+        android:layout_alignBottom="@+id/accountsearch"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/accountsearch"
+        android:background="@drawable/searchbar"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="Search Accounts"
+        android:paddingLeft="2dp"
+        android:singleLine="true"
+        android:textColorHint="@android:color/black"
+        android:textSize="12sp" />
+
+    <Button
+        android:id="@+id/accounthome"
+        android:layout_width="40.5dp"
+        android:layout_height="40.5dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true" 
+        android:background="@drawable/home_button"/>
+
+    <Button
+        android:id="@+id/accountlistadd"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/accountsearch"
+        android:background="@drawable/addbutton" />
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/accounthome"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/accountlistadd" >
+
+        <TableLayout
+            android:id="@+id/accounttable"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TableRow
+                android:id="@+id/tableaccountrow"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+            </TableRow>
+
+        </TableLayout>
+
+    </ScrollView>
+    
+</RelativeLayout>

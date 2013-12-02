@@ -1,22 +1,28 @@
 package com.astroware.famis;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
 
 import controlClasses.ClientControl;
 import controlClasses.DigitsToPixels;
-
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.ArrayAdapter;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.Toast;
 
@@ -35,62 +41,49 @@ public class ClientScreen extends Activity {
 			//Create a button that allows the user to search through the list for a specified search requirement
 			Button search = (Button)findViewById(R.id.buttonsearch);
 			
-			//Button home = (Button)findViewById(R.id.clienthome);
-	        
-	        
-	        
-	        /*Spinner dropdown = (Spinner)findViewById(R.id.spinner1);
-	        String[] items = new String[]{"1","2","three"};
-	        ArrayAdapter<String>adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, items);
-			dropdown.setAdapter(adapter);*/
-	        
 			searchbar= (EditText)findViewById(R.id.searchbar);
-			
-			//placeholder for the real button
-			
-			
-			Button temp2 = (Button)findViewById(R.id.newtemp);
-			
+			Boolean flag = true;
+			System.out.println("what");
 			//Parse the XML document to get all the necessary information
-			ClientControl.getInstance().parseXML();
+			try {
+				ClientControl.parseXML();
+			} catch (FileNotFoundException e) {
+				Toast.makeText(getApplicationContext(), "The Inspection data file required to run this program is missing", Toast.LENGTH_LONG).show();
+				System.out.println("here");
+				flag = false;
+				e.printStackTrace();
+			} catch (SAXException e) {
+				flag = false;
+				e.printStackTrace();
+			} catch (IOException e) {
+				flag = false;
+				e.printStackTrace();
+			} catch (ParserConfigurationException e) {
+				flag = false;
+				e.printStackTrace();
+			}
+			
+			if(flag == true)
+			{
 			
 			//Create an array of buttons that will hold all of the clients that the franchisee has
 			createButtons();
 			
-				//Rhys - is there any reason to keep this commented code??
-				//Button client2 = new Button(this);
-				//client2.setText("Client 2");
-				//client2.setTextColor(@android:color/white);
-				//client2.setBackgroundResource(R.drawable.backgroundbehindclientlist);
-				//TableLayout tl = (TableLayout)findViewById(R.id.customertable);
-				//LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT);
-				//tl.addView(client2, lp);
-			
-			//goesto account management screen when pressed
-			
-			
-			temp2.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					startActivity(new Intent (ClientScreen.this, AccountManagementScreenv3.class));	
-				}
-			});
-			
-			//Create a listener for when the back button is pressed
-				back.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					finish();
-					overridePendingTransition(R.anim.slide_out_right, R.anim.slide_in_right);
-				}
-			});
-				
 			//Create a listener for when the search button is clicked
 			search.setOnClickListener(new View.OnClickListener() {	
 				@Override
 				public void onClick(View v) {
 					Toast.makeText(getApplicationContext(), searchbar.getText().toString().trim(), Toast.LENGTH_LONG).show();
 					createButtons();
+				}
+			});
+			}
+			//Create a listener for when the back button is pressed
+			back.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					finish();
+					overridePendingTransition(R.anim.slide_out_right, R.anim.slide_in_right);
 				}
 			});
 		}
@@ -103,10 +96,12 @@ public class ClientScreen extends Activity {
 
 			TableLayout tl = (TableLayout)findViewById(R.id.customertable);
 			tl.removeAllViewsInLayout();
+			clientButtons.removeAll(clientButtons);
+			tl.invalidate();
 			LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, DigitsToPixels.dpToPixel(50, getBaseContext()));
 			for (int i=0; i<ClientControl.getInstance().getClientListSize(); i++) {
-				if (ClientControl.getInstance().getClient(i).getName().toLowerCase().startsWith(searchbar.getText().toString().toLowerCase().trim())){
-					clientButtons.add(new Button(this));
+				clientButtons.add(new Button(this));
+				if (ClientControl.getInstance().getClient(i).getName().toLowerCase().startsWith(searchbar.getText().toString().toLowerCase().trim())){	
 					clientButtons.get(i).setText(ClientControl.getInstance().getClient(i).getName());
 					clientButtons.get(i).setBackgroundResource(R.drawable.client_button);
 					clientButtons.get(i).setTextColor(Color.parseColor("white"));
@@ -141,6 +136,14 @@ public class ClientScreen extends Activity {
 	    public void onBackPressed() {
 	        super.onBackPressed();
 	        overridePendingTransition(R.anim.slide_out_right, R.anim.slide_in_right);
+	    }
+	    
+	    public boolean onTouchEvent(MotionEvent event)
+	    {
+	    	super.onTouchEvent(event);
+	    	InputMethodManager IMM = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+	    	IMM.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+	    	return true;
 	    }
 	 
 	}

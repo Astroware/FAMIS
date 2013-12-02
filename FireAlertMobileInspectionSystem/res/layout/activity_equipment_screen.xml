@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/equipscreen"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -26,11 +27,16 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:background="@drawable/searchbutton" />
+
 	<ScrollView
+	    android:id="@+id/equipmentscroll"
 	    android:layout_width="match_parent"
-        android:layout_height="match_parent"
-		android:layout_marginTop="40dp"
-		android:layout_above="@+id/inspectiondone">
+	    android:layout_height="match_parent"
+	    android:layout_above="@+id/inspectiondone"
+	    android:layout_marginTop="40dp"
+	    android:layout_marginLeft="10dp"
+	    android:layout_marginRight="10dp" >
+
     <TableLayout
         android:id="@+id/make_rooms_here"
         android:layout_width="match_parent"
@@ -84,9 +90,8 @@
         android:hint="Manually Enter ID"
         android:singleLine="true"
         android:textColorHint="@android:color/black"
-        android:textSize="12sp" >
-
-        <requestFocus />
+        android:textSize="12sp"
+        android:inputType="number" >
     </EditText>
 
     <Button
@@ -97,6 +102,25 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="44dp"
         android:background="@drawable/submit_button" />
+        
+        <Button
+        android:id="@+id/swipeleft"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/inspectiondone"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/equipmentscroll"
+        android:background="@drawable/swipeleft" />
+
+    <Button
+        android:id="@+id/swiperight"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/inspectiondone"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/inspectiondone"
+        android:background="@drawable/swiperight"/>
+        
 
     <Button
         android:id="@+id/equipmenthome"
@@ -106,5 +130,59 @@
        android:layout_alignParentLeft="true"
        android:layout_marginBottom="0dp"
        android:background="@drawable/home_button" />
+
+    <Button
+        android:id="@+id/swipeleft"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/inspectiondone"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/equipmentscroll"
+        android:background="@drawable/swipeleft" />
+
+    <Button
+        android:id="@+id/swiperight"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/inspectiondone"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/inspectiondone"
+        android:background="@drawable/swiperight"/>
+
+    <Button
+        android:id="@+id/swipeleft"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/inspectiondone"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/equipmentscroll"
+        android:background="@drawable/swipeleft" />
+
+    <Button
+        android:id="@+id/swiperight"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/inspectiondone"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/inspectiondone"
+        android:background="@drawable/swiperight"/>
+
+    <Button
+        android:id="@+id/swipeleft"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/inspectiondone"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/equipmentscroll"
+        android:background="@drawable/swipeleft" />
+
+    <Button
+        android:id="@+id/swiperight"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/inspectiondone"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/inspectiondone"
+        android:background="@drawable/swiperight"/>
 
 </RelativeLayout>

@@ -26,21 +26,20 @@ public class AccountManagementScreen extends Activity {
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_account_management_screen);
+		
+		
 		
 		//create a button that will add accounts
 		Button addbtn = (Button)findViewById(R.id.btnadd);
 		
-		setContentView(R.layout.activity_account_management_screen);
+
 		
 		//Create a button that allows the user to go back to the previous page
 		Button back = (Button)findViewById(R.id.button67);
 		
 		//Create a button that allows the user to search through the list for a specified search requirement
 		Button search = (Button)findViewById(R.id.buttonsearch);
-		
-		//Rhys - need to get rid of this button - remember this was hidden to help with 
-		//the spacing of the dynamically created buttons. It should be removed.
-		Button client1 = (Button)findViewById(R.id.button4c);
 		
 		//Create an array of buttons that will hold all of the accounts
 		createButtons();
@@ -63,14 +62,6 @@ public class AccountManagementScreen extends Activity {
 			}
 		});
 		
-		client1.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				Toast.makeText(getApplicationContext(), "Client 1", Toast.LENGTH_LONG).show();
-				
-			}
-		});
 	}
 		
 		
@@ -83,6 +74,12 @@ public class AccountManagementScreen extends Activity {
 				deleteAccountButtons = new ArrayList<Button>();
 				
 				
+				TableLayout tl = (TableLayout)findViewById(R.id.addingtable);
+				//empty what was previously within this layout
+				tl.removeAllViewsInLayout();
+				
+				LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, DigitsToPixels.dpToPixel(50, getBaseContext()));
+				
 				for (int i=0; i<3; i++) { //3 is a placeholder for number of accounts
 					
 					accountButtons.add(new Button(this));
@@ -91,6 +88,8 @@ public class AccountManagementScreen extends Activity {
 					accountButtons.get(i).setTextColor(Color.parseColor("white"));
 					accountButtons.get(i).setTypeface(null, Typeface.BOLD_ITALIC);
 					accountButtons.get(i).setTextSize(20);
+					tl.addView(accountButtons.get(i), lp);
+					
 					
 					updateAccountButtons.add(new Button(this));
 					updateAccountButtons.get(i).setText("");
@@ -98,6 +97,7 @@ public class AccountManagementScreen extends Activity {
 					updateAccountButtons.get(i).setTextColor(Color.parseColor("white"));
 					updateAccountButtons.get(i).setTypeface(null, Typeface.BOLD_ITALIC);
 					updateAccountButtons.get(i).setTextSize(20);
+					tl.addView(updateAccountButtons.get(i), lp);
 					
 					deleteAccountButtons.add(new Button(this));
 					deleteAccountButtons.get(i).setText("");
@@ -105,11 +105,10 @@ public class AccountManagementScreen extends Activity {
 					deleteAccountButtons.get(i).setTextColor(Color.parseColor("white"));
 					deleteAccountButtons.get(i).setTypeface(null, Typeface.BOLD_ITALIC);
 					deleteAccountButtons.get(i).setTextSize(20);
+					tl.addView(deleteAccountButtons.get(i), lp);
 					
 					
-					
-					TableLayout tl = (TableLayout)findViewById(R.id.customertable);
-					LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, DigitsToPixels.dpToPixel(50, getBaseContext()));
+					/*
 					TableRow currentRow = (TableRow)findViewById(R.id.ButtonRows);
 					currentRow.addView(accountButtons.get(i), lp);
 					
@@ -118,6 +117,7 @@ public class AccountManagementScreen extends Activity {
 					currentRow.addView(deleteAccountButtons.get(i), lp);
 					
 					tl.addView(currentRow, lp);
+					*/
 					
 					/*TableLayout tl2 = (TableLayout)findViewById(R.id.updatetable);
 					LayoutParams lp2 = new LayoutParams(LayoutParams.MATCH_PARENT, DigitsToPixels.dpToPixel(50, getBaseContext()));
