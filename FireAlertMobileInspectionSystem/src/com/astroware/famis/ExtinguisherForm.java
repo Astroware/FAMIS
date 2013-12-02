@@ -7,23 +7,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 import entityClasses.InspectionElement.Result;
+
 import com.astroware.famis.R;
 
 import controlClasses.DigitsToPixels;
 import controlClasses.EquipmentControl;
-
 import entityClasses.Device;
 import entityClasses.Device.DeviceType;
-
 import entityClasses.InspectionElement.Result;
-
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.text.InputType;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TableLayout;
@@ -42,6 +43,9 @@ public class ExtinguisherForm extends Activity {
 	List <Button> column1;
 	List <Button> column2;
 	List <Button> column3;
+	
+	TextView title;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -52,6 +56,10 @@ public class ExtinguisherForm extends Activity {
 		column2= new ArrayList<Button>();
 		column3= new ArrayList<Button>();
 		Intent in = getIntent();
+		
+		EquipmentControl.getInstance().getDevice().setIncomplete();
+		
+		title = (TextView)findViewById(R.id.formTitle);
 	    
 		selectTable();
 
@@ -71,6 +79,7 @@ public class ExtinguisherForm extends Activity {
 	}
 
 	private void createExtinguisherTable() {
+		title.setText("Extinguisher " + EquipmentControl.getInstance().getDevice().getId() + " Form");
 		TableLayout tl = (TableLayout)findViewById(R.id.inspectionelementtable);
 		LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT);
 		LayoutParams lprow =  new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT, 1f);
@@ -147,6 +156,7 @@ public class ExtinguisherForm extends Activity {
 	}
 
 	private void createHoseCabinetTable() {
+		title.setText("Fire Hose Cabinet " + EquipmentControl.getInstance().getDevice().getId() + " Form");
 		TableLayout tl = (TableLayout)findViewById(R.id.inspectionelementtable);
 		LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT);
 		tl.removeAllViewsInLayout();
@@ -323,11 +333,11 @@ public class ExtinguisherForm extends Activity {
 			System.out.println("three views added:"+i);
 			switch (EquipmentControl.getInstance().getInspectionElement(i+2).getTestResult())
 			{
-			case PASS:
+			case YES:
 				check.setBackgroundResource(R.drawable.check_box);
 				inspectionNote.setText(EquipmentControl.getInstance().getInspectionElement(i+2).getTestNote());
 				break;
-			case FAIL:
+			case NO:
 				fail.setBackgroundResource(R.drawable.fail_box);
 				inspectionNote.setText(EquipmentControl.getInstance().getInspectionElement(i+2).getTestNote());
 				break;
@@ -373,6 +383,7 @@ public class ExtinguisherForm extends Activity {
 	}
 	
 	private void createEmergencyLightTable() {
+		title.setText("Emergency Light " + EquipmentControl.getInstance().getDevice().getId() + " Form");
 		TableLayout tl = (TableLayout)findViewById(R.id.inspectionelementtable);
 		tl.removeAllViewsInLayout();
 		LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT);
@@ -544,6 +555,20 @@ public class ExtinguisherForm extends Activity {
 				
 			
 		}
+	}
+	
+	public boolean dispatchTouchEvent(MotionEvent event) {
+
+	    View v = getCurrentFocus();
+	    boolean ret = super.dispatchTouchEvent(event);
+
+	    if (v instanceof EditText) 
+	    {
+	    	v.clearFocus();
+	    	InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(getWindow().getCurrentFocus().getWindowToken(), 0);
+	    }
+	return ret;
 	}
 
 }

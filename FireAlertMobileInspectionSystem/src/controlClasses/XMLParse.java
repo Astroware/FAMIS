@@ -51,32 +51,12 @@ public class XMLParse{
 	}
 	
     public static void setDoc(String filePath) throws SAXException, FileNotFoundException, IOException, ParserConfigurationException
-    {
-    	//try
-    	//{
-	    	DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
-	        DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
-	        Document doc = docBuilder.parse (new File(Environment.getExternalStorageDirectory(),filePath));
-	        doc.getDocumentElement().normalize();
-	        m_doc=doc;
-	           
-    	/*}
-		catch (SAXParseException err) {
-	        System.out.println ("** Parsing error" + ", line " + err.getLineNumber () + ", uri " + err.getSystemId ());
-	        System.out.println(" " + err.getMessage ());
-        }
-    	catch (SAXException e) {
-	        Exception x = e.getException ();
-	        ((x == null) ? e : x).printStackTrace ();
-	        Log.w("SAXException", "not sure");
-    	}
-    	catch (FileNotFoundException e){
-    		
-    	}
-    	catch (Throwable t) {
-	        t.printStackTrace ();
-	        Log.w("Other Exception", "not sure");
-        }*/
+    {	
+    	DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
+        DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
+        Document doc = docBuilder.parse (new File(Environment.getExternalStorageDirectory(),filePath));
+        doc.getDocumentElement().normalize();
+        m_doc=doc;        
     }
     
     public static Franchisee parseFranchisee()

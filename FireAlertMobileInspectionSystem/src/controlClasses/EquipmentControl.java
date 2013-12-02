@@ -75,7 +75,7 @@ public class EquipmentControl {
 		return device.m_inspectionElements.size();
 	}
 	
-	public boolean checkDevice(String num) {
+	public boolean checkDevice(int num) {
 		for (int i=0; i<getFloorListSize(); i++) {
 			setFloor(i);
 			
@@ -85,7 +85,7 @@ public class EquipmentControl {
 				for (int k=0; k<getDeviceListSize(); k++) {
 					setDevice(k);
 					
-					if (getDevice().getId() == Integer.parseInt(num.trim().replaceAll("\\s",""))) {
+					if (getDevice().getId() == num) {
 						return true;
 					}
 				}
