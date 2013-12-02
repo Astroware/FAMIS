@@ -98,7 +98,6 @@ public class ExtinguisherForm extends Activity {
 			fail.setWidth(DigitsToPixels.dpToPixel(50, getBaseContext()));
 			EditText inspectionNote = new EditText(this);
 			inspectionNote.setSingleLine(true);
-			inspectionNote.setWidth(DigitsToPixels.dpToPixel(150, getBaseContext()));
 			System.out.println(name.getText());
 			switch (EquipmentControl.getInstance().getInspectionElement(i).getTestResult())
 			{
@@ -121,7 +120,7 @@ public class ExtinguisherForm extends Activity {
 			column2.add(fail);
 			notes.add(inspectionNote);
 			inspectionNote.setTransformationMethod(null);
-			inspectionNote.setWidth(DigitsToPixels.dpToPixel(150, getBaseContext()));
+			inspectionNote.setWidth(DigitsToPixels.dpToPixel(100, getBaseContext()));
 			currentRow.addView(inspectionNote, new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT, 2f));
 			tl.addView(currentRow);
 			System.out.println("added current row:"+i);
@@ -211,12 +210,15 @@ public class ExtinguisherForm extends Activity {
 			na.setWidth(DigitsToPixels.dpToPixel(45, getBaseContext()));
 			EditText inspectionNote = new EditText(this);
 			inspectionNote.setSingleLine(true);
-			inspectionNote.setWidth(DigitsToPixels.dpToPixel(150, getBaseContext()));
+			inspectionNote.setWidth(DigitsToPixels.dpToPixel(75, getBaseContext()));//c
 			System.out.println(name.getText());
 			currentRow.addView(name, lprow);
 			currentRow.addView(check, buttonParams);
 			currentRow.addView(fail, buttonParams);
 			currentRow.addView(na, buttonParams);
+			column1.add(check);
+			column2.add(fail);
+			column3.add(na);
 			switch (EquipmentControl.getInstance().getInspectionElement(i).getTestResult())
 			{
 			case GOOD:
@@ -234,9 +236,6 @@ public class ExtinguisherForm extends Activity {
 			default:
 				break;
 			}
-			column1.add(check);
-			column2.add(fail);
-			column3.add(na);
 			notes.add(inspectionNote);
 			inspectionNote.setSingleLine(true);
 			currentRow.addView(inspectionNote, new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT, 2f));
@@ -244,6 +243,9 @@ public class ExtinguisherForm extends Activity {
 			System.out.println("added current row:"+i);
 			final int j;
 			j = i;
+			
+
+			
 			column1.get(i).setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -279,7 +281,7 @@ public class ExtinguisherForm extends Activity {
 				@Override
 				public void onClick(View v) {
 					column3.get(j).requestFocus();
-					column3.get(j).setBackgroundResource(R.drawable.na_box);
+					column3.get(j).setBackgroundResource(R.drawable.na_box);//c
 					column3.get(j).setWidth(DigitsToPixels.dpToPixel(50, getBaseContext()));
 					column2.get(j).setBackgroundResource(android.R.drawable.btn_default);
 					column2.get(j).setWidth(DigitsToPixels.dpToPixel(50, getBaseContext()));
@@ -329,7 +331,8 @@ public class ExtinguisherForm extends Activity {
 			fail.setWidth(DigitsToPixels.dpToPixel(50, getBaseContext()));
 			EditText inspectionNote = new EditText(this);
 			inspectionNote.setSingleLine(true);
-			inspectionNote.setWidth(DigitsToPixels.dpToPixel(100, getBaseContext()));
+			//inspectionNote.setTransformationMethod(null);//c
+			inspectionNote.setWidth(DigitsToPixels.dpToPixel(50, getBaseContext()));//c
 			System.out.println(name.getText());
 			currentRow.addView(name, lprow);
 			currentRow.addView(check, buttonParams);
@@ -351,8 +354,8 @@ public class ExtinguisherForm extends Activity {
 			column1.add(check);
 			column2.add(fail);
 			notes.add(inspectionNote);
-			currentRow.addView(inspectionNote, new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT, 1f));
-			tl.addView(currentRow);
+			currentRow.addView(inspectionNote, new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT, 2f));
+			tl.addView(currentRow,lprow);
 			System.out.println("added current row:"+i);
 			final int j;
 			j = i+2;
@@ -392,7 +395,7 @@ public class ExtinguisherForm extends Activity {
 		tl.removeAllViewsInLayout();
 		LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT);
 		LayoutParams lprow =  new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT, 1f);
-		LayoutParams buttonParams = new LayoutParams(DigitsToPixels.dpToPixel(45, getBaseContext()),DigitsToPixels.dpToPixel(45, getBaseContext()));TableRow titlerow = new TableRow(this);
+		LayoutParams buttonParams = new LayoutParams(DigitsToPixels.dpToPixel(50, getBaseContext()),DigitsToPixels.dpToPixel(50, getBaseContext()));TableRow titlerow = new TableRow(this);
 		TableRow titleRow = new TableRow(this);
 		TextView titlename = new TextView(this);
 		titlename.setText("Test Name");
@@ -432,17 +435,26 @@ public class ExtinguisherForm extends Activity {
 		{
 			TableRow currentRow = new TableRow(this);
 			TextView name = new TextView(this);
+		    System.out.println("textview made:"+i);
 			name.setText(EquipmentControl.getInstance().getInspectionElement(i).getName());
-			name.setWidth(DigitsToPixels.dpToPixel(120, getBaseContext()));
+			name.setWidth(100);
 			check = new Button(this);
-			check.setWidth(DigitsToPixels.dpToPixel(50, getBaseContext()));
+			check.setWidth(DigitsToPixels.dpToPixel(45, getBaseContext()));
 			fail = new Button(this);
-			fail.setWidth(DigitsToPixels.dpToPixel(50, getBaseContext()));
+			fail.setWidth(DigitsToPixels.dpToPixel(45, getBaseContext()));
 			na = new Button(this);
-			na.setWidth(DigitsToPixels.dpToPixel(50, getBaseContext()));
+			na.setWidth(DigitsToPixels.dpToPixel(45, getBaseContext()));
 			EditText inspectionNote = new EditText(this);
 			inspectionNote.setSingleLine(true);
-			inspectionNote.setWidth(DigitsToPixels.dpToPixel(100, getBaseContext()));
+			inspectionNote.setWidth(DigitsToPixels.dpToPixel(75, getBaseContext()));//c
+			System.out.println(name.getText());
+			currentRow.addView(name, lprow);
+			currentRow.addView(check, buttonParams);
+			currentRow.addView(fail, buttonParams);
+			currentRow.addView(na, buttonParams);
+			column1.add(check);
+			column2.add(fail);
+			column3.add(na);
 			switch (EquipmentControl.getInstance().getInspectionElement(i).getTestResult())
 			{
 			case GOOD:
@@ -460,16 +472,8 @@ public class ExtinguisherForm extends Activity {
 			default:
 				break;
 			}
-			currentRow.addView(name, lprow);
-			currentRow.addView(check, buttonParams);
-			currentRow.addView(fail, buttonParams);
-			currentRow.addView(na, buttonParams);
-			System.out.println("three views added:"+i);
-			column1.add(check);
-			column2.add(fail);
-			column3.add(na);
 			notes.add(inspectionNote);
-			currentRow.addView(inspectionNote, new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT, 1f));
+			currentRow.addView(inspectionNote, new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT, 2f));
 			tl.addView(currentRow);
 			System.out.println("added current row:"+i);
 			final int j;
