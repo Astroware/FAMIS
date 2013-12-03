@@ -3,6 +3,13 @@
 
 package com.astroware.famis;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
+
 import controlClasses.*;
 import android.os.Bundle;
 import android.app.Activity;
@@ -160,6 +167,21 @@ public class EquipmentScreen extends Activity {
 			public void onClick(View v) {
 				if(EquipmentControl.getInstance().getLocation().isComplete()) {
 					Toast.makeText(getBaseContext(), "Submitting Inspection", Toast.LENGTH_SHORT).show();
+					try {
+						EquipmentControl.getInstance().submitInspection();
+					} catch (FileNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (SAXException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (ParserConfigurationException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					finish();
 				}
 				else {

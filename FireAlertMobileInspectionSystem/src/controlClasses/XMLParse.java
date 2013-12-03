@@ -54,7 +54,8 @@ public class XMLParse{
     {	
     	DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
-        Document doc = docBuilder.parse (new File(Environment.getExternalStorageDirectory(),filePath));
+        //Document doc = docBuilder.parse (new File(Environment.getExternalStorageDirectory(),filePath));
+        Document doc = docBuilder.parse (new File(Environment.getDataDirectory(),filePath));
         doc.getDocumentElement().normalize();
         m_doc=doc;        
     }
@@ -206,7 +207,7 @@ public class XMLParse{
         
         for(int k=0; k<listOfFloors.getLength() ; k++)
 		{
-			Element floors = (Element)listOfFloors.item(k);;
+			Element floors = (Element)listOfFloors.item(k);
 		 	NamedNodeMap ServiceAddressAttr = floors.getAttributes();
 		 	Node ServiceAddress = listOfFloors.item(k);
 		 	tempNode3 = ServiceAddress;
@@ -232,7 +233,7 @@ public class XMLParse{
         
         for(int k=0; k<listOfRooms.getLength() ; k++)
 		{
-			Element rooms = (Element)listOfRooms.item(k);;
+			Element rooms = (Element)listOfRooms.item(k);
 		 	NamedNodeMap roomAttr = rooms.getAttributes();
 		 	Node RoomNode = listOfRooms.item(k);
 		 	tempNode4 = RoomNode;
@@ -268,7 +269,7 @@ public class XMLParse{
         
         for(int k=0; k<listOfExtinguishers.getLength() ; k++)
 		{
-			Element extinguishers = (Element)listOfExtinguishers.item(k);;
+			Element extinguishers = (Element)listOfExtinguishers.item(k);
 		 	NamedNodeMap exAttr = extinguishers.getAttributes();
 		 	Node exNode = listOfExtinguishers.item(k);
 		 	
@@ -352,7 +353,7 @@ public class XMLParse{
         
         for(int i=0, k=b; k<listOfLights.getLength()+b ; i++, k++)
 		{
-			Element lights = (Element)listOfLights.item(i);;
+			Element lights = (Element)listOfLights.item(i);
 		 	NamedNodeMap lightsAttr = lights.getAttributes();
 		 	Node lightNode = listOfLights.item(i);
 		 	
@@ -400,7 +401,7 @@ public class XMLParse{
     	
     	for(int k=0; k<listOfInspecEle.getLength() ; k++)
 		{
-			Element InspectionEle = (Element)listOfInspecEle.item(k);;
+			Element InspectionEle = (Element)listOfInspecEle.item(k);
 		 	NamedNodeMap IEAttr = InspectionEle.getAttributes();
 		 	Node InspecEleNode = listOfInspecEle.item(k);
 		 	
@@ -516,12 +517,123 @@ public class XMLParse{
 			 TransformerFactory transformerFactory = TransformerFactory.newInstance();
 			  Transformer transformer = transformerFactory.newTransformer();
 			  DOMSource source = new DOMSource(m_doc);
-			  StreamResult streamResult =  new StreamResult(new File(Environment.getDataDirectory(),"inspectors.xml"));
+			  StreamResult streamResult =  new StreamResult(new File(Environment.getDataDirectory(),getInspectorFilePath()));
 			  
 				transformer.transform(source, streamResult);
 			} catch (TransformerException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+	  }
+	  
+	  public static void writeInspection()
+	  {
+		  Node tempLocationNode = null;
+		  String checkID = EquipmentControl.getInstance().getLocation().getId();
+		  
+		  NodeList listOfAddresses = m_doc.getElementsByTagName("ServiceAddress");
+		  
+		  for(int k=0; k<listOfAddresses.getLength() ; k++)
+		  {
+			    Node ServiceAddressNode = listOfAddresses.item(k);
+			 	NamedNodeMap ServiceAddressAttrs = ServiceAddressNode.getAttributes();
+			 	
+			 	if(ServiceAddressNode.getNodeType() == Node.ELEMENT_NODE)
+			 	{
+			 		String tempID;
+				    tempID = ServiceAddressAttrs.getNamedItem("id").getNodeValue();
+				    
+				    if(checkID.equals(tempID))
+				    {
+				    	tempLocationNode = ServiceAddressNode;
+				    	break;
+				    }
+			 	}
+		  }
+	      writeResults(tempLocationNode);
+		  updateInspectionData();
+	  }
+	  
+	  public static void updateInspectionData()
+	  {
+		  try{
+			 TransformerFactory transformerFactory = TransformerFactory.newInstance();
+			  Transformer transformer = transformerFactory.newTransformer();
+			  DOMSource source = new DOMSource(m_doc);
+			  StreamResult streamResult =  new StreamResult(new File(Environment.getDataDirectory(),"InspectionData.xml"));
+			  
+				transformer.transform(source, streamResult);
+			} catch (TransformerException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	  }
+	  
+	  public static void writeResults(Node addressNode)
+	  {
+		  Element location = (Element)addressNode;
+		  
+	      NodeList listOfExtinguishers = location.getElementsByTagName("Extinguisher");
+	      int extIndex = 0;
+	      
+	      NodeList listOfCabinets = location.getElementsByTagName("FireHoseCabinet");
+	      int cabIndex = 0;
+	      
+	      NodeList listOfLights = location.getElementsByTagName("EmergencyLight");
+	      int lightIndex = 0;
+	      
+		  for (int i=0; i<EquipmentControl.getInstance().getFloorListSize(); i++)
+		  {
+			  EquipmentControl.getInstance().setFloor(i);
+			  for (int j=0; j<EquipmentControl.getInstance().getRoomListSize(); j++)
+			  {
+				  EquipmentControl.getInstance().setRoom(j);
+				  for(int k=0; k<EquipmentControl.getInstance().getDeviceListSize(); k++)
+				  {
+					  EquipmentControl.getInstance().setDevice(k);
+					  if(EquipmentControl.getInstance().getDevice().getDeviceType().equals(DeviceType.EXTINGUISHER))
+				      {
+						  Node Extinguisher = listOfExtinguishers.item(extIndex);
+						  Element InspecEle = (Element)Extinguisher;
+					      NodeList listOfInspecEle = InspecEle.getElementsByTagName("inspectionElement");
+					      
+						  for(int a=0; a<EquipmentControl.getInstance().getInspectionElementListSize(); a++)
+						  {
+							  ((Element)listOfInspecEle.item(a)).setAttribute("testResult", EquipmentControl.getInstance().getInspectionElement(a).getTestResult().toString());
+							  ((Element)listOfInspecEle.item(a)).setAttribute("testNote", EquipmentControl.getInstance().getInspectionElement(a).getTestNote().toString()); 
+						  }
+						  extIndex++;
+				      }
+					  
+					  else if(EquipmentControl.getInstance().getDevice().getDeviceType().equals(DeviceType.FIRE_HOSE_CABINET))
+				      {
+						  Node Cabinet = listOfCabinets.item(cabIndex);
+						  Element cabinetEle = (Element)Cabinet;
+						  NodeList listOfInspecEle = cabinetEle.getElementsByTagName("inspectionElement");
+						  
+						  for(int a=0; a<EquipmentControl.getInstance().getInspectionElementListSize(); a++)
+						  {
+							  ((Element)listOfInspecEle.item(a)).setAttribute("testResult", EquipmentControl.getInstance().getInspectionElement(a).getTestResult().toString());
+							  ((Element)listOfInspecEle.item(a)).setAttribute("testNote", EquipmentControl.getInstance().getInspectionElement(a).getTestNote().toString()); 
+						  }
+						  cabIndex++;
+				      }
+					  
+					  else if(EquipmentControl.getInstance().getDevice().getDeviceType().equals(DeviceType.EMERGENCY_LIGHT))
+				      {
+						  Node Lights = listOfLights.item(lightIndex);
+						  Element lightsEle = (Element)Lights;
+						  NodeList listOfInspecEle = lightsEle.getElementsByTagName("inspectionElement");
+						  
+						  for(int a=0; a<EquipmentControl.getInstance().getInspectionElementListSize(); a++)
+						  {
+							  ((Element)listOfInspecEle.item(a)).setAttribute("testResult", EquipmentControl.getInstance().getInspectionElement(a).getTestResult().toString());
+							  ((Element)listOfInspecEle.item(a)).setAttribute("testNote", EquipmentControl.getInstance().getInspectionElement(a).getTestNote().toString()); 
+						  }
+						  lightIndex++;
+				      }
+				  }
+			  }
+		  }
 	  }
 }
