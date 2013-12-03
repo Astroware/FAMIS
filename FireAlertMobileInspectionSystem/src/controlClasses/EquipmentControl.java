@@ -1,5 +1,12 @@
 package controlClasses;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
+
 import entityClasses.Device;
 import entityClasses.Floor;
 import entityClasses.Room;
@@ -93,5 +100,11 @@ public class EquipmentControl {
 		}
 		
 		return false;
+	}
+	
+	public void submitInspection() throws FileNotFoundException, SAXException, IOException, ParserConfigurationException
+	{
+		XMLParse.setDoc(XMLParse.getInspectionDataFilePath());
+		XMLParse.writeInspection();
 	}
 }

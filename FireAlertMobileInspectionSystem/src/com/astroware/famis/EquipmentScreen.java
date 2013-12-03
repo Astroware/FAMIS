@@ -3,10 +3,19 @@
 
 package com.astroware.famis;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
+
 import controlClasses.*;
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -39,6 +48,16 @@ public class EquipmentScreen extends Activity {
         Button back = (Button)findViewById(R.id.buttonbacktolocation);
         Button swiperight = (Button)findViewById(R.id.swiperight);
         Button swipeleft = (Button)findViewById(R.id.swipeleft);
+        Button overview = (Button)findViewById(R.id.overviewbutton);
+        overview.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				startActivity(new Intent(EquipmentScreen.this, Overview.class));
+				overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+			}
+		});
         //Create a button that will allow the user to submit the inspection
         Button submitInspection =(Button)findViewById(R.id.inspectiondone);
         //Receiving the intent and the passed index for the location of the selected ServiceAddress from the previous activity
@@ -47,7 +66,11 @@ public class EquipmentScreen extends Activity {
 	    if (locationIndex != -1) {
 	    	EquipmentControl.getInstance().setLocation(locationIndex);
 	    }
-        
+        if (EquipmentControl.getInstance().getLocation().m_floors.size()==1)
+        {
+        	swiperight.setVisibility(View.GONE);
+        	swipeleft.setVisibility(View.GONE);
+        }
         //This scanner object is created so that its listener is running during this activity
         Scanner scanner = new Scanner();
         
@@ -160,8 +183,74 @@ public class EquipmentScreen extends Activity {
 			@Override
 			public void onClick(View v) {
 				if(EquipmentControl.getInstance().getLocation().isComplete()) {
-					Toast.makeText(getBaseContext(), "Submitting Inspection", Toast.LENGTH_SHORT).show();
-					finish();
+						AlertDialog.Builder alertDialog = new AlertDialog.Builder(EquipmentScreen.this);
+						// Setting Dialog Title
+						alertDialog.setTitle("Submission Confirmation");
+						
+						// Setting Dialog Message
+						alertDialog.setMessage("Press continue to confirm inspection submission");
+						
+						// Setting Icon to Dialog
+						alertDialog.setIcon(R.drawable.overview);
+						
+						// Setting OK Button
+						alertDialog.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int which) {
+							Toast.makeText(getApplicationContext(), "Submitting the Inspection", Toast.LENGTH_SHORT).show();
+							try {
+									EquipmentControl.getInstance().submitInspection();
+									System.out.println("this should be writing");
+							} catch (FileNotFoundException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							} catch (SAXException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							} catch (ParserConfigurationException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+								AlertDialog.Builder alertTCP = new AlertDialog.Builder(EquipmentScreen.this);
+								// Setting Dialog Title
+								alertTCP.setTitle("Send to TCP");
+							
+								// Setting Dialog Message
+								alertTCP.setMessage("Would you like to send inspection results over TCP");
+							
+								// Setting Icon to Dialog
+								alertTCP.setIcon(R.drawable.overview);
+							
+								// Setting OK Button
+								alertTCP.setPositiveButton("Send Now", new DialogInterface.OnClickListener() {
+								
+								@Override
+								public void onClick(DialogInterface dialog, int which) {
+									// TODO Auto-generated method stub
+									Toast.makeText(getBaseContext(), "Sending", Toast.LENGTH_SHORT).show();
+								}
+								});
+								alertTCP.setNegativeButton("Not Now", new DialogInterface.OnClickListener() {
+								
+								@Override
+								public void onClick(DialogInterface dialog, int which) {
+									finish();
+								}
+								});
+								alertTCP.show();
+							}
+							});
+							alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+							
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								
+							}
+							});
+							// Showing Alert Message
+							alertDialog.show();
 				}
 				else {
 					Toast.makeText(getBaseContext(), "Inspection not complete!", Toast.LENGTH_SHORT).show();

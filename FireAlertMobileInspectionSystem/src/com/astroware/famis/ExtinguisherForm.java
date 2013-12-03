@@ -39,6 +39,7 @@ public class ExtinguisherForm extends Activity {
     Button fail; 
     Button na;
     Button submit;
+    Button back;
 	List <EditText> notes;
 	List <Button> column1;
 	List <Button> column2;
@@ -50,6 +51,7 @@ public class ExtinguisherForm extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_extinguisher_form);
+		back = (Button)findViewById(R.id.buttonback);
 		submit = (Button)findViewById(R.id.btnsubmitform);
 		notes= new ArrayList<EditText>();
 		column1= new ArrayList<Button>();
@@ -74,6 +76,14 @@ public class ExtinguisherForm extends Activity {
 				else {
 					Toast.makeText(getApplicationContext(), "Form not fully completed", Toast.LENGTH_SHORT).show();
 				}				
+			}
+		});
+	    back.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				finish();
+				overridePendingTransition(R.anim.slide_out_right, R.anim.slide_in_right);
 			}
 		});
 	}
