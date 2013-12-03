@@ -134,8 +134,8 @@ public class ClientScreen extends Activity {
 	    //When the back button is pressed the screen state will switch from the List of Clients screen to the login screen
 	    @Override
 	    public void onBackPressed() {
-	        super.onBackPressed();
-	        overridePendingTransition(R.anim.slide_out_right, R.anim.slide_in_right);
+	        //super.onBackPressed();
+	        //overridePendingTransition(R.anim.slide_out_right, R.anim.slide_in_right);
 	    }
 	    
 	    public boolean onTouchEvent(MotionEvent event)

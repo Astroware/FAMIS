@@ -13,7 +13,9 @@ import org.xml.sax.SAXException;
 import controlClasses.*;
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -181,23 +183,74 @@ public class EquipmentScreen extends Activity {
 			@Override
 			public void onClick(View v) {
 				if(EquipmentControl.getInstance().getLocation().isComplete()) {
-					Toast.makeText(getBaseContext(), "Submitting Inspection", Toast.LENGTH_SHORT).show();
-					try {
-						EquipmentControl.getInstance().submitInspection();
-					} catch (FileNotFoundException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (SAXException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (ParserConfigurationException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					finish();
+						AlertDialog.Builder alertDialog = new AlertDialog.Builder(EquipmentScreen.this);
+						// Setting Dialog Title
+						alertDialog.setTitle("Submission Confirmation");
+						
+						// Setting Dialog Message
+						alertDialog.setMessage("Press continue to confirm inspection submission");
+						
+						// Setting Icon to Dialog
+						alertDialog.setIcon(R.drawable.overview);
+						
+						// Setting OK Button
+						alertDialog.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int which) {
+							Toast.makeText(getApplicationContext(), "Submitting the Inspection", Toast.LENGTH_SHORT).show();
+							try {
+									EquipmentControl.getInstance().submitInspection();
+									System.out.println("this should be writing");
+							} catch (FileNotFoundException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							} catch (SAXException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							} catch (ParserConfigurationException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+								AlertDialog.Builder alertTCP = new AlertDialog.Builder(EquipmentScreen.this);
+								// Setting Dialog Title
+								alertTCP.setTitle("Send to TCP");
+							
+								// Setting Dialog Message
+								alertTCP.setMessage("Would you like to send inspection results over TCP");
+							
+								// Setting Icon to Dialog
+								alertTCP.setIcon(R.drawable.overview);
+							
+								// Setting OK Button
+								alertTCP.setPositiveButton("Send Now", new DialogInterface.OnClickListener() {
+								
+								@Override
+								public void onClick(DialogInterface dialog, int which) {
+									// TODO Auto-generated method stub
+									Toast.makeText(getBaseContext(), "Sending", Toast.LENGTH_SHORT).show();
+								}
+								});
+								alertTCP.setNegativeButton("Not Now", new DialogInterface.OnClickListener() {
+								
+								@Override
+								public void onClick(DialogInterface dialog, int which) {
+									finish();
+								}
+								});
+								alertTCP.show();
+							}
+							});
+							alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+							
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								
+							}
+							});
+							// Showing Alert Message
+							alertDialog.show();
 				}
 				else {
 					Toast.makeText(getBaseContext(), "Inspection not complete!", Toast.LENGTH_SHORT).show();
