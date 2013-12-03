@@ -1,8 +1,16 @@
 package com.astroware.famis;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
+
+import controlClasses.AccountControl;
 import controlClasses.DigitsToPixels;
+import entityClasses.Inspector;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -11,12 +19,10 @@ import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.Menu;
 import android.view.View;
-import android.widget.PopupWindow;
 import android.widget.TableRow.LayoutParams;
 import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
-import android.widget.Toast;
 
 public class AccountManagementScreenv3 extends Activity {
 
@@ -80,14 +86,17 @@ public class AccountManagementScreenv3 extends Activity {
 			TableLayout tl = (TableLayout)findViewById(R.id.accounttable);
 			//empty what was previously within this layout
 			tl.removeAllViewsInLayout();
+			tl.invalidate();
+			ArrayList<Inspector> inspect = new ArrayList<Inspector>();
+			inspect = AccountControl.getInspectorList();
 			LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT,DigitsToPixels.dpToPixel(50, getBaseContext()), 1f);
 			LayoutParams bp = new LayoutParams(100,DigitsToPixels.dpToPixel(50, getBaseContext()));
-			for (int i=0; i<25; i++) { //3 is a placeholder for number of accounts
+			for (int i=0; i<inspect.size(); i++) {
 				TableRow accountRow= new TableRow(this);
 				Button user = new Button (this);
 				Button update = new Button (this);
 				Button delete = new Button (this);
-				user.setText("User");
+				user.setText(inspect.get(i).getName());
 				user.setBackgroundResource(R.drawable.red);
 				user.setTextColor(Color.parseColor("white"));
 				user.setTypeface(null, Typeface.BOLD_ITALIC);
@@ -111,7 +120,7 @@ public class AccountManagementScreenv3 extends Activity {
 				accountRow.addView(delete,bp);
 				deleteAccountButtons.add(delete);
 				tl.addView(accountRow);
-				
+				final int j=i;
 				update.setOnClickListener(new View.OnClickListener() {			
 					@Override
 					public void onClick(View v) {
@@ -123,7 +132,22 @@ public class AccountManagementScreenv3 extends Activity {
 				delete.setOnClickListener(new View.OnClickListener() {	
 					@Override
 					public void onClick(View v) {
-						
+						try {
+							AccountControl.deleteInspector(j);
+						} catch (FileNotFoundException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (SAXException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (ParserConfigurationException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						createButtons();
 					}
 				});
 			}

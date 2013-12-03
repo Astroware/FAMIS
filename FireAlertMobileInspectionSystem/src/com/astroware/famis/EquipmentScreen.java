@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.Menu;
 import android.view.MotionEvent;
@@ -45,6 +46,16 @@ public class EquipmentScreen extends Activity {
         Button back = (Button)findViewById(R.id.buttonbacktolocation);
         Button swiperight = (Button)findViewById(R.id.swiperight);
         Button swipeleft = (Button)findViewById(R.id.swipeleft);
+        Button overview = (Button)findViewById(R.id.overviewbutton);
+        overview.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				startActivity(new Intent(EquipmentScreen.this, Overview.class));
+				overridePendingTransition(R.anim.slide_in_up, R.anim.slide_out_up);
+			}
+		});
         //Create a button that will allow the user to submit the inspection
         Button submitInspection =(Button)findViewById(R.id.inspectiondone);
         //Receiving the intent and the passed index for the location of the selected ServiceAddress from the previous activity
@@ -53,7 +64,11 @@ public class EquipmentScreen extends Activity {
 	    if (locationIndex != -1) {
 	    	EquipmentControl.getInstance().setLocation(locationIndex);
 	    }
-        
+        if (EquipmentControl.getInstance().getLocation().m_floors.size()==1)
+        {
+        	swiperight.setVisibility(View.GONE);
+        	swipeleft.setVisibility(View.GONE);
+        }
         //This scanner object is created so that its listener is running during this activity
         Scanner scanner = new Scanner();
         
@@ -303,9 +318,15 @@ public class EquipmentScreen extends Activity {
 	        	
 	        	Button checkOrX = new Button(this);
 	        	if (EquipmentControl.getInstance().getDevice().isComplete()) {
+	        		checkOrX.setBackgroundResource(R.drawable.complete);
+	        		checkOrX.setTextColor(Color.WHITE);
+	        		checkOrX.setTypeface(null, Typeface.BOLD);
 	        		checkOrX.setText("Complete");
 	        	}
 	        	else {
+	        		checkOrX.setBackgroundResource(R.drawable.incomplete);
+	        		checkOrX.setTypeface(null, Typeface.BOLD);
+	        		checkOrX.setTextColor(Color.WHITE);
 	        		checkOrX.setText("Incomplete");
 	        	}
 	        	
