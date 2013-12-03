@@ -86,6 +86,15 @@ public class ClientScreen extends Activity {
 					overridePendingTransition(R.anim.slide_out_right, R.anim.slide_in_right);
 				}
 			});
+			}
+			//Create a listener for when the back button is pressed
+			back.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					finish();
+					overridePendingTransition(R.anim.slide_out_right, R.anim.slide_in_right);
+				}
+			});
 		}
 		
 		//Each client will have a new button created for them and will be displayed in the screen. These buttons will all be 

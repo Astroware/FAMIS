@@ -74,4 +74,24 @@ public class EquipmentControl {
 	public int getInspectionElementListSize() {
 		return device.m_inspectionElements.size();
 	}
+	
+	public boolean checkDevice(int num) {
+		for (int i=0; i<getFloorListSize(); i++) {
+			setFloor(i);
+			
+			for (int j=0; j<getRoomListSize(); j++) {
+				setRoom(j);
+				
+				for (int k=0; k<getDeviceListSize(); k++) {
+					setDevice(k);
+					
+					if (getDevice().getId() == num) {
+						return true;
+					}
+				}
+			}
+		}
+		
+		return false;
+	}
 }

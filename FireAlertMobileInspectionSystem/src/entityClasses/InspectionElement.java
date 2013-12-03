@@ -63,42 +63,65 @@ public class InspectionElement {
 			return Result.EMPTY;
 		}
 		
-		if(result.equalsIgnoreCase("PASS"))
+		else if(result.equalsIgnoreCase("PASS"))
 		{
 			return Result.PASS;
 		}
 		
-		if(result.equalsIgnoreCase("FAIL"))
+		else if(result.equalsIgnoreCase("FAIL"))
 		{
 			return Result.FAIL;
 		}
 		
-		if(result.equalsIgnoreCase("GOOD"))
+		else if(result.equalsIgnoreCase("GOOD"))
 		{
 			return Result.GOOD;
 		}
 		
-		if(result.equalsIgnoreCase("POOR"))
+		else if(result.equalsIgnoreCase("POOR"))
 		{
 			return Result.POOR;
 		}
 		
-		if(result.equalsIgnoreCase("NA"))
+		else if(result.equalsIgnoreCase("N/A"))
 		{
 			return Result.NA;
 		}
 		
-		if(result.equalsIgnoreCase("YES"))
+		else if(result.equalsIgnoreCase("YES"))
 		{
 			return Result.YES;
 		}
 		
-		if(result.equalsIgnoreCase("NO"))
+		else if(result.equalsIgnoreCase("NO"))
 		{
 			return Result.NO;
 		}
 		else
 			return Result.EMPTY;
+	}
+	
+	public String getResultString() {
+		switch (m_testResult) {
+		case EMPTY:
+			return "";
+		case PASS:
+			return "Pass";
+		case FAIL:
+			return "Fail";
+		case GOOD:
+			return "Good";
+		case POOR:
+			return "Poor";
+		case NA:
+			return "N/A";
+		case YES:
+			return "Yes";
+		case NO:
+			return "No";
+		default:
+			return "";
+		}
 	}
 	
 	//---------------------------------gets---------------------------------------------
