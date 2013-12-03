@@ -78,15 +78,7 @@ public class ClientScreen extends Activity {
 				}
 			});
 			}
-			//Create a listener for when the back button is pressed
-			back.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					finish();
-					overridePendingTransition(R.anim.slide_out_right, R.anim.slide_in_right);
-				}
-			});
-			}
+			
 			//Create a listener for when the back button is pressed
 			back.setOnClickListener(new View.OnClickListener() {
 				@Override
