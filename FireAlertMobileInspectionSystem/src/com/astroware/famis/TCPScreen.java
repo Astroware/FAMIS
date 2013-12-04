@@ -90,10 +90,14 @@ public class TCPScreen extends Activity {
 	}
 	
 	public void setConnectBtnFalse() {
+		portNumText.setClickable(false);
+		ipAddressText.setClickable(false);
 		this.connectButton.setEnabled(false);
 	}
 
 	public void setConnectBtnTrue() {
+		portNumText.setClickable(true);
+		ipAddressText.setClickable(true);
 		this.connectButton.setEnabled(true);
 	}
 	

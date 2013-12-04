@@ -61,7 +61,7 @@ public class AccountManagementScreenv3 extends Activity {
 	Button home = (Button)findViewById(R.id.accounthome);
 	Button search = (Button)findViewById(R.id.accountsearch);
 	Button add = (Button)findViewById(R.id.accountlistadd);
-	
+	search.setVisibility(View.INVISIBLE);
 	back.setOnClickListener(new View.OnClickListener() {
 		@Override
 		public void onClick(View v) {
@@ -82,12 +82,6 @@ public class AccountManagementScreenv3 extends Activity {
 		}
 	});
 	
-	search.setOnClickListener(new View.OnClickListener() {
-		@Override
-		public void onClick(View v) {
-		}
-	});
-
     
 	add.setOnClickListener(new View.OnClickListener() {
 		@Override

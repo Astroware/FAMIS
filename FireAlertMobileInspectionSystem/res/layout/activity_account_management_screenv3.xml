@@ -28,29 +28,13 @@
         android:layout_height="match_parent"
         android:layout_alignBottom="@+id/accountback"
         android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/editText1"
+        android:layout_toLeftOf="@+id/accountsearch"
         android:layout_toRightOf="@+id/accountback"
-        android:text="Account List"
         android:gravity="center"
+        android:text="Account List"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColor="@android:color/white"
         android:textSize="20sp" />
-
-    <EditText
-        android:id="@+id/editText1"
-        android:layout_width="100dp"
-        android:layout_height="25dp"
-        android:layout_alignBottom="@+id/accountsearch"
-        android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/accountsearch"
-        android:background="@drawable/searchbar"
-        android:ems="10"
-        android:gravity="center"
-        android:hint="Search Accounts"
-        android:paddingLeft="2dp"
-        android:singleLine="true"
-        android:textColorHint="@android:color/black"
-        android:textSize="12sp" />
 
     <Button
         android:id="@+id/accounthome"
