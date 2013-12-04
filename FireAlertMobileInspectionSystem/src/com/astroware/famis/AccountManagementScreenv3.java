@@ -2,6 +2,8 @@ package com.astroware.famis;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -10,6 +12,7 @@ import org.xml.sax.SAXException;
 
 import controlClasses.AccountControl;
 import controlClasses.DigitsToPixels;
+import controlClasses.PasswordHash;
 import entityClasses.Inspector;
 
 import android.os.Bundle;
@@ -42,6 +45,10 @@ public class AccountManagementScreenv3 extends Activity {
 	private ArrayList<Button> accountButtons;
 	private ArrayList<Button> updateAccountButtons;
 	private ArrayList<Button> deleteAccountButtons;
+	EditText field1;
+	EditText field2;
+	EditText field3;
+	EditText field4;
 	
 	Point p;
 	
@@ -219,39 +226,51 @@ public class AccountManagementScreenv3 extends Activity {
 	   // Some offset to align the popup a bit to the right, and a bit down, relative to button's position.
 	   int OFFSET_X = 0;
 	   int OFFSET_Y = 60;
-	   final EditText field1 = (EditText)findViewById(R.id.field1);
-	   final EditText field2 = (EditText)findViewById(R.id.field2);
-	   final EditText field3 = (EditText)findViewById(R.id.field3);
-	   final EditText field4 = (EditText)findViewById(R.id.field4);
+	   field1 = (EditText)layout.findViewById(R.id.field1);
+	   field2 = (EditText)layout.findViewById(R.id.field2);
+	   field3 = (EditText)layout.findViewById(R.id.field3);
+	   field4 = (EditText)layout.findViewById(R.id.field4);
 	   // Clear the default translucent background
 	   popup.setBackgroundDrawable(getBaseContext().getWallpaper());
 	   // Displaying the popup at the specified location, + offsets.
 	   popup.showAtLocation(layout, Gravity.NO_GRAVITY, p.x + OFFSET_X, p.y + OFFSET_Y);
 	 
 	   // Getting a reference to Close button, and close the popup when clicked.
-	   Button close = (Button)findViewById(R.id.close);
-	   close.setOnClickListener(new OnClickListener() {
-	     @Override
-	     public void onClick(View v) {
-		  try {
-			AccountControl.addInspector(field1.getText().toString(), field2.getText().toString(), field3.getText().toString(), field4.getText().toString(), false);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SAXException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	       popup.dismiss();
-	       createButtons();
-	     }
+	   Button close = (Button) layout.findViewById(R.id.close);
+	   close.setOnClickListener(new OnClickListener(){
+		 @Override
+		 public void onClick(View v) {
+			 String password = field4.getText().toString();
+			 String hashedpassword = "";
+			 try {
+				hashedpassword = PasswordHash.createHash(password);
+			} catch (NoSuchAlgorithmException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (InvalidKeySpecException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			 
+			 try {
+				AccountControl.addInspector(field1.getText().toString(), field2.getText().toString(), field3.getText().toString(), hashedpassword, false);
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SAXException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ParserConfigurationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			 popup.dismiss();
+			 createButtons();
+		 }
 	   });
+	   
 	}
-
 }
