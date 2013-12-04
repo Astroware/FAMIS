@@ -196,21 +196,7 @@ public class EquipmentScreen extends Activity {
 						alertDialog.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int which) {
 							Toast.makeText(getApplicationContext(), "Submitting the Inspection", Toast.LENGTH_SHORT).show();
-							try {
-									EquipmentControl.getInstance().submitInspection();
-							} catch (FileNotFoundException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							} catch (SAXException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							} catch (IOException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							} catch (ParserConfigurationException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
+							
 								AlertDialog.Builder alertTCP = new AlertDialog.Builder(EquipmentScreen.this);
 								// Setting Dialog Title
 								alertTCP.setTitle("Send to TCP");
