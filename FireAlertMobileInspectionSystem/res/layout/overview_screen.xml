@@ -41,4 +41,20 @@
         android:textColor="@android:color/white"
         android:textSize="20sp" />
 
+    <Button
+        android:id="@+id/overbackview"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/backbutton" />
+
+    <Button
+        android:id="@+id/overhomeview"
+        android:layout_width="40.5dp"
+        android:layout_height="40.5dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:background="@drawable/home_button" />
+
 </RelativeLayout>

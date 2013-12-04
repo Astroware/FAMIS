@@ -124,14 +124,6 @@
       android:layout_centerHorizontal="true"
       android:layout_marginBottom="39dp"
       android:background="@drawable/submit_button" />
-      
-      <Button
-      android:id="@+id/extinguisherhome"
-      android:layout_width="40.5dp"
-      android:layout_height="40.5dp"
-      android:layout_alignParentBottom="true"
-      android:layout_alignParentLeft="true"
-      android:background="@drawable/home_button" />
 
 
 </RelativeLayout>

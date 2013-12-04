@@ -49,6 +49,7 @@ public class EquipmentScreen extends Activity {
         Button swiperight = (Button)findViewById(R.id.swiperight);
         Button swipeleft = (Button)findViewById(R.id.swipeleft);
         Button overview = (Button)findViewById(R.id.overviewbutton);
+        Button home = (Button)findViewById(R.id.equipmenthome);
         overview.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -111,6 +112,17 @@ public class EquipmentScreen extends Activity {
 				// TODO Auto-generated method stub
 				finish();
 			    overridePendingTransition(R.anim.slide_out_right, R.anim.slide_in_right);
+			}
+		});
+		
+		home.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				//overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_right);
+				Intent intent = new Intent(EquipmentScreen.this, ClientScreen.class);
+			    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			    startActivity(intent);
+			    
 			}
 		});
 		swiperight.setOnClickListener(new View.OnClickListener() {

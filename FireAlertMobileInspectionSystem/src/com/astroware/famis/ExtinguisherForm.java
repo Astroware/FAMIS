@@ -53,6 +53,7 @@ public class ExtinguisherForm extends Activity {
 		setContentView(R.layout.activity_extinguisher_form);
 		back = (Button)findViewById(R.id.buttonback);
 		submit = (Button)findViewById(R.id.btnsubmitform);
+		
 		notes= new ArrayList<EditText>();
 		column1= new ArrayList<Button>();
 		column2= new ArrayList<Button>();

@@ -41,6 +41,9 @@ public class ClientScreen extends Activity {
 			//Create a button that allows the user to search through the list for a specified search requirement
 			Button search = (Button)findViewById(R.id.buttonsearch);
 			
+			//button to go to the account screen
+			Button account = (Button)findViewById(R.id.newtemp);
+			
 			searchbar= (EditText)findViewById(R.id.searchbar);
 			Boolean flag = true;
 			System.out.println("what");
@@ -85,6 +88,14 @@ public class ClientScreen extends Activity {
 				public void onClick(View v) {
 					finish();
 					overridePendingTransition(R.anim.slide_out_right, R.anim.slide_in_right);
+				}
+			});
+			
+			//create listener for when account button is pressed
+			account.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					startActivity(new Intent (ClientScreen.this, AccountManagementScreenv3.class));	
 				}
 			});
 		}

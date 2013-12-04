@@ -33,7 +33,7 @@ public class LoginScreen extends Activity {
         passwordBox = (EditText) findViewById(R.id.editTextpassword);
         //Creating submit button
         Button btn = (Button)findViewById(R.id.btnsubmit);
-        Button back = (Button)findViewById(R.id.button1);
+        Button back = (Button)findViewById(R.id.overviewhome);
         
      	//Click Listener that listen for the submit button
         btn.setOnClickListener(new View.OnClickListener() {

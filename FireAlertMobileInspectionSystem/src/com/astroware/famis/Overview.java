@@ -3,6 +3,7 @@ package com.astroware.famis;
 import controlClasses.EquipmentControl;
 import entityClasses.ServiceAddress;
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -20,6 +21,30 @@ public class Overview extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.overview_screen);
+		
+		Button back = (Button)findViewById(R.id.overbackview);
+		Button home = (Button)findViewById(R.id.overhomeview);
+		
+		//Button back = (Button)findViewById(R.id.);
+		
+		home.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(Overview.this, ClientScreen.class);
+			    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			    startActivity(intent);
+			}
+		});
+		
+		back.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				finish();
+				overridePendingTransition(R.anim.slide_out_down, R.anim.slide_in_down);
+			}
+		});
+		
 		createTable();
 		
 	}

@@ -101,7 +101,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="44dp"
-        android:background="@drawable/submit_button" />
+        android:background="@drawable/sendresults_button" />
         
         <Button
         android:id="@+id/swipeleft"
@@ -136,8 +136,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="32dp"
-        android:layout_toRightOf="@+id/swipeleft"
-        android:background="@drawable/overview" />
+        android:layout_alignRight="@+id/equipmenttitle"
+        android:layout_alignTop="@+id/equipmenthome"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="5dp"
+        android:layout_toRightOf="@+id/equipmenthome"
+        android:background="@drawable/overviewtest" />
 
 </RelativeLayout>

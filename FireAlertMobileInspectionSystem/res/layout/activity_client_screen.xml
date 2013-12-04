@@ -85,8 +85,8 @@
 
        <Button
            android:id="@+id/newtemp"
-           android:layout_width="40.5dp"
-           android:layout_height="40.5dp"
+           android:layout_width="39dp"
+           android:layout_height="39dp"
            android:layout_alignParentBottom="true"
            android:layout_alignParentLeft="true"
            android:background="@drawable/account_managment_button" />

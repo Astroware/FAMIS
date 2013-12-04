@@ -36,7 +36,7 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="40dp"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/button67"
+        android:layout_alignBottom="@+id/locationback"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:background="@drawable/searchbutton" />
