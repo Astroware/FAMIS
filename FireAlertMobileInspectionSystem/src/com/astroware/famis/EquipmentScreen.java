@@ -50,7 +50,6 @@ public class EquipmentScreen extends Activity {
         Button swipeleft = (Button)findViewById(R.id.swipeleft);
         Button overview = (Button)findViewById(R.id.overviewbutton);
         overview.setOnClickListener(new View.OnClickListener() {
-			
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
@@ -421,6 +420,5 @@ public class EquipmentScreen extends Activity {
     	IMM.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
     	return true;
     }
- 
 }
 

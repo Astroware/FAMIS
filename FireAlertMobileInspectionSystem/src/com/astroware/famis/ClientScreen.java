@@ -10,6 +10,7 @@ import org.xml.sax.SAXException;
 
 import controlClasses.ClientControl;
 import controlClasses.DigitsToPixels;
+import controlClasses.LoginControl;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
@@ -94,6 +95,10 @@ public class ClientScreen extends Activity {
 					startActivity(new Intent (ClientScreen.this, AccountManagementScreenv3.class));
 				}
 			});
+			if (LoginControl.getCurrentInspector().getFlag()==false)
+			{
+				manage.setVisibility(View.GONE);
+			}
 		}
 		
 		//Each client will have a new button created for them and will be displayed in the screen. These buttons will all be 
