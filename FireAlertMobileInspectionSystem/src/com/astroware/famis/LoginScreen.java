@@ -50,7 +50,7 @@ public class LoginScreen extends Activity {
 					 
 					 try {
 						 if(LoginControl.getInspectors().isEmpty())
-						 {
+						{
 							 LoginControl.parseInspectors();
 						 }
 					} catch (FileNotFoundException e) {
@@ -72,28 +72,31 @@ public class LoginScreen extends Activity {
 					 {
 						 if(!(LoginControl.checkLogin(username)))
 							 Toast.makeText(getApplicationContext(), "User Account Does Not Exist", Toast.LENGTH_SHORT).show();
-						 String storedPassword = LoginControl.getCurrentInspector().getPassword();
-						 //Toast.makeText(getApplicationContext(), storedPassword, Toast.LENGTH_LONG).show();
-						 try {
-							 
-							if(PasswordHash.validatePassword(password, storedPassword) == true)
-							{
-								Toast.makeText(getApplicationContext(), ("Entering "+LoginControl.getCurrentInspector().getName()+"'s account"), Toast.LENGTH_SHORT).show();
-								//Move into the next screen state (List of Clients) screen
-								startActivity(new Intent (LoginScreen.this, ClientScreen.class));
-								//Current screen will slide to the left
-								overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
-							}
-							else
-								Toast.makeText(getApplicationContext(), "Incorrect Password", Toast.LENGTH_LONG).show();
-								
-						} catch (NoSuchAlgorithmException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (InvalidKeySpecException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}		
+						 else
+						 {
+							 String storedPassword = LoginControl.getCurrentInspector().getPassword();
+							 //Toast.makeText(getApplicationContext(), storedPassword, Toast.LENGTH_LONG).show();
+							 try {
+								 
+								if(PasswordHash.validatePassword(password, storedPassword) == true)
+								{
+									Toast.makeText(getApplicationContext(), ("Entering "+LoginControl.getCurrentInspector().getName()+"'s account"), Toast.LENGTH_SHORT).show();
+									//Move into the next screen state (List of Clients) screen
+									startActivity(new Intent (LoginScreen.this, ClientScreen.class));
+									//Current screen will slide to the left
+									overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
+								}
+								else
+									Toast.makeText(getApplicationContext(), "Incorrect Password", Toast.LENGTH_LONG).show();
+									
+							} catch (NoSuchAlgorithmException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							} catch (InvalidKeySpecException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}	
+						}
 					 }
 				 }
 				 else

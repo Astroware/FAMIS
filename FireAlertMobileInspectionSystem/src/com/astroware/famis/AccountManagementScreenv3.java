@@ -9,6 +9,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 import controlClasses.AccountControl;
 import controlClasses.DigitsToPixels;
+import controlClasses.LoginControl;
 import controlClasses.PasswordHash;
 import entityClasses.Inspector;
 import android.os.Bundle;
@@ -89,7 +90,7 @@ public class AccountManagementScreenv3 extends Activity {
 		@Override
 		public void onClick(View v) {
 			if (p != null)
-				showPopup(AccountManagementScreenv3.this, p);
+				showPopup(AccountManagementScreenv3.this, p, "add", 0);
 		}
 	});
 	
@@ -143,13 +144,16 @@ public class AccountManagementScreenv3 extends Activity {
 				deleteAccountButtons.add(delete);
 				tl.addView(accountRow);
 				final int j=i;
+				
+				
 				update.setOnClickListener(new View.OnClickListener() {			
 					@Override
 					public void onClick(View v) {
-						//PopupWindow updating = new PopupWindow();
-						//
+						if (p != null)
+							showPopup(AccountManagementScreenv3.this, p, "update", j);
 					}
 				});
+				
 				
 				delete.setOnClickListener(new View.OnClickListener() {	
 					@Override
@@ -225,7 +229,7 @@ public class AccountManagementScreenv3 extends Activity {
 	}
 	 
 	// The method that displays the popup.
-	private void showPopup(final Activity context, Point p) {
+	private void showPopup(final Activity context, Point p, final String type, final int j) {
 
 	 
 	   // Inflate the popup_layout.xml
@@ -250,6 +254,14 @@ public class AccountManagementScreenv3 extends Activity {
 	   field2 = (EditText)layout.findViewById(R.id.field2);
 	   field3 = (EditText)layout.findViewById(R.id.field3);
 	   field4 = (EditText)layout.findViewById(R.id.field4);
+	   field4.setVisibility(View.VISIBLE);
+	   if (type.equals("update"))
+	   {
+		   field1.setText(LoginControl.getInspectors().get(j).getId());
+		   field2.setText(LoginControl.getInspectors().get(j).getName());
+		   field3.setText(LoginControl.getInspectors().get(j).getUsername());
+		   field4.setVisibility(View.GONE);
+	   }
 	   // Clear the default translucent background
 	   popup.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
 	   // Displaying the popup at the specified location, + offsets.
@@ -260,37 +272,59 @@ public class AccountManagementScreenv3 extends Activity {
 	   close.setOnClickListener(new OnClickListener(){
 		 @Override
 		 public void onClick(View v) {
-			 String password = field4.getText().toString();
-			 String hashedpassword = "";
-			 try {
-				hashedpassword = PasswordHash.createHash(password);
-			} catch (NoSuchAlgorithmException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (InvalidKeySpecException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			 
-			 try {
-				AccountControl.addInspector(field1.getText().toString(), field2.getText().toString(), field3.getText().toString(), hashedpassword, false);
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (SAXException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (ParserConfigurationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			 popup.dismiss();
-			 createButtons();
-		 }
+			 if (type.equals("add")) {
+				 String password = field4.getText().toString();
+				 String hashedpassword = "";
+				 try {
+					hashedpassword = PasswordHash.createHash(password);
+				} catch (NoSuchAlgorithmException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (InvalidKeySpecException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				 
+				 try {
+					AccountControl.addInspector(field1.getText().toString(), field2.getText().toString(), field3.getText().toString(), hashedpassword, false);
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (SAXException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (ParserConfigurationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				 popup.dismiss();
+				 createButtons();
+			 }
+			 else
+			 {
+				 try {
+						AccountControl.modifyInspector(j,field1.getText().toString(), field2.getText().toString(), field3.getText().toString(), LoginControl.getInspectors().get(j).getPassword(), false);
+					} catch (FileNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (SAXException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (ParserConfigurationException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					 popup.dismiss();
+					 createButtons();
+			 }
+	     }
 	   });
-	   
+   
 	}
 }
