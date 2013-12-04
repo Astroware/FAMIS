@@ -337,7 +337,7 @@ public class ExtinguisherForm extends Activity {
 		failtitle.setTextSize(20);
 		failtitle.setTypeface(null, Typeface.BOLD_ITALIC);
 		TextView titlenotes2 = new TextView(this);
-		titlenotes2.setText("Notes");
+		titlenotes2.setText("Note");
 	 	titlenotes2.setGravity(android.view.Gravity.CENTER);
 		titlenotes2.setTextSize(20);
 		titlenotes2.setTypeface(null, Typeface.BOLD_ITALIC);
@@ -419,89 +419,73 @@ public class ExtinguisherForm extends Activity {
 	private void createEmergencyLightTable() {
 		title.setText("Emergency Light " + EquipmentControl.getInstance().getDevice().getId() + " Form");
 		TableLayout tl = (TableLayout)findViewById(R.id.inspectionelementtable);
-		tl.removeAllViewsInLayout();
 		LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT);
+		tl.removeAllViewsInLayout();
 		LayoutParams lprow =  new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT, 1f);
-		LayoutParams buttonParams = new LayoutParams(DigitsToPixels.dpToPixel(50, getBaseContext()),DigitsToPixels.dpToPixel(50, getBaseContext()));TableRow titlerow = new TableRow(this);
-		TableRow titleRow = new TableRow(this);
-		TextView titlename = new TextView(this);
-		titlename.setText("Test Name");
-	 	titlename.setGravity(android.view.Gravity.CENTER);
-		titlename.setTextSize(15);
-		titlename.setTypeface(null, Typeface.BOLD_ITALIC);
-		TextView good = new TextView(this);
-	 	good.setGravity(android.view.Gravity.CENTER);
-		good.setText("Good");
-		good.setTextSize(15);
-		good.setTypeface(null, Typeface.BOLD_ITALIC);
-		TextView poor = new TextView(this);
-		poor.setText("Poor");
-	 	poor.setGravity(android.view.Gravity.CENTER);
-		poor.setTextSize(15);
-		poor.setTypeface(null, Typeface.BOLD_ITALIC);
-		TextView titlena = new TextView(this);
-		titlena.setText("N/A");
-	 	titlena.setGravity(android.view.Gravity.CENTER);
-		titlena.setTextSize(15);
-		titlena.setTypeface(null, Typeface.BOLD_ITALIC);
-		TextView titlenotes = new TextView(this);
-		titlenotes.setText("Note");
-	 	titlenotes.setGravity(android.view.Gravity.CENTER);
-		titlenotes.setTextSize(15);
-		titlenotes.setTypeface(null, Typeface.BOLD_ITALIC);
-		titleRow.addView(titlename, lprow);
-		titleRow.addView(good, lprow);
-		titleRow.addView(poor, lprow);
-		titleRow.addView(titlena, lprow);
-		titleRow.addView(titlenotes, lprow);
-		tl.addView(titleRow, lprow);
-		
-	    System.out.println("After CreateTable!");
-		// TODO Auto-generated method stub
+		LayoutParams buttonParams = new LayoutParams(DigitsToPixels.dpToPixel(50, getBaseContext()),DigitsToPixels.dpToPixel(50, getBaseContext()));
+		TableRow titleRow2 = new TableRow(this);
+		TextView titlename2 = new TextView(this);
+		titlename2.setText("Test Name");
+	 	titlename2.setGravity(android.view.Gravity.CENTER);
+		titlename2.setTextSize(20);
+		titlename2.setTypeface(null, Typeface.BOLD_ITALIC);
+		TextView pass = new TextView(this);
+	 	pass.setGravity(android.view.Gravity.CENTER);
+		pass.setText("Yes");
+		pass.setTextSize(20);
+		pass.setTypeface(null, Typeface.BOLD_ITALIC);
+		TextView failtitle = new TextView(this);
+		failtitle.setText("No");
+	 	failtitle.setGravity(android.view.Gravity.CENTER);
+		failtitle.setTextSize(20);
+		failtitle.setTypeface(null, Typeface.BOLD_ITALIC);
+		TextView titlenotes2 = new TextView(this);
+		titlenotes2.setText("Note");
+	 	titlenotes2.setGravity(android.view.Gravity.CENTER);
+		titlenotes2.setTextSize(20);
+		titlenotes2.setTypeface(null, Typeface.BOLD_ITALIC);
+		titleRow2.addView(titlename2, lprow);
+		titleRow2.addView(pass, lprow);
+		titleRow2.addView(failtitle, lprow);
+		titleRow2.addView(titlenotes2, lprow);
+		tl.addView(titleRow2, lprow);
 		for (int i=0; i<EquipmentControl.getInstance().getInspectionElementListSize(); i++)
 		{
 			TableRow currentRow = new TableRow(this);
 			TextView name = new TextView(this);
 		    System.out.println("textview made:"+i);
 			name.setText(EquipmentControl.getInstance().getInspectionElement(i).getName());
-			name.setWidth(100);
 			check = new Button(this);
-			check.setWidth(DigitsToPixels.dpToPixel(45, getBaseContext()));
+			check.setWidth(DigitsToPixels.dpToPixel(50, getBaseContext()));
 			fail = new Button(this);
-			fail.setWidth(DigitsToPixels.dpToPixel(45, getBaseContext()));
-			na = new Button(this);
-			na.setWidth(DigitsToPixels.dpToPixel(45, getBaseContext()));
+			fail.setWidth(DigitsToPixels.dpToPixel(50, getBaseContext()));
 			EditText inspectionNote = new EditText(this);
 			inspectionNote.setSingleLine(true);
-			inspectionNote.setWidth(DigitsToPixels.dpToPixel(75, getBaseContext()));//c
+			//inspectionNote.setTransformationMethod(null);//c
+			inspectionNote.setWidth(DigitsToPixels.dpToPixel(50, getBaseContext()));//c
 			System.out.println(name.getText());
 			currentRow.addView(name, lprow);
 			currentRow.addView(check, buttonParams);
 			currentRow.addView(fail, buttonParams);
-			currentRow.addView(na, buttonParams);
-			column1.add(check);
-			column2.add(fail);
-			column3.add(na);
+			System.out.println("three views added:"+i);
 			switch (EquipmentControl.getInstance().getInspectionElement(i).getTestResult())
 			{
-			case GOOD:
+			case YES:
 				check.setBackgroundResource(R.drawable.check_box);
 				inspectionNote.setText(EquipmentControl.getInstance().getInspectionElement(i).getTestNote());
 				break;
-			case POOR:
+			case NO:
 				fail.setBackgroundResource(R.drawable.fail_box);
-				inspectionNote.setText(EquipmentControl.getInstance().getInspectionElement(i).getTestNote());
-				break;
-			case NA:
-				na.setBackgroundResource(R.drawable.na_box);
 				inspectionNote.setText(EquipmentControl.getInstance().getInspectionElement(i).getTestNote());
 				break;
 			default:
 				break;
 			}
+			column1.add(check);
+			column2.add(fail);
 			notes.add(inspectionNote);
 			currentRow.addView(inspectionNote, new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT, 2f));
-			tl.addView(currentRow);
+			tl.addView(currentRow,lprow);
 			System.out.println("added current row:"+i);
 			final int j;
 			j = i;
@@ -514,9 +498,7 @@ public class ExtinguisherForm extends Activity {
 					column1.get(j).setWidth(DigitsToPixels.dpToPixel(50, getBaseContext()));
 					column2.get(j).setBackgroundResource(android.R.drawable.btn_default);
 					column2.get(j).setWidth(DigitsToPixels.dpToPixel(50, getBaseContext()));
-					column3.get(j).setBackgroundResource(android.R.drawable.btn_default);
-					column3.get(j).setWidth(DigitsToPixels.dpToPixel(50, getBaseContext()));
-					EquipmentControl.getInstance().getInspectionElement(j).setTestResult(Result.GOOD);
+					EquipmentControl.getInstance().getInspectionElement(j).setTestResult(Result.YES);
 					EquipmentControl.getInstance().getInspectionElement(j).setComplete(true);
 				}
 			});
@@ -529,28 +511,11 @@ public class ExtinguisherForm extends Activity {
 					column2.get(j).setWidth(DigitsToPixels.dpToPixel(50, getBaseContext()));
 					column1.get(j).setBackgroundResource(android.R.drawable.btn_default);
 					column1.get(j).setWidth(DigitsToPixels.dpToPixel(50, getBaseContext()));
-					column3.get(j).setBackgroundResource(android.R.drawable.btn_default);
-					column3.get(j).setWidth(DigitsToPixels.dpToPixel(50, getBaseContext()));
-					EquipmentControl.getInstance().getInspectionElement(j).setTestResult(Result.POOR);
+					EquipmentControl.getInstance().getInspectionElement(j).setTestResult(Result.NO);
 					EquipmentControl.getInstance().getInspectionElement(j).setComplete(true);
 				}
 			});
-	       
-	        column3.get(i).setOnClickListener(new View.OnClickListener() {	
-				@Override
-				public void onClick(View v) {
-					column3.get(j).requestFocus();
-					column3.get(j).setBackgroundResource(R.drawable.na_box);
-					column3.get(j).setWidth(DigitsToPixels.dpToPixel(50, getBaseContext()));
-					column2.get(j).setBackgroundResource(android.R.drawable.btn_default);
-					column2.get(j).setWidth(DigitsToPixels.dpToPixel(50, getBaseContext()));
-					column1.get(j).setBackgroundResource(android.R.drawable.btn_default);
-					column1.get(j).setWidth(DigitsToPixels.dpToPixel(50, getBaseContext()));
-					EquipmentControl.getInstance().getInspectionElement(j).setTestResult(Result.NA);
-					EquipmentControl.getInstance().getInspectionElement(j).setComplete(true);
-				}
-			});
-	        tl.requestFocus();
+	        
 		}
 	}
 

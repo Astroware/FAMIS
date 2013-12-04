@@ -46,8 +46,10 @@ public class TCPScreen extends Activity {
 				//on "connectButton" click
 				connectButton.setOnClickListener(new OnClickListener() {
 					public void onClick(View v) {
-						if (portNumText.getText().toString().trim().length()>0 && ipAddressText.getText().toString().trim().length()>0)
+						if (portNumText.getText().toString().trim().length()>0 && ipAddressText.getText().toString().trim().length()>0) {
+							Toast.makeText(getBaseContext(), "Connecting...", Toast.LENGTH_SHORT).show();
 							_controller.ConnectBtnClick();
+						}
 						else 
 							Toast.makeText(getBaseContext(), "Make sure all text fields are full", Toast.LENGTH_SHORT).show();
 					}
