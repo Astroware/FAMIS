@@ -23,7 +23,6 @@ public class InspectionElement {
 		m_deviceType = deviceType;
 		m_testResult = getResult(result);
 		m_testNote = testNote;
-		m_complete = false;
 		
 		switch (m_deviceType) {
 		case EXTINGUISHER:	
@@ -60,45 +59,55 @@ public class InspectionElement {
 	{
 		if(result.equalsIgnoreCase(""))
 		{
+			m_complete = false;
 			return Result.EMPTY;
 		}
 		
 		else if(result.equalsIgnoreCase("PASS"))
 		{
+			m_complete = true;
 			return Result.PASS;
 		}
 		
 		else if(result.equalsIgnoreCase("FAIL"))
 		{
+			m_complete = false;
 			return Result.FAIL;
 		}
 		
 		else if(result.equalsIgnoreCase("GOOD"))
 		{
+			m_complete = true;
 			return Result.GOOD;
 		}
 		
 		else if(result.equalsIgnoreCase("POOR"))
 		{
+			m_complete = true;
 			return Result.POOR;
 		}
 		
-		else if(result.equalsIgnoreCase("N/A"))
+		else if(result.equalsIgnoreCase("NA"))
 		{
+			m_complete = true;
 			return Result.NA;
 		}
 		
 		else if(result.equalsIgnoreCase("YES"))
 		{
+			m_complete = true;
 			return Result.YES;
 		}
 		
 		else if(result.equalsIgnoreCase("NO"))
 		{
+			m_complete = true;
 			return Result.NO;
 		}
-		else
+		else {
+			m_complete = false;
 			return Result.EMPTY;
+		}
 	}
 	
 	public String getResultString() {

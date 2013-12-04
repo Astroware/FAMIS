@@ -10,6 +10,7 @@ import org.xml.sax.SAXException;
 
 import controlClasses.ClientControl;
 import controlClasses.DigitsToPixels;
+import controlClasses.LoginControl;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
@@ -40,9 +41,8 @@ public class ClientScreen extends Activity {
 			
 			//Create a button that allows the user to search through the list for a specified search requirement
 			Button search = (Button)findViewById(R.id.buttonsearch);
-			
-			//button to go to the account screen
-			Button account = (Button)findViewById(R.id.newtemp);
+			//button to go to the manage accounts screen
+			Button manage = (Button)findViewById(R.id.newtemp);
 			
 			searchbar= (EditText)findViewById(R.id.searchbar);
 			Boolean flag = true;
@@ -91,13 +91,16 @@ public class ClientScreen extends Activity {
 				}
 			});
 			
-			//create listener for when account button is pressed
-			account.setOnClickListener(new View.OnClickListener() {
+			manage.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					startActivity(new Intent (ClientScreen.this, AccountManagementScreenv3.class));	
+					startActivity(new Intent (ClientScreen.this, AccountManagementScreenv3.class));
 				}
 			});
+			if (LoginControl.getCurrentInspector().getFlag()==false)
+			{
+				manage.setVisibility(View.GONE);
+			}
 		}
 		
 		//Each client will have a new button created for them and will be displayed in the screen. These buttons will all be 

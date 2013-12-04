@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/biggerbackground"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/tcptitle"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_weight="0.00"
+        android:text="TCP Connection Screen"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        android:gravity="center"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/portno"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="35dp"
+            android:text="Port Number"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/ipaddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="55dp"
+            android:text="IP address"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <EditText
+            android:id="@+id/portdata"
+            android:layout_width="132dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:ems="10"
+            android:inputType="number"
+            android:hint="Enter Port"/>
+
+        <EditText
+            android:id="@+id/ipdata"
+            android:layout_width="132dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:ems="10"
+            android:inputType="number|text"
+            android:hint="Enter IP" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/connectTCP"
+        android:layout_width="266dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Connect" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/sendTCP"
+        android:layout_width="281dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Send" />
+
+    <Button
+        android:id="@+id/closeTCP"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Close Connection" />
+
+    <Button
+        android:id="@+id/finishTCP"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Finish" />
+
+</LinearLayout>

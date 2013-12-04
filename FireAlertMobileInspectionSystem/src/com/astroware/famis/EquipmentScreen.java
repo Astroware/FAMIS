@@ -51,7 +51,6 @@ public class EquipmentScreen extends Activity {
         Button overview = (Button)findViewById(R.id.overviewbutton);
         Button home = (Button)findViewById(R.id.equipmenthome);
         overview.setOnClickListener(new View.OnClickListener() {
-			
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
@@ -197,10 +196,10 @@ public class EquipmentScreen extends Activity {
 				if(EquipmentControl.getInstance().getLocation().isComplete()) {
 						AlertDialog.Builder alertDialog = new AlertDialog.Builder(EquipmentScreen.this);
 						// Setting Dialog Title
-						alertDialog.setTitle("Submission Confirmation");
+						alertDialog.setTitle("Send Confirmation");
 						
 						// Setting Dialog Message
-						alertDialog.setMessage("Press continue to confirm inspection submission");
+						alertDialog.setMessage("Press continue to send the inspection results over TCP connection");
 						
 						// Setting Icon to Dialog
 						alertDialog.setIcon(R.drawable.overview);
@@ -208,61 +207,17 @@ public class EquipmentScreen extends Activity {
 						// Setting OK Button
 						alertDialog.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int which) {
-							Toast.makeText(getApplicationContext(), "Submitting the Inspection", Toast.LENGTH_SHORT).show();
-							try {
-									EquipmentControl.getInstance().submitInspection();
-									System.out.println("this should be writing");
-							} catch (FileNotFoundException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							} catch (SAXException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							} catch (IOException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							} catch (ParserConfigurationException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
+								startActivity(new Intent(EquipmentScreen.this, TCPScreen.class));
 							}
-								AlertDialog.Builder alertTCP = new AlertDialog.Builder(EquipmentScreen.this);
-								// Setting Dialog Title
-								alertTCP.setTitle("Send to TCP");
-							
-								// Setting Dialog Message
-								alertTCP.setMessage("Would you like to send inspection results over TCP");
-							
-								// Setting Icon to Dialog
-								alertTCP.setIcon(R.drawable.overview);
-							
-								// Setting OK Button
-								alertTCP.setPositiveButton("Send Now", new DialogInterface.OnClickListener() {
-								
-								@Override
-								public void onClick(DialogInterface dialog, int which) {
-									// TODO Auto-generated method stub
-									Toast.makeText(getBaseContext(), "Sending", Toast.LENGTH_SHORT).show();
-								}
-								});
-								alertTCP.setNegativeButton("Not Now", new DialogInterface.OnClickListener() {
-								
-								@Override
-								public void onClick(DialogInterface dialog, int which) {
-									finish();
-								}
-								});
-								alertTCP.show();
-							}
-							});
-							alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-							
-							@Override
+						});
+						
+						alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int which) {
 								
 							}
-							});
-							// Showing Alert Message
-							alertDialog.show();
+						});
+						// Showing Alert Message
+						alertDialog.show();
 				}
 				else {
 					Toast.makeText(getBaseContext(), "Inspection not complete!", Toast.LENGTH_SHORT).show();
@@ -347,17 +302,17 @@ public class EquipmentScreen extends Activity {
 		 	TextView subtitleName = new TextView(this);
 		 	subtitleName.setText("Equipment");
 		 	subtitleName.setGravity(android.view.Gravity.CENTER);
-		 	subtitleName.setTextSize(15);
+		 	subtitleName.setTextSize(13);
 		 	subtitleName.setTypeface(null, Typeface.BOLD);
 		 	TextView subtitleLocation = new TextView(this);
 		 	subtitleLocation.setText("Location");
 		 	subtitleLocation.setGravity(android.view.Gravity.CENTER);
-		 	subtitleLocation.setTextSize(15);
+		 	subtitleLocation.setTextSize(13);
 		 	subtitleLocation.setTypeface(null, Typeface.BOLD);
 		 	TextView subtitlePassOrFail = new TextView(this);
 		 	subtitlePassOrFail.setText("Completed");
 		 	subtitlePassOrFail.setGravity(android.view.Gravity.CENTER);
-		 	subtitlePassOrFail.setTextSize(15);
+		 	subtitlePassOrFail.setTextSize(13);
 		 	subtitlePassOrFail.setTypeface(null, Typeface.BOLD);
 		 	
 		 	//Add the second row to the table layout
@@ -433,6 +388,5 @@ public class EquipmentScreen extends Activity {
     	IMM.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
     	return true;
     }
- 
 }
 
