@@ -523,7 +523,7 @@ public class XMLParse{
 			 TransformerFactory transformerFactory = TransformerFactory.newInstance();
 			  Transformer transformer = transformerFactory.newTransformer();
 			  DOMSource source = new DOMSource(m_doc);
-			  StreamResult streamResult =  new StreamResult(new File(Environment.getDataDirectory(),getInspectorFilePath()));
+			  StreamResult streamResult =  new StreamResult(new File(Environment.getExternalStorageDirectory(),getInspectorFilePath()));
 			  transformer.transform(source, streamResult);
 			} catch (TransformerException e) {
 				// TODO Auto-generated catch block
@@ -565,7 +565,7 @@ public class XMLParse{
 			 TransformerFactory transformerFactory = TransformerFactory.newInstance();
 			  Transformer transformer = transformerFactory.newTransformer();
 			  DOMSource source = new DOMSource(m_doc);
-			  StreamResult streamResult =  new StreamResult(new File(Environment.getDataDirectory(),"InspectionData.xml"));
+			  StreamResult streamResult =  new StreamResult(new File(Environment.getExternalStorageDirectory(),"InspectionData.xml"));
 			  
 				transformer.transform(source, streamResult);
 			} catch (TransformerException e) {
