@@ -18,6 +18,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -223,7 +224,7 @@ public class AccountManagementScreenv3 extends Activity {
 	   field3 = (EditText)layout.findViewById(R.id.field3);
 	   field4 = (EditText)layout.findViewById(R.id.field4);
 	   // Clear the default translucent background
-	   popup.setBackgroundDrawable(getBaseContext().getWallpaper());
+	   popup.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
 	   // Displaying the popup at the specified location, + offsets.
 	   popup.showAtLocation(layout, Gravity.NO_GRAVITY, p.x + OFFSET_X, p.y + OFFSET_Y);
 	 
