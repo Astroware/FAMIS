@@ -335,17 +335,17 @@ public class EquipmentScreen extends Activity {
 		 	TextView subtitleName = new TextView(this);
 		 	subtitleName.setText("Equipment");
 		 	subtitleName.setGravity(android.view.Gravity.CENTER);
-		 	subtitleName.setTextSize(15);
+		 	subtitleName.setTextSize(13);
 		 	subtitleName.setTypeface(null, Typeface.BOLD);
 		 	TextView subtitleLocation = new TextView(this);
 		 	subtitleLocation.setText("Location");
 		 	subtitleLocation.setGravity(android.view.Gravity.CENTER);
-		 	subtitleLocation.setTextSize(15);
+		 	subtitleLocation.setTextSize(13);
 		 	subtitleLocation.setTypeface(null, Typeface.BOLD);
 		 	TextView subtitlePassOrFail = new TextView(this);
 		 	subtitlePassOrFail.setText("Completed");
 		 	subtitlePassOrFail.setGravity(android.view.Gravity.CENTER);
-		 	subtitlePassOrFail.setTextSize(15);
+		 	subtitlePassOrFail.setTextSize(13);
 		 	subtitlePassOrFail.setTypeface(null, Typeface.BOLD);
 		 	
 		 	//Add the second row to the table layout
