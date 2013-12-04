@@ -184,10 +184,10 @@ public class EquipmentScreen extends Activity {
 				if(EquipmentControl.getInstance().getLocation().isComplete()) {
 						AlertDialog.Builder alertDialog = new AlertDialog.Builder(EquipmentScreen.this);
 						// Setting Dialog Title
-						alertDialog.setTitle("Submission Confirmation");
+						alertDialog.setTitle("Send Confirmation");
 						
 						// Setting Dialog Message
-						alertDialog.setMessage("Press continue to confirm inspection submission");
+						alertDialog.setMessage("Press continue to send the inspection results over TCP connection");
 						
 						// Setting Icon to Dialog
 						alertDialog.setIcon(R.drawable.overview);
@@ -195,60 +195,17 @@ public class EquipmentScreen extends Activity {
 						// Setting OK Button
 						alertDialog.setPositiveButton("Continue", new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int which) {
-							Toast.makeText(getApplicationContext(), "Submitting the Inspection", Toast.LENGTH_SHORT).show();
-							try {
-									EquipmentControl.getInstance().submitInspection();
-							} catch (FileNotFoundException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							} catch (SAXException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							} catch (IOException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							} catch (ParserConfigurationException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
+								startActivity(new Intent(EquipmentScreen.this, TCPScreen.class));
 							}
-								AlertDialog.Builder alertTCP = new AlertDialog.Builder(EquipmentScreen.this);
-								// Setting Dialog Title
-								alertTCP.setTitle("Send to TCP");
-							
-								// Setting Dialog Message
-								alertTCP.setMessage("Would you like to send inspection results over TCP");
-							
-								// Setting Icon to Dialog
-								alertTCP.setIcon(R.drawable.overview);
-							
-								// Setting OK Button
-								alertTCP.setPositiveButton("Send Now", new DialogInterface.OnClickListener() {
-								
-								@Override
-								public void onClick(DialogInterface dialog, int which) {
-									// TODO Auto-generated method stub
-									startActivity(new Intent(EquipmentScreen.this, TCPScreen.class));
-								}
-								});
-								alertTCP.setNegativeButton("Not Now", new DialogInterface.OnClickListener() {
-								
-								@Override
-								public void onClick(DialogInterface dialog, int which) {
-									finish();
-								}
-								});
-								alertTCP.show();
-							}
-							});
-							alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-							
-							@Override
+						});
+						
+						alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog, int which) {
 								
 							}
-							});
-							// Showing Alert Message
-							alertDialog.show();
+						});
+						// Showing Alert Message
+						alertDialog.show();
 				}
 				else {
 					Toast.makeText(getBaseContext(), "Inspection not complete!", Toast.LENGTH_SHORT).show();

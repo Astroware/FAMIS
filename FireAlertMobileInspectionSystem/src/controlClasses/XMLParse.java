@@ -553,6 +553,7 @@ public class XMLParse{
 				    
 				    if(checkID.equals(tempID))
 				    {
+				    	((Element)listOfAddresses.item(k)).setAttribute("InspectorID", LoginControl.getCurrentInspector().getId());
 				    	tempLocationNode = ServiceAddressNode;
 				    	break;
 				    }

@@ -3,8 +3,15 @@
 
 package com.astroware.famis;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
+
 import entityClasses.InspectionElement.Result;
 import com.astroware.famis.R;
 import controlClasses.DigitsToPixels;
@@ -63,6 +70,22 @@ public class ExtinguisherForm extends Activity {
 			public void onClick(View v) {
 				writeText();
 				if (EquipmentControl.getInstance().getDevice().isComplete()) {
+					try {
+						EquipmentControl.getInstance().submitInspection();
+						Toast.makeText(getBaseContext(), "submitted results", Toast.LENGTH_SHORT).show();
+				} catch (FileNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (SAXException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (ParserConfigurationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 					finish();
 					overridePendingTransition(R.anim.slide_out_right, R.anim.slide_in_right);
 				}
