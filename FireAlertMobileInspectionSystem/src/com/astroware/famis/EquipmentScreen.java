@@ -3,13 +3,6 @@
 
 package com.astroware.famis;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.xml.sax.SAXException;
-
 import controlClasses.*;
 import android.os.Bundle;
 import android.app.Activity;
