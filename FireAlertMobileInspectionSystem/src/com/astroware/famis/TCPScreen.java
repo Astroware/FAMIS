@@ -43,7 +43,7 @@ public class TCPScreen extends Activity {
 				//on "connectButton" click
 				connectButton.setOnClickListener(new OnClickListener() {
 					public void onClick(View v) {
-						_controller.ConnectBtnClick();	
+						_controller.ConnectBtnClick();
 					}
 				});
 

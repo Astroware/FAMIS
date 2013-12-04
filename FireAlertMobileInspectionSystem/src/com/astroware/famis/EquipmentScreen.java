@@ -199,7 +199,6 @@ public class EquipmentScreen extends Activity {
 							Toast.makeText(getApplicationContext(), "Submitting the Inspection", Toast.LENGTH_SHORT).show();
 							try {
 									EquipmentControl.getInstance().submitInspection();
-									System.out.println("this should be writing");
 							} catch (FileNotFoundException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -229,7 +228,7 @@ public class EquipmentScreen extends Activity {
 								@Override
 								public void onClick(DialogInterface dialog, int which) {
 									// TODO Auto-generated method stub
-									Toast.makeText(getBaseContext(), "Sending", Toast.LENGTH_SHORT).show();
+									startActivity(new Intent(EquipmentScreen.this, TCPScreen.class));
 								}
 								});
 								alertTCP.setNegativeButton("Not Now", new DialogInterface.OnClickListener() {

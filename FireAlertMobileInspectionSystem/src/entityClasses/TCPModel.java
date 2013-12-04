@@ -21,7 +21,6 @@ public class TCPModel {
 	public TCPModel(String IP, int ServerPort) throws IOException {
 		try {
 			ServerIPAdd = InetAddress.getByName(IP);
-			//RTSPsocket = new Socket(ServerIPAdd, ServerPort);
 			RTSPsocket = new Socket();
 			RTSPsocket.connect(new InetSocketAddress(ServerIPAdd, ServerPort), 5000);
 		}
