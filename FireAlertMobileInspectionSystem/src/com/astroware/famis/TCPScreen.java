@@ -10,6 +10,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class TCPScreen extends Activity {
 	private Button connectButton;
@@ -45,7 +46,10 @@ public class TCPScreen extends Activity {
 				//on "connectButton" click
 				connectButton.setOnClickListener(new OnClickListener() {
 					public void onClick(View v) {
-						_controller.ConnectBtnClick();
+						if (portNumText.getText().toString().trim().length()>0 && ipAddressText.getText().toString().trim().length()>0)
+							_controller.ConnectBtnClick();
+						else 
+							Toast.makeText(getBaseContext(), "Make sure all text fields are full", Toast.LENGTH_SHORT).show();
 					}
 				});
 

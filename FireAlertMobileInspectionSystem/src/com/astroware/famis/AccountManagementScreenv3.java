@@ -35,6 +35,8 @@ import android.widget.TableRow.LayoutParams;
 import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class AccountManagementScreenv3 extends Activity {
 
@@ -45,6 +47,7 @@ public class AccountManagementScreenv3 extends Activity {
 	EditText field2;
 	EditText field3;
 	EditText field4;
+	TextView passwordtitle;
 	
 	Point p;
 	
@@ -254,6 +257,7 @@ public class AccountManagementScreenv3 extends Activity {
 	   field2 = (EditText)layout.findViewById(R.id.field2);
 	   field3 = (EditText)layout.findViewById(R.id.field3);
 	   field4 = (EditText)layout.findViewById(R.id.field4);
+	   passwordtitle = (TextView)layout.findViewById(R.id.passwordpopuptitle);
 	   field4.setVisibility(View.VISIBLE);
 	   if (type.equals("update"))
 	   {
@@ -261,6 +265,7 @@ public class AccountManagementScreenv3 extends Activity {
 		   field2.setText(LoginControl.getInspectors().get(j).getName());
 		   field3.setText(LoginControl.getInspectors().get(j).getUsername());
 		   field4.setVisibility(View.GONE);
+		   passwordtitle.setVisibility(View.GONE);
 	   }
 	   // Clear the default translucent background
 	   popup.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
@@ -272,7 +277,10 @@ public class AccountManagementScreenv3 extends Activity {
 	   close.setOnClickListener(new OnClickListener(){
 		 @Override
 		 public void onClick(View v) {
-			 if (type.equals("add")) {
+	     if (field1.getText().toString().trim().length()>0 &&
+	         field2.getText().toString().trim().length()>0 &&
+	         field3.getText().toString().trim().length()>0){
+			 if (type.equals("add") && field4.getText().toString().trim().length()>0) {
 				 String password = field4.getText().toString();
 				 String hashedpassword = "";
 				 try {
@@ -303,7 +311,7 @@ public class AccountManagementScreenv3 extends Activity {
 				 popup.dismiss();
 				 createButtons();
 			 }
-			 else
+			 else if (type.equals("update"))
 			 {
 				 try {
 						AccountControl.modifyInspector(j,field1.getText().toString(), field2.getText().toString(), field3.getText().toString(), LoginControl.getInspectors().get(j).getPassword(), false);
@@ -323,7 +331,16 @@ public class AccountManagementScreenv3 extends Activity {
 					 popup.dismiss();
 					 createButtons();
 			 }
+			 else 
+			 {
+				 Toast.makeText(getBaseContext(), "Ensure all fields are Completed", Toast.LENGTH_SHORT).show();
+			 }
 	     }
+	     else 
+		 {
+			 Toast.makeText(getBaseContext(), "Ensure all fields are Completed", Toast.LENGTH_SHORT).show();
+		 }
+		 }
 	   });
    
 	}

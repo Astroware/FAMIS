@@ -50,7 +50,7 @@
             android:layout_marginLeft="10dp"
             android:ems="10"
             android:inputType="number"
-            android:text="Enter Port" />
+            android:hint="Enter Port"/>
 
         <EditText
             android:id="@+id/ipdata"
@@ -59,7 +59,7 @@
             android:layout_marginLeft="20dp"
             android:ems="10"
             android:inputType="number|text"
-            android:text="Enter IP" />
+            android:hint="Enter IP" />
 
     </LinearLayout>
 
