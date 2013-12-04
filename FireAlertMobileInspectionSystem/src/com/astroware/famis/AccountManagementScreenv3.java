@@ -13,7 +13,9 @@ import controlClasses.PasswordHash;
 import entityClasses.Inspector;
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -152,26 +154,50 @@ public class AccountManagementScreenv3 extends Activity {
 				delete.setOnClickListener(new View.OnClickListener() {	
 					@Override
 					public void onClick(View v) {
-						try {
-							AccountControl.deleteInspector(j);
-						} catch (FileNotFoundException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (SAXException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (ParserConfigurationException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						createButtons();
+						AlertDialog.Builder alertdelete = new AlertDialog.Builder(AccountManagementScreenv3.this);
+						// Setting Dialog Title
+						alertdelete.setTitle("Confirmation");
+					
+						// Setting Dialog Message
+						alertdelete.setMessage("Are you sure you would like to Delete the Account");
+					
+						// Setting Icon to Dialog
+						alertdelete.setIcon(R.drawable.overview);
+					
+						// Setting OK Button
+						alertdelete.setPositiveButton("Delete Account", new DialogInterface.OnClickListener() {
+						
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							// TODO Auto-generated method stub
+							try {
+								AccountControl.deleteInspector(j);
+								} catch (FileNotFoundException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (SAXException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (IOException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								} catch (ParserConfigurationException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+							}
+						});
+						alertdelete.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {					
+							@Override
+							public void onClick(DialogInterface dialog, int which) 
+							{		
+							}
+						});
+						alertdelete.show();
+						
 					}
 				});
 			}
-		
 		}
 
 	@Override
