@@ -3,6 +3,7 @@ package com.astroware.famis;
 import controlClasses.TCPController;
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -14,6 +15,7 @@ public class TCPScreen extends Activity {
 	private Button connectButton;
 	private Button sendButton;
 	private Button disconnectButton;
+	private Button finishButton;
 
 	private EditText portNumText;
 	private EditText ipAddressText;
@@ -30,7 +32,7 @@ public class TCPScreen extends Activity {
 				connectButton = (Button)findViewById(R.id.connectTCP);
 				sendButton = (Button)findViewById(R.id.sendTCP);
 				disconnectButton = (Button)findViewById(R.id.closeTCP);
-		 
+				finishButton = (Button)findViewById(R.id.finishTCP);
 				portNumText = (EditText)findViewById(R.id.portdata);
 				ipAddressText = (EditText)findViewById(R.id.ipdata);
 
@@ -61,6 +63,15 @@ public class TCPScreen extends Activity {
 						_controller.DisconnectBtnClick();
 					}
 				});
+				
+				finishButton.setOnClickListener(new OnClickListener() {
+					public void onClick(View v) {
+						Intent intent = new Intent(TCPScreen.this, ClientScreen.class);
+					    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					    startActivity(intent);
+					}
+				});
+				
 	}
 	public String GetServerIP() {
 		return this.ipAddressText.getText().toString();
@@ -97,6 +108,15 @@ public class TCPScreen extends Activity {
 	public void setDisconnectBtnFalse() {
 		this.disconnectButton.setEnabled(false);
 	}
+	
+	public void setFinishBtnTrue() {
+		this.finishButton.setEnabled(true);
+	}
+	
+	public void setFinishBtnFalse() {
+		this.finishButton.setEnabled(false);
+	}
+	
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
