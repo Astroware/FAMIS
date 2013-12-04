@@ -464,7 +464,7 @@ public class XMLParse{
 	  }
 	  public static void addInspector(Inspector ins)
 	  {  
-		  Element newInspector = m_doc.createElement("Inspector");
+		  	Element newInspector = m_doc.createElement("Inspector");
 			
 			NodeList root = m_doc.getElementsByTagName("InspectorList");
 			root.item(0).appendChild(newInspector);
@@ -483,7 +483,7 @@ public class XMLParse{
 			Password.appendChild(Passwordtext);
 			Element Flag = m_doc.createElement("FranchFlag");
 			Text Flagtext = m_doc.createTextNode(ins.getFlag()+"");
-			Password.appendChild(Flagtext);
+			Flag.appendChild(Flagtext);
 			
 			newInspector.appendChild(ID);
 			newInspector.appendChild(Name);
@@ -523,7 +523,7 @@ public class XMLParse{
 			 TransformerFactory transformerFactory = TransformerFactory.newInstance();
 			  Transformer transformer = transformerFactory.newTransformer();
 			  DOMSource source = new DOMSource(m_doc);
-			  StreamResult streamResult =  new StreamResult(new File(Environment.getDataDirectory(),getInspectorFilePath()));
+			  StreamResult streamResult =  new StreamResult(new File(Environment.getExternalStorageDirectory(),getInspectorFilePath()));
 			  transformer.transform(source, streamResult);
 			} catch (TransformerException e) {
 				// TODO Auto-generated catch block
@@ -565,7 +565,7 @@ public class XMLParse{
 			 TransformerFactory transformerFactory = TransformerFactory.newInstance();
 			  Transformer transformer = transformerFactory.newTransformer();
 			  DOMSource source = new DOMSource(m_doc);
-			  StreamResult streamResult =  new StreamResult(new File(Environment.getDataDirectory(),"InspectionData.xml"));
+			  StreamResult streamResult =  new StreamResult(new File(Environment.getExternalStorageDirectory(),"InspectionData.xml"));
 			  
 				transformer.transform(source, streamResult);
 			} catch (TransformerException e) {

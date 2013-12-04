@@ -28,7 +28,6 @@ public class LoginScreen extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_screen);
-        System.out.println("here");
         usernameBox = (EditText) findViewById(R.id.editTextusername);
         passwordBox = (EditText) findViewById(R.id.editTextpassword);
         //Creating submit button
