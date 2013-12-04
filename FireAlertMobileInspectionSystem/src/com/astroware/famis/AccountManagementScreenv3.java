@@ -159,7 +159,7 @@ public class AccountManagementScreenv3 extends Activity {
 						alertdelete.setTitle("Confirmation");
 					
 						// Setting Dialog Message
-						alertdelete.setMessage("Are you sure you would like to Delete the Account");
+						alertdelete.setMessage("Are you sure you would like to delete this account?");
 					
 						// Setting Icon to Dialog
 						alertdelete.setIcon(R.drawable.overview);
@@ -185,6 +185,7 @@ public class AccountManagementScreenv3 extends Activity {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
 								}
+							createButtons();
 							}
 						});
 						alertdelete.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {					
