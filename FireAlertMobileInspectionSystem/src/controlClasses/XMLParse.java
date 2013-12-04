@@ -4,10 +4,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
 
 import org.w3c.dom.*;
+
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.ParserConfigurationException;
@@ -16,7 +19,9 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+
 import org.xml.sax.SAXException;
+
 import android.os.Environment;
 import entityClasses.Client;
 import entityClasses.Device;
@@ -555,6 +560,7 @@ public class XMLParse{
 				    if(checkID.equals(tempID))
 				    {
 				    	((Element)listOfAddresses.item(k)).setAttribute("InspectorID", LoginControl.getInstance().getCurrentInspector().getId());
+				    	((Element)listOfAddresses.item(k)).setAttribute("testTimeStamp", getTimeStamp());
 				    	tempLocationNode = ServiceAddressNode;
 				    	break;
 				    }
@@ -662,5 +668,13 @@ public class XMLParse{
 			
 			return null;
 		 
+	  }
+	  
+	  public static String getTimeStamp()
+	  {
+		  Date date = new Date();
+		  Timestamp dateString = new Timestamp(date.getTime());
+		  String tempDateString = dateString.toGMTString();
+		  return tempDateString;
 	  }
 }
