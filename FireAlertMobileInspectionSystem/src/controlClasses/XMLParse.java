@@ -1,9 +1,12 @@
 package controlClasses;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
+
 import org.w3c.dom.*;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
@@ -640,5 +643,22 @@ public class XMLParse{
 				  }
 			  }
 		  }
+	  }
+	  
+	  public static String getXMLFile() {
+		
+			FileInputStream inputStream;
+			try {
+				String filePath = Environment.getExternalStorageDirectory() + inspectionDataFilePath;
+				inputStream = new FileInputStream(filePath);
+				Scanner s = new Scanner(inputStream).useDelimiter("\\A");
+				return s.hasNext() ? s.next() : "";
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			return null;
+		 
 	  }
 }
