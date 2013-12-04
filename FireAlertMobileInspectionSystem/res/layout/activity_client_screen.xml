@@ -17,7 +17,6 @@
         android:paddingLeft="0dp"
         android:paddingTop="0dp" >
     </Button>
-
     <Button
         android:id="@+id/buttonsearch"
         style="?android:attr/buttonStyleSmall"
@@ -72,5 +71,24 @@
     </TableLayout>
     
     </ScrollView>
+
+       <!--  
+       <Spinner
+           android:id="@+id/spinner1"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_alignParentBottom="true"
+           android:layout_alignTop="@+id/newtemp"
+           android:layout_toLeftOf="@+id/searchbar"
+           android:layout_toRightOf="@+id/clienthome"
+           android:spinnerMode="dropdown" />-->
+
+       <Button
+           android:id="@+id/newtemp"
+           android:layout_width="40.5dp"
+           android:layout_height="40.5dp"
+           android:layout_alignParentBottom="true"
+           android:layout_alignParentLeft="true"
+           android:background="@drawable/account_managment_button" />
     
 </RelativeLayout>

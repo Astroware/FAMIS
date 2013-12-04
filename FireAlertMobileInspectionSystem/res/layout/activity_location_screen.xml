@@ -73,4 +73,13 @@
        android:textColorHint="@android:color/black"
        android:textSize="12sp" />
 
+   <Button
+       android:id="@+id/locationhome"
+       android:layout_width="40.5dp"
+       android:layout_height="40.5dp"
+       android:layout_alignParentBottom="true"
+       android:layout_alignParentLeft="true"
+       android:layout_marginBottom="0dp"
+       android:background="@drawable/home_button" />
+
 </RelativeLayout>
