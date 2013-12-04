@@ -5,16 +5,12 @@ import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
-
 import javax.xml.parsers.ParserConfigurationException;
-
 import org.xml.sax.SAXException;
-
 import controlClasses.AccountControl;
 import controlClasses.DigitsToPixels;
 import controlClasses.PasswordHash;
 import entityClasses.Inspector;
-
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
@@ -22,9 +18,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Typeface;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.text.Layout;
 import android.view.Display;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -38,7 +31,6 @@ import android.widget.TableRow.LayoutParams;
 import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TableRow;
-import android.widget.TextView;
 
 public class AccountManagementScreenv3 extends Activity {
 
