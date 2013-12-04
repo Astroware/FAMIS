@@ -50,7 +50,6 @@ public class EquipmentScreen extends Activity {
         Button swipeleft = (Button)findViewById(R.id.swipeleft);
         Button overview = (Button)findViewById(R.id.overviewbutton);
         overview.setOnClickListener(new View.OnClickListener() {
-			
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
@@ -334,17 +333,17 @@ public class EquipmentScreen extends Activity {
 		 	TextView subtitleName = new TextView(this);
 		 	subtitleName.setText("Equipment");
 		 	subtitleName.setGravity(android.view.Gravity.CENTER);
-		 	subtitleName.setTextSize(15);
+		 	subtitleName.setTextSize(13);
 		 	subtitleName.setTypeface(null, Typeface.BOLD);
 		 	TextView subtitleLocation = new TextView(this);
 		 	subtitleLocation.setText("Location");
 		 	subtitleLocation.setGravity(android.view.Gravity.CENTER);
-		 	subtitleLocation.setTextSize(15);
+		 	subtitleLocation.setTextSize(13);
 		 	subtitleLocation.setTypeface(null, Typeface.BOLD);
 		 	TextView subtitlePassOrFail = new TextView(this);
 		 	subtitlePassOrFail.setText("Completed");
 		 	subtitlePassOrFail.setGravity(android.view.Gravity.CENTER);
-		 	subtitlePassOrFail.setTextSize(15);
+		 	subtitlePassOrFail.setTextSize(13);
 		 	subtitlePassOrFail.setTypeface(null, Typeface.BOLD);
 		 	
 		 	//Add the second row to the table layout
@@ -420,6 +419,5 @@ public class EquipmentScreen extends Activity {
     	IMM.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
     	return true;
     }
- 
 }
 
