@@ -90,4 +90,14 @@
         android:paddingLeft="0dp"
         android:paddingTop="0dp" />
 
+    <Button
+        android:id="@+id/extinguisherhome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textViewpassword"
+        android:layout_alignBottom="@+id/textViewpassword"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/textViewusername"
+        android:background="@drawable/dalmatian" />
+
 </RelativeLayout>
