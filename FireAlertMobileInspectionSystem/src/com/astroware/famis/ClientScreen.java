@@ -97,7 +97,7 @@ public class ClientScreen extends Activity {
 					startActivity(new Intent (ClientScreen.this, AccountManagementScreenv3.class));
 				}
 			});
-			if (LoginControl.getCurrentInspector().getFlag()==false)
+			if (LoginControl.getInstance().getCurrentInspector().getFlag()==false)
 			{
 				manage.setVisibility(View.GONE);
 			}

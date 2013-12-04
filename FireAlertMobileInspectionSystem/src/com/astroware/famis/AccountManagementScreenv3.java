@@ -108,7 +108,7 @@ public class AccountManagementScreenv3 extends Activity {
 			tl.removeAllViewsInLayout();
 			tl.invalidate();
 			ArrayList<Inspector> inspect = new ArrayList<Inspector>();
-			inspect = AccountControl.getInspectorList();
+			inspect = AccountControl.getInstance().getInspectorList();
 			LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT,DigitsToPixels.dpToPixel(50, getBaseContext()), 1f);
 			LayoutParams bp = new LayoutParams(100,DigitsToPixels.dpToPixel(50, getBaseContext()));
 			for (int i=0; i<inspect.size(); i++) {
@@ -172,7 +172,7 @@ public class AccountManagementScreenv3 extends Activity {
 						public void onClick(DialogInterface dialog, int which) {
 							// TODO Auto-generated method stub
 							try {
-								AccountControl.deleteInspector(j);
+								AccountControl.getInstance().deleteInspector(j);
 								} catch (FileNotFoundException e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();
@@ -255,9 +255,9 @@ public class AccountManagementScreenv3 extends Activity {
 	   field4.setVisibility(View.VISIBLE);
 	   if (type.equals("update"))
 	   {
-		   field1.setText(LoginControl.getInspectors().get(j).getId());
-		   field2.setText(LoginControl.getInspectors().get(j).getName());
-		   field3.setText(LoginControl.getInspectors().get(j).getUsername());
+		   field1.setText(LoginControl.getInstance().getInspectors().get(j).getId());
+		   field2.setText(LoginControl.getInstance().getInspectors().get(j).getName());
+		   field3.setText(LoginControl.getInstance().getInspectors().get(j).getUsername());
 		   field4.setVisibility(View.GONE);
 		   passwordtitle.setVisibility(View.GONE);
 	   }
@@ -288,7 +288,7 @@ public class AccountManagementScreenv3 extends Activity {
 				}
 				 
 				 try {
-					AccountControl.addInspector(field1.getText().toString(), field2.getText().toString(), field3.getText().toString(), hashedpassword, false);
+					AccountControl.getInstance().addInspector(field1.getText().toString(), field2.getText().toString(), field3.getText().toString(), hashedpassword, false);
 				} catch (FileNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -308,7 +308,7 @@ public class AccountManagementScreenv3 extends Activity {
 			 else if (type.equals("update"))
 			 {
 				 try {
-						AccountControl.modifyInspector(j,field1.getText().toString(), field2.getText().toString(), field3.getText().toString(), LoginControl.getInspectors().get(j).getPassword(), false);
+						AccountControl.getInstance().modifyInspector(j,field1.getText().toString(), field2.getText().toString(), field3.getText().toString(), LoginControl.getInstance().getInspectors().get(j).getPassword(), false);
 					} catch (FileNotFoundException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();

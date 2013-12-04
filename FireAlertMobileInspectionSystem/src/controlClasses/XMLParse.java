@@ -57,8 +57,8 @@ public class XMLParse{
     {	
     	DocumentBuilderFactory docBuilderFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = docBuilderFactory.newDocumentBuilder();
-        Document doc = docBuilder.parse (new File(Environment.getExternalStorageDirectory(),filePath));
-        //Document doc = docBuilder.parse (new File(Environment.getDataDirectory(),filePath));
+        //Document doc = docBuilder.parse (new File(Environment.getExternalStorageDirectory(),filePath));
+        Document doc = docBuilder.parse (new File(Environment.getDataDirectory(),filePath));
         doc.getDocumentElement().normalize();
         m_doc=doc;        
     }
@@ -434,6 +434,7 @@ public class XMLParse{
 					inspectors.add(new Inspector(getId(eElement),getName(eElement),getUsername(eElement),getPassword(eElement),getFranchiseeFlag(eElement)));
 				}
 			}
+		  System.out.println("inspector nodelist size (reading)" + inspectors.size());
 	  }
 	  public static String getId(Element eElement)
 	  {
@@ -553,7 +554,7 @@ public class XMLParse{
 				    
 				    if(checkID.equals(tempID))
 				    {
-				    	((Element)listOfAddresses.item(k)).setAttribute("InspectorID", LoginControl.getCurrentInspector().getId());
+				    	((Element)listOfAddresses.item(k)).setAttribute("InspectorID", LoginControl.getInstance().getCurrentInspector().getId());
 				    	tempLocationNode = ServiceAddressNode;
 				    	break;
 				    }

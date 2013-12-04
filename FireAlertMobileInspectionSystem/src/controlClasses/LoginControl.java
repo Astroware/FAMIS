@@ -12,8 +12,8 @@ import entityClasses.Inspector;
 
 public class LoginControl {
 	private static LoginControl m_instance = null;
-	private static ArrayList<Inspector> m_inspectors = new ArrayList<Inspector>();
-	private static int m_index;
+	private ArrayList<Inspector> m_inspectors = new ArrayList<Inspector>();
+	private int m_index;
 	
 	private LoginControl() {
 	}
@@ -25,19 +25,22 @@ public class LoginControl {
 		return m_instance;
 	}
 	
-	public static void parseInspectors() throws FileNotFoundException, SAXException, IOException, ParserConfigurationException
+	public void parseInspectors() throws FileNotFoundException, SAXException, IOException, ParserConfigurationException
 	{
 		XMLParse.setDoc(XMLParse.getInspectorFilePath());
 		XMLParse.getInspectors(m_inspectors);
 	}
 	
-	public static Boolean checkLogin(String uname)
+	public Boolean checkLogin(String uname)
 	{
 		
 		 for(int i =0; i<m_inspectors.size();i++)
 			 if(uname.equals(m_inspectors.get(i).getUsername()))
 			 {
 				 m_index = i;
+				 System.out.println("Login");
+				 System.out.println("Inspector index number:" + i);
+				 System.out.println("Inspector array size:" + m_inspectors.size());
 				 return true;
 			 }
 		 		
@@ -45,11 +48,14 @@ public class LoginControl {
 		return false;
 	}
 	
-	public static Inspector getCurrentInspector()
+	public Inspector getCurrentInspector()
 	{
+		System.out.println("Get current inspector");
+		System.out.println("Inspector index number:" + m_index);
+		System.out.println("Inspector array size:" + m_inspectors.size());
 		return m_inspectors.get(m_index);
 	}
-	public static ArrayList<Inspector> getInspectors()
+	public ArrayList<Inspector> getInspectors()
 	{
 		return m_inspectors;
 	}

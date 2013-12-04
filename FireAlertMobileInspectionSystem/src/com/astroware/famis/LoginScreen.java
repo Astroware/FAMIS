@@ -49,9 +49,9 @@ public class LoginScreen extends Activity {
 					 Boolean contFlag = true;
 					 
 					 try {
-						 if(LoginControl.getInspectors().isEmpty())
+						 if(LoginControl.getInstance().getInspectors().isEmpty())
 						{
-							 LoginControl.parseInspectors();
+							 LoginControl.getInstance().parseInspectors();
 						 }
 					} catch (FileNotFoundException e) {
 						Toast.makeText(getApplicationContext(), "The user accounts file required to run this program is missing", Toast.LENGTH_SHORT).show();
@@ -70,17 +70,17 @@ public class LoginScreen extends Activity {
 					}
 					 if(contFlag == true)
 					 {
-						 if(!(LoginControl.checkLogin(username)))
+						 if(!(LoginControl.getInstance().checkLogin(username)))
 							 Toast.makeText(getApplicationContext(), "User Account Does Not Exist", Toast.LENGTH_SHORT).show();
 						 else
 						 {
-							 String storedPassword = LoginControl.getCurrentInspector().getPassword();
+							 String storedPassword = LoginControl.getInstance().getCurrentInspector().getPassword();
 							 //Toast.makeText(getApplicationContext(), storedPassword, Toast.LENGTH_LONG).show();
 							 try {
 								 
 								if(PasswordHash.validatePassword(password, storedPassword) == true)
 								{
-									Toast.makeText(getApplicationContext(), ("Entering "+LoginControl.getCurrentInspector().getName()+"'s account"), Toast.LENGTH_SHORT).show();
+									Toast.makeText(getApplicationContext(), ("Entering "+LoginControl.getInstance().getCurrentInspector().getName()+"'s account"), Toast.LENGTH_SHORT).show();
 									//Move into the next screen state (List of Clients) screen
 									startActivity(new Intent (LoginScreen.this, ClientScreen.class));
 									//Current screen will slide to the left
