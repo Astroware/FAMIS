@@ -102,8 +102,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="44dp"
         android:background="@drawable/submit_button" />
-
-    <Button
+        
+        <Button
         android:id="@+id/swipeleft"
         android:layout_width="50dp"
         android:layout_height="wrap_content"
@@ -120,6 +120,16 @@
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/inspectiondone"
         android:background="@drawable/swiperight"/>
+        
+
+    <Button
+        android:id="@+id/equipmenthome"
+        android:layout_width="40.5dp"
+       android:layout_height="40.5dp"
+       android:layout_alignParentBottom="true"
+       android:layout_alignParentLeft="true"
+       android:layout_marginBottom="0dp"
+       android:background="@drawable/home_button" />
 
     <Button
         android:id="@+id/overviewbutton"

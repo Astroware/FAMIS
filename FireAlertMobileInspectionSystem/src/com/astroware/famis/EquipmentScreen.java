@@ -36,7 +36,7 @@ public class EquipmentScreen extends Activity {
 	private TextView floornum;
 	private int currentfloor=1;
 	TableLayout MainLayout;
-	
+
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_equipment_screen);
@@ -308,7 +308,7 @@ public class EquipmentScreen extends Activity {
 			MainLayout.removeAllViewsInLayout();
 			MainLayout.invalidate();
 		}
-		
+
 		//make layout of the table
 		 for (int i=0; i<EquipmentControl.getInstance().getRoomListSize();i++) {
 			EquipmentControl.getInstance().setRoom(i);
@@ -353,8 +353,10 @@ public class EquipmentScreen extends Activity {
 		 	subtitleRow.addView(subtitleLocation, lprow);
 		 	subtitleRow.addView(subtitlePassOrFail, lprow);
 		 	MainLayout.addView(subtitleRow, lprow);
+
 	        
 		 	//For loop adding all of the pieces of equipment into the table
+
 		 	for (int j=0; j<EquipmentControl.getInstance().getDeviceListSize(); j++) {
 		 		EquipmentControl.getInstance().setDevice(j);
 		 		
@@ -421,3 +423,4 @@ public class EquipmentScreen extends Activity {
     }
  
 }
+

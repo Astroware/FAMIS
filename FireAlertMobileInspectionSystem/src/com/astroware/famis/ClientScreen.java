@@ -78,6 +78,7 @@ public class ClientScreen extends Activity {
 				}
 			});
 			}
+			
 			//Create a listener for when the back button is pressed
 			back.setOnClickListener(new View.OnClickListener() {
 				@Override
