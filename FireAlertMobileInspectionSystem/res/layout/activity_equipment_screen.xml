@@ -136,8 +136,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="32dp"
-        android:layout_toRightOf="@+id/swipeleft"
+        android:layout_toLeftOf="@+id/inspectiondone"
         android:background="@drawable/overview" />
 
 </RelativeLayout>
