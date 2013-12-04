@@ -29,6 +29,7 @@ public class TCPController {
 			_view.setConnectBtnFalse();
 			_view.setSendBtnTrue();
 			_view.setDisconnectBtnTrue();
+			_view.setFinishBtnFalse();
 
 		} catch (Exception e) {
 			Log.d("Error in ConnectBtnClick", e.toString());
@@ -47,5 +48,6 @@ public class TCPController {
 		_view.setConnectBtnTrue();
 		_view.setSendBtnFalse();
 		_view.setDisconnectBtnFalse();
+		_view.setFinishBtnTrue();
 	}
 }
