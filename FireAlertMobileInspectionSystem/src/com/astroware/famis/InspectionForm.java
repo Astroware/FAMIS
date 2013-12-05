@@ -66,6 +66,7 @@ public class InspectionForm extends Activity {
 	    
 		selectTable();
 
+		//Creates a listener for when the submit button is pressed
 	    submit.setOnClickListener(new View.OnClickListener() {	
 			@Override
 			public void onClick(View v) {
@@ -95,6 +96,8 @@ public class InspectionForm extends Activity {
 				}				
 			}
 		});
+	    
+	    //Creates a listener for when the back button is pressed
 	    back.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -105,6 +108,7 @@ public class InspectionForm extends Activity {
 		});
 	}
 
+	//Creates the fire extinguisher table
 	private void createExtinguisherTable() {
 		title.setText("Extinguisher " + EquipmentControl.getInstance().getDevice().getId() + " Form");
 		TableLayout tl = (TableLayout)findViewById(R.id.inspectionelementtable);
@@ -112,7 +116,8 @@ public class InspectionForm extends Activity {
 		LayoutParams lprow =  new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT, 1f);
 		LayoutParams buttonParams = new LayoutParams(DigitsToPixels.dpToPixel(50, getBaseContext()),DigitsToPixels.dpToPixel(50, getBaseContext()));
 	    System.out.println("After CreateTable!");
-		// TODO Auto-generated method stub
+
+	    //Creates a row for each inspection element within the extinguisher 
 		for (int i=0; i<EquipmentControl.getInstance().getInspectionElementListSize(); i++)
 		{
 			TableRow currentRow = new TableRow(this);
@@ -126,6 +131,8 @@ public class InspectionForm extends Activity {
 			EditText inspectionNote = new EditText(this);
 			inspectionNote.setSingleLine(true);
 			System.out.println(name.getText());
+			
+			//Sets the buttons so that they are the same as they were in the previous inspection
 			switch (EquipmentControl.getInstance().getInspectionElement(i).getTestResult())
 			{
 			case PASS:
@@ -139,6 +146,7 @@ public class InspectionForm extends Activity {
 			default:
 				break;
 			}
+			
 			currentRow.addView(name, lprow);
 			currentRow.addView(check, buttonParams);
 			currentRow.addView(fail, buttonParams);
@@ -153,6 +161,8 @@ public class InspectionForm extends Activity {
 			System.out.println("added current row:"+i);
 			final int j;
 			j = i;
+			
+			//Creates a listener for when the PASS button is pressed
 			column1.get(i).setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -167,6 +177,7 @@ public class InspectionForm extends Activity {
 				}
 			});
 			
+			//Creates a listener for when the FAIL button is pressed
 	        column2.get(i).setOnClickListener(new View.OnClickListener() {	
 				@Override
 				public void onClick(View v) {
@@ -183,6 +194,7 @@ public class InspectionForm extends Activity {
 		}
 	}
 
+	//Creates the table that holds information pertainig to fire hose cabinets
 	private void createHoseCabinetTable() {
 		title.setText("Fire Hose Cabinet " + EquipmentControl.getInstance().getDevice().getId() + " Form");
 		TableLayout tl = (TableLayout)findViewById(R.id.inspectionelementtable);
@@ -223,6 +235,8 @@ public class InspectionForm extends Activity {
 		titleRow.addView(titlena, lprow);
 		titleRow.addView(titlenotes, lprow);
 		tl.addView(titleRow, lprow);
+		
+		//Makes the rows for the GOOD POOR NA options within  fire hose cabinet
 		for (int i=0; i<2; i++)
 		{
 			TableRow currentRow = new TableRow(this);
@@ -246,6 +260,8 @@ public class InspectionForm extends Activity {
 			column1.add(check);
 			column2.add(fail);
 			column3.add(na);
+			
+			//Sets the buttons so that they are the same as they were the previous inspection
 			switch (EquipmentControl.getInstance().getInspectionElement(i).getTestResult())
 			{
 			case GOOD:
@@ -270,9 +286,8 @@ public class InspectionForm extends Activity {
 			System.out.println("added current row:"+i);
 			final int j;
 			j = i;
-			
 
-			
+			//Creates a listener for when the GOOD button is pressed
 			column1.get(i).setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -289,6 +304,7 @@ public class InspectionForm extends Activity {
 				}
 			});
 			
+			//Creates a listener for when the POOR button is pressed
 	        column2.get(i).setOnClickListener(new View.OnClickListener() {	
 				@Override
 				public void onClick(View v) {
@@ -304,6 +320,7 @@ public class InspectionForm extends Activity {
 				}
 			});
 	       
+	        //Creates a listener for when the NA button is pressed
 	        column3.get(i).setOnClickListener(new View.OnClickListener() {	
 				@Override
 				public void onClick(View v) {
@@ -346,6 +363,8 @@ public class InspectionForm extends Activity {
 		titleRow2.addView(failtitle, lprow);
 		titleRow2.addView(titlenotes2, lprow);
 		tl.addView(titleRow2, lprow);
+		
+		//Makes two rows for the fire hose cabinet for yes no buttons because this will always have 2 instances of yes no cases
 		for (int i=0; i<2; i++)
 		{
 			TableRow currentRow = new TableRow(this);
@@ -358,13 +377,14 @@ public class InspectionForm extends Activity {
 			fail.setWidth(DigitsToPixels.dpToPixel(50, getBaseContext()));
 			EditText inspectionNote = new EditText(this);
 			inspectionNote.setSingleLine(true);
-			//inspectionNote.setTransformationMethod(null);//c
 			inspectionNote.setWidth(DigitsToPixels.dpToPixel(50, getBaseContext()));//c
 			System.out.println(name.getText());
 			currentRow.addView(name, lprow);
 			currentRow.addView(check, buttonParams);
 			currentRow.addView(fail, buttonParams);
 			System.out.println("three views added:"+i);
+			
+			//Sets buttons what they used to be in the previous inspection
 			switch (EquipmentControl.getInstance().getInspectionElement(i+2).getTestResult())
 			{
 			case YES:
@@ -386,6 +406,7 @@ public class InspectionForm extends Activity {
 			System.out.println("added current row:"+i);
 			final int j;
 			j = i+2;
+			//Creates a listener for when the YES button is pressed
 			column1.get(i+2).setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -399,7 +420,7 @@ public class InspectionForm extends Activity {
 					EquipmentControl.getInstance().getInspectionElement(j).setComplete(true);
 				}
 			});
-			
+			//Creates a listener for when the NO button is pressed
 	        column2.get(i+2).setOnClickListener(new View.OnClickListener() {	
 				@Override
 				public void onClick(View v) {
@@ -416,6 +437,7 @@ public class InspectionForm extends Activity {
 		}
 	}
 	
+	//Creates the emergency light form table and holds the buttons on the table
 	private void createEmergencyLightTable() {
 		title.setText("Emergency Light " + EquipmentControl.getInstance().getDevice().getId() + " Form");
 		TableLayout tl = (TableLayout)findViewById(R.id.inspectionelementtable);
@@ -449,6 +471,8 @@ public class InspectionForm extends Activity {
 		titleRow2.addView(failtitle, lprow);
 		titleRow2.addView(titlenotes2, lprow);
 		tl.addView(titleRow2, lprow);
+		
+		//Creates a row for every inspection element within the device
 		for (int i=0; i<EquipmentControl.getInstance().getInspectionElementListSize(); i++)
 		{
 			TableRow currentRow = new TableRow(this);
@@ -461,13 +485,14 @@ public class InspectionForm extends Activity {
 			fail.setWidth(DigitsToPixels.dpToPixel(50, getBaseContext()));
 			EditText inspectionNote = new EditText(this);
 			inspectionNote.setSingleLine(true);
-			//inspectionNote.setTransformationMethod(null);//c
 			inspectionNote.setWidth(DigitsToPixels.dpToPixel(50, getBaseContext()));//c
 			System.out.println(name.getText());
 			currentRow.addView(name, lprow);
 			currentRow.addView(check, buttonParams);
 			currentRow.addView(fail, buttonParams);
 			System.out.println("three views added:"+i);
+			
+			//Sets the buttons to what they were last left as in the previous inspection
 			switch (EquipmentControl.getInstance().getInspectionElement(i).getTestResult())
 			{
 			case YES:
@@ -481,6 +506,8 @@ public class InspectionForm extends Activity {
 			default:
 				break;
 			}
+			
+			
 			column1.add(check);
 			column2.add(fail);
 			notes.add(inspectionNote);
@@ -489,6 +516,8 @@ public class InspectionForm extends Activity {
 			System.out.println("added current row:"+i);
 			final int j;
 			j = i;
+			
+			//Creates a listener for when the YES button is pressed
 			column1.get(i).setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -503,6 +532,7 @@ public class InspectionForm extends Activity {
 				}
 			});
 			
+			//Creates a listener for when the NO button is pressed
 	        column2.get(i).setOnClickListener(new View.OnClickListener() {	
 				@Override
 				public void onClick(View v) {
@@ -518,7 +548,8 @@ public class InspectionForm extends Activity {
 	        
 		}
 	}
-
+	
+	//Sets the test notes to what they previously were on the last inspection
 	public void writeText(){
 		for (int i=0;i<EquipmentControl.getInstance().getInspectionElementListSize();i++)
 		{
@@ -534,12 +565,14 @@ public class InspectionForm extends Activity {
 	}
 
 
+	//Creates a listener for when the back button is pressed
 	@Override
 	public void onBackPressed() {
 	    super.onBackPressed();
 	    overridePendingTransition(R.anim.slide_out_right, R.anim.slide_in_right);
 	}
 	
+	//A function used to choose which type of table to display
 	private void selectTable() {
 		switch (EquipmentControl.getInstance().getDevice().getDeviceType()) {
 		case EXTINGUISHER:
@@ -558,6 +591,7 @@ public class InspectionForm extends Activity {
 		}
 	}
 	
+	//Creates a listener for when anything outside the current text box is pressed , to lose function
 	public boolean dispatchTouchEvent(MotionEvent event) {
 
 	    View v = getCurrentFocus();

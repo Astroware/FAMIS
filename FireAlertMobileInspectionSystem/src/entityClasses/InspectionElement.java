@@ -45,6 +45,7 @@ public class InspectionElement {
 		}
 	}
 	
+	//Checks if the inspection element has been completed
 	public Boolean isComplete() {
 		if (m_complete == false) {
 			if (m_testResult != Result.EMPTY && m_testNote != null && m_testNote.trim().length() > 0) {

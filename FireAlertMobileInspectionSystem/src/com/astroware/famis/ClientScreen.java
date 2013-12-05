@@ -91,6 +91,7 @@ public class ClientScreen extends Activity {
 				}
 			});
 			
+			//Creates a listener for when the account management button is pressed
 			manage.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -114,6 +115,8 @@ public class ClientScreen extends Activity {
 			clientButtons.removeAll(clientButtons);
 			tl.invalidate();
 			LayoutParams lp = new LayoutParams(LayoutParams.MATCH_PARENT, DigitsToPixels.dpToPixel(50, getBaseContext()));
+			
+			//This for loop ensures all clients get their own row for their corresponding button
 			for (int i=0; i<ClientControl.getInstance().getClientListSize(); i++) {
 				clientButtons.add(new Button(this));
 				if (ClientControl.getInstance().getClient(i).getName().toLowerCase().startsWith(searchbar.getText().toString().toLowerCase().trim())){	
@@ -137,6 +140,7 @@ public class ClientScreen extends Activity {
 					});
 				}
 			}
+			
 		}
 		
 		@Override

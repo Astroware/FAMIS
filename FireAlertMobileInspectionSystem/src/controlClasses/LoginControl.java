@@ -25,12 +25,14 @@ public class LoginControl {
 		return m_instance;
 	}
 	
+	//passes the inspectors to the XML parser control class
 	public void parseInspectors() throws FileNotFoundException, SAXException, IOException, ParserConfigurationException
 	{
 		XMLHandler.setDoc(XMLHandler.getInspectorsFilePath());
 		XMLHandler.getInspectors(m_inspectors);
 	}
 	
+	//checks if the login is correct
 	public Boolean checkLogin(String uname)
 	{
 		
@@ -45,6 +47,7 @@ public class LoginControl {
 		return false;
 	}
 	
+	//gets the inspector that is currently logged in
 	public Inspector getCurrentInspector()
 	{
 

@@ -72,8 +72,6 @@ public class XMLHandler{
     {
     	Franchisee franchisee = new Franchisee(0, null);
     	
-    	//TODO: Inform the user that the XML file could not be found
-    	
     	String id;	
     	String name;
         
@@ -82,7 +80,7 @@ public class XMLHandler{
     	Element FranchID = (Element)listOfFranchisees.item(0);;
     	NamedNodeMap Franch = FranchID.getAttributes();
     	Node Franchisee = listOfFranchisees.item(0);
-    	
+    	//Get franchisee nodes and call methods to get nodes bellow them
     	if(Franchisee.getNodeType() == Node.ELEMENT_NODE)
     	{
             Node nodeFranchID = Franch.getNamedItem("id");
@@ -97,7 +95,7 @@ public class XMLHandler{
     	clientParse(franchisee);
         return franchisee;
     }
-    
+    //Parse clients and get the attributes of clients
     public static Franchisee clientParse(Franchisee franchisee)
     {
     	String id = "";
@@ -131,7 +129,7 @@ public class XMLHandler{
         }
         return franchisee;
     }
-    
+    //Parse nodes of name service address and create instances of service address class
     public static void getServiceAddresses(Client client)
     {
     	String id="";
@@ -205,7 +203,7 @@ public class XMLHandler{
 		 	getFloors(client.m_serviceAddress.get(k));
 		}
     }
-    
+    //Parse nodes of name floor and create instances of floor class
     public static void getFloors(ServiceAddress serAdd)
     {
     	String name="";
@@ -230,7 +228,7 @@ public class XMLHandler{
 		 	getRooms(serAdd.m_floors.get(k));
 		}
     }
-    
+    //Parse nodes of name room and create instances of room class
     public static void getRooms(Floor floor)
     {
     	String id="";
@@ -258,7 +256,7 @@ public class XMLHandler{
 		 	getDevices(floor.m_rooms.get(k));
 		}
     }
-    
+    //Parse device nodes and create instances of the appropriate subclass of device
     public static void getDevices(Room room)
     {
     	String id="";
@@ -397,7 +395,7 @@ public class XMLHandler{
 		 	getInspectionElement(tempLightNode, room.m_devices.get(k));
 		}
     }
-    
+    //Parse nodes of name inspection element and create instances of inspection element
     public static void getInspectionElement(Node node, Device device)
     {
     	String name="";
@@ -427,7 +425,7 @@ public class XMLHandler{
 		 	device.m_inspectionElements.add(new InspectionElement(name, device.getDeviceType(), testResult, testNote));
 		}
     }
-    
+    //Parse nodes of name Inspector call functions to get sub nodes and create instances of inspector
     public static void getInspectors(ArrayList<Inspector> inspectors)
 	  {
 		  NodeList nList = m_doc.getElementsByTagName("Inspector");
@@ -471,6 +469,7 @@ public class XMLHandler{
 		  Boolean flag = Boolean.parseBoolean(nList.item(0).getFirstChild().getNodeValue());
 		  return flag;
 	  }
+	  //Transfer a new inspector from the system to the xml document
 	  public static void addInspector(Inspector ins)
 	  {  
 		  	Element newInspector = m_doc.createElement("Inspector");
@@ -504,6 +503,7 @@ public class XMLHandler{
 			
 			return;
 	  }
+	  //Remove a specified inspector from the xml document
 	  public static void removeInspector(Inspector ins)
 	  {
 		  NodeList nList = m_doc.getElementsByTagName("Inspector");
@@ -526,6 +526,7 @@ public class XMLHandler{
 		  XMLHandler.updateDocument();
 		  return;
 	  }
+	  //Updates any changes made and writes to the xml file on the external storage directory
 	  public static void updateDocument()
 	  {
 		  try{
@@ -540,6 +541,7 @@ public class XMLHandler{
 			}
 	  }
 	  
+	  //Writing the inspection and puttin the time stamp onto it
 	  public static void writeInspection()
 	  {
 		  Node tempLocationNode = null;
@@ -569,7 +571,7 @@ public class XMLHandler{
 	      writeResults(tempLocationNode);
 		  updateInspectionData();
 	  }
-	  
+	//Updates any changes made and writes to the xml file on the external storage directory
 	  public static void updateInspectionData()
 	  {
 		  try{
@@ -584,7 +586,7 @@ public class XMLHandler{
 				e.printStackTrace();
 			}
 	  }
-	  
+	  //Takes the results from the XML file and transfers them into object within the FAMIS system
 	  public static void writeResults(Node addressNode)
 	  {
 		  Element location = (Element)addressNode;

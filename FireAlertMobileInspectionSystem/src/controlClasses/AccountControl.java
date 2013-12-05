@@ -26,6 +26,7 @@ public class AccountControl {
 			return m_instance;
 		}
 	 
+	 //Adds an inspector to an XML file
 	 public void addInspector(String id, String name, String username, String password, Boolean flag) throws FileNotFoundException, SAXException, IOException, ParserConfigurationException
 	 {
 		 Inspector newInspector = new Inspector(id,name,username,password,flag);
@@ -34,6 +35,7 @@ public class AccountControl {
 		 m_inspectors.add(newInspector);
 	 }
 	 
+	 //Deletes an inspector to the XML file
 	 public void deleteInspector(int index) throws FileNotFoundException, SAXException, IOException, ParserConfigurationException
 	 {
 		 XMLHandler.setDoc(XMLHandler.getInspectorsFilePath());
@@ -41,6 +43,7 @@ public class AccountControl {
 		 m_inspectors.remove(index);
 	 }
 	 
+	 //Modify an inspector within the XML file
 	 public void modifyInspector(int index, String id, String name, String username, String password, Boolean flag) throws FileNotFoundException, SAXException, IOException, ParserConfigurationException
 	 {
 		XMLHandler.setDoc(XMLHandler.getInspectorsFilePath());

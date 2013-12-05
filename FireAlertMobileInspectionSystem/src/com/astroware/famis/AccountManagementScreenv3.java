@@ -39,14 +39,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class AccountManagementScreenv3 extends Activity {
-
+	//These arrays are used to hold the buttons that are being dynamically added to the screen. 
+	//They are needed so that they system can tell which button is being clicked within the onclick listener 
 	private ArrayList<Button> accountButtons;
 	private ArrayList<Button> updateAccountButtons;
 	private ArrayList<Button> deleteAccountButtons;
+	//These text fields are used for getting information within the popup that occurs for adding and modifying accounts
 	EditText field1;
 	EditText field2;
 	EditText field3;
 	EditText field4;
+	//The title of password needs to bee removed from the screen if the inspector is updating the account not adding an account
 	TextView passwordtitle;
 	
 	Point p;
@@ -62,6 +65,8 @@ public class AccountManagementScreenv3 extends Activity {
 	Button search = (Button)findViewById(R.id.accountsearch);
 	Button add = (Button)findViewById(R.id.accountlistadd);
 	search.setVisibility(View.INVISIBLE);
+	
+	//This is the onclick listener for the back button on the screen, it allows the user to move back to the previous screen
 	back.setOnClickListener(new View.OnClickListener() {
 		@Override
 		public void onClick(View v) {
@@ -71,6 +76,7 @@ public class AccountManagementScreenv3 extends Activity {
 		}
 	});
 	
+	//This is the onclick listener for the home button on the screen, it allows the user to move back to the client screen
 	home.setOnClickListener(new View.OnClickListener() {
 		@Override
 		public void onClick(View v) {
@@ -82,7 +88,8 @@ public class AccountManagementScreenv3 extends Activity {
 		}
 	});
 	
-    
+	//This is the onclick listener for the add user button on the screen, it allows the inspector to create a new account
+	//by opening up a popup window for account information
 	add.setOnClickListener(new View.OnClickListener() {
 		@Override
 		public void onClick(View v) {
@@ -92,13 +99,14 @@ public class AccountManagementScreenv3 extends Activity {
 	});
 	
 
-	
+	//This is called to initialize the screen and show all dynamically created GUI elements.
 	createButtons();
 	
 	}
 	
-	//Each account will have a new button created for them and will be displayed in the screen.
-		//These buttons will all be similar 
+	    //Each account will have a new button created for them and will be displayed in the screen.
+		//These buttons will all be similar, however their names will be different. Beside each user will be a
+		//modify button and a delete button so that the franchisee can properly manage accounts.
 		public void createButtons() {
 			accountButtons = new ArrayList<Button>();
 			updateAccountButtons = new ArrayList<Button>();
@@ -142,7 +150,7 @@ public class AccountManagementScreenv3 extends Activity {
 				tl.addView(accountRow);
 				final int j=i;
 				
-				
+				//This onclick listener will display a popup for modifying an inspectors account
 				update.setOnClickListener(new View.OnClickListener() {			
 					@Override
 					public void onClick(View v) {
@@ -151,7 +159,7 @@ public class AccountManagementScreenv3 extends Activity {
 					}
 				});
 				
-				
+				//This onclick listener will display a confirmation message for deleteing an inspectors account and allows deletion
 				delete.setOnClickListener(new View.OnClickListener() {	
 					@Override
 					public void onClick(View v) {
@@ -261,7 +269,7 @@ public class AccountManagementScreenv3 extends Activity {
 		   field4.setVisibility(View.GONE);
 		   passwordtitle.setVisibility(View.GONE);
 	   }
-	   // Clear the default translucent background
+	   // Clear the default translucent background and change it to a white background
 	   popup.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
 	   // Displaying the popup at the specified location, + offsets.
 	   popup.showAtLocation(layout, Gravity.NO_GRAVITY, p.x + OFFSET_X, p.y + OFFSET_Y);

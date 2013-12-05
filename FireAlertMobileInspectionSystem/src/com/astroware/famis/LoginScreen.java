@@ -48,6 +48,7 @@ public class LoginScreen extends Activity {
 
 					 Boolean contFlag = true;
 					 
+					//Parses the inspectors if they have not already been parsed
 					 try {
 						 if(LoginControl.getInstance().getInspectors().isEmpty())
 						{
@@ -68,6 +69,7 @@ public class LoginScreen extends Activity {
 						contFlag = false;
 						e.printStackTrace();
 					}
+					 //Checks if the inputs are correct for the login and sees is the user is found within the xml file
 					 if(contFlag == true)
 					 {
 						 if(!(LoginControl.getInstance().checkLogin(username)))

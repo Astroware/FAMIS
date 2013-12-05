@@ -16,6 +16,7 @@ public class Floor {
 		m_rooms = new ArrayList<Room>();
 	}
 	
+	//Checks if all rooms inside of the floor have been completed
 	public Boolean isComplete() {
 		if (m_complete == false) {
 			
