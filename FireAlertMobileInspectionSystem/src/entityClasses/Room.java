@@ -18,6 +18,7 @@ public class Room {
 		m_devices = new ArrayList<Device>();
 	}
 	
+	//Checks if all devices within the Room are completed
 	public Boolean isComplete() {
 		if (m_complete == false) {
 			

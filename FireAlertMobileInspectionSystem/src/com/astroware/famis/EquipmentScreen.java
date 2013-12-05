@@ -3,13 +3,6 @@
 
 package com.astroware.famis;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.xml.sax.SAXException;
-
 import controlClasses.*;
 import android.os.Bundle;
 import android.app.Activity;
@@ -105,6 +98,7 @@ public class EquipmentScreen extends Activity {
 				}
 			}
 		});
+      //Creates a listener for when the back button is pressed
 		back.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -114,6 +108,7 @@ public class EquipmentScreen extends Activity {
 			}
 		});
 		
+		//Creates a listener for when the home button is pressed
 		home.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -124,6 +119,7 @@ public class EquipmentScreen extends Activity {
 			    
 			}
 		});
+		//Creates a listener for when the right arrow button is pressed
 		swiperight.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -142,6 +138,7 @@ public class EquipmentScreen extends Activity {
 		        createTables();
 		    }
 		});
+		//Creates a listener for when the left arrow button is pressed
 		swipeleft.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -160,7 +157,9 @@ public class EquipmentScreen extends Activity {
 			}
 		});
 		
+		//Creates the ability for the screen to be swipable while not on the scrollable view 
 		findViewById(R.id.equipscreen).setOnTouchListener(new SwipeControl(this) {
+			//If the screen is swiped left
 		    public void onSwipeLeft() {
 		    	if (currentfloor==EquipmentControl.getInstance().getFloorListSize())
 		    	{
@@ -175,6 +174,7 @@ public class EquipmentScreen extends Activity {
 		    	}
 		        createTables();
 		    }
+		    //If the screen is swiped right
 		    public void onSwipeRight() {
 		    	if (currentfloor==1)
 		    	{
@@ -189,7 +189,7 @@ public class EquipmentScreen extends Activity {
 		        createTables();
 		    }
 		});
-		
+		////Creates a listener for when the submit button is pressed
 		submitInspection.setOnClickListener(new View.OnClickListener() {	
 			@Override
 			public void onClick(View v) {
@@ -228,11 +228,9 @@ public class EquipmentScreen extends Activity {
         
 	protected void onStart() {
 		super.onStart();
-		//should this scanner be here? What about the one in onCreate()?
 		Scanner scanner = new Scanner();
-		//TODO: This needs to be changed so that it is not hard coded
 		EquipmentControl.getInstance().setFloor(currentfloor-1);
-		
+		//Refresh the screen
         createTables();	
 	}
 	
@@ -242,10 +240,8 @@ public class EquipmentScreen extends Activity {
 		private String ACTION_CONTENT_NOTIFY = "android.intent.action.CONTENT_NOTIFY";
 		private String content = null;
 		
-		//TODO: This function needs a call to the function that will be created
-		//to check to see if a bar code is found or not
-		//TODO: This function also needs a call to the function that will make
-		//the intent and call to the next activity
+		//This function is called when the scanner detects that an item has been scanned, it validates or
+		//rejects the item that has been scanned
 		public void onReceive(Context context, Intent intent) {
 			if (intent.getAction().equals(ACTION_CONTENT_NOTIFY)) {
 				Bundle bundle = new Bundle();
@@ -263,8 +259,7 @@ public class EquipmentScreen extends Activity {
 		}
 	}
 	
-	//Rhys - can you comment each block in this section?
-	//The spacing also needs to be fixed for this activity
+	//This function is used to refresh the view on the screen
 	public void createTables() {
 		
         floornum = (TextView)findViewById(R.id.equipmenttitle);
@@ -370,18 +365,21 @@ public class EquipmentScreen extends Activity {
         return true;
     }
     
+    //Creates a listener for when the back button is pressed
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         overridePendingTransition(R.anim.slide_out_right, R.anim.slide_in_right);
     }
     
+  //This function is used to change the screen to the inspection form screen
     public void openDeviceForm() {
-    	Intent in = new Intent(EquipmentScreen.this, ExtinguisherForm.class);
+    	Intent in = new Intent(EquipmentScreen.this, InspectionForm.class);
 		startActivity(in);
 		overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
     }
     
+  //Creates a listener for when anything outside the current text box is pressed , to lose function
     public boolean onTouchEvent(MotionEvent event)
     {
     	InputMethodManager IMM = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);

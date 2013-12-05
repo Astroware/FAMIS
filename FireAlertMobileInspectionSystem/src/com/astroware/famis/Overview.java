@@ -26,6 +26,7 @@ public class Overview extends Activity {
 		
 		//Button back = (Button)findViewById(R.id.);
 		
+		//Creates a listener for when the home button is pressed
 		home.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -35,6 +36,7 @@ public class Overview extends Activity {
 			}
 		});
 		
+		//Creates a listener for when the back button is pressed
 		back.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -53,17 +55,22 @@ public class Overview extends Activity {
 	    return true;
 	}
 	
+	//Overrides when the back button is pressed
 	@Override
 	public void onBackPressed() {
 		super.onBackPressed();
 		overridePendingTransition(R.anim.slide_out_down, R.anim.slide_in_down);
 	}
+	
+	//Creates the overview table that lists all of the floors and the rooms
 	public void createTable()
 	{
 		TableLayout tl = (TableLayout)findViewById(R.id.Overviewtable);
 		tl.removeAllViewsInLayout();
 		ServiceAddress current = EquipmentControl.getInstance().getLocation();
 		LayoutParams lp = new LayoutParams(LayoutParams.WRAP_CONTENT,LayoutParams.MATCH_PARENT, 1f);
+		
+		//goes through all of the floors and creates a row for the floor
 		for (int i=0; i<current.m_floors.size();i++)
 		{
 			TableRow floorRow = new TableRow (this);
@@ -79,6 +86,8 @@ public class Overview extends Activity {
 		 	floorName.setWidth(100);
 		 	floorName.setHeight(50);
 		 	floorRow.addView(floorName,lp);
+		 	
+		 	//Goes through all of the rooms in the floor and inflates the table even more
 		 	for (int j = 0; j < current.m_floors.get(i).m_rooms.size();j++)
 		 	{
 		 		TableRow roomRow = new TableRow (this);

@@ -82,6 +82,7 @@ public class EquipmentControl {
 		return device.m_inspectionElements.size();
 	}
 	
+	//Checks if the device exists within a room 
 	public boolean checkDevice(int num) {
 		for (int i=0; i<getFloorListSize(); i++) {
 			setFloor(i);
@@ -102,9 +103,10 @@ public class EquipmentControl {
 		return false;
 	}
 	
+	//Submits the inspection to the XML file and hands all the data to the XML Parser
 	public void submitInspection() throws FileNotFoundException, SAXException, IOException, ParserConfigurationException
 	{
-		XMLParse.setDoc(XMLParse.getInspectionDataFilePath());
-		XMLParse.writeInspection();
+		XMLHandler.setDoc(XMLHandler.getInspectionDataFilePath());
+		XMLHandler.writeInspection();
 	}
 }

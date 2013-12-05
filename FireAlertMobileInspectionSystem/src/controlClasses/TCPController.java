@@ -38,7 +38,7 @@ public class TCPController {
 
 	// Send button click function
 	public void SendBtnClick() {
-		String txt = XMLParse.getXMLFile();
+		String txt = XMLHandler.getXMLFile();
 		_TCPModel.RTSPSend(txt); // send message to server
 	}
 

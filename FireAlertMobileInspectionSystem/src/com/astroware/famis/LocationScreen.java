@@ -39,7 +39,8 @@ public class LocationScreen extends Activity {
 		    	LocationControl.getInstance().setClient(clientIndex);
 		    	createButtons();
 		    }
-		    
+		
+		//Creates a listener for when the back button is pressed
 		back.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -49,6 +50,7 @@ public class LocationScreen extends Activity {
 			}
 		});
 		
+		//Creates a listener for when the search button is pressed
 		search.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -57,6 +59,7 @@ public class LocationScreen extends Activity {
 			}
 		});
 		
+		//Creates a listener for when the home button is pressed
 		home.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -121,6 +124,7 @@ public class LocationScreen extends Activity {
 	    return true;
 	}
 	
+	//Overrides when the back button is pressed
 	@Override
 	public void onBackPressed() {
 	    super.onBackPressed();

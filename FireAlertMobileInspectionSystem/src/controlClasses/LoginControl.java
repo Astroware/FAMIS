@@ -12,8 +12,8 @@ import entityClasses.Inspector;
 
 public class LoginControl {
 	private static LoginControl m_instance = null;
-	private static ArrayList<Inspector> m_inspectors = new ArrayList<Inspector>();
-	private static int m_index;
+	private ArrayList<Inspector> m_inspectors = new ArrayList<Inspector>();
+	private int m_index;
 	
 	private LoginControl() {
 	}
@@ -25,13 +25,15 @@ public class LoginControl {
 		return m_instance;
 	}
 	
-	public static void parseInspectors() throws FileNotFoundException, SAXException, IOException, ParserConfigurationException
+	//passes the inspectors to the XML parser control class
+	public void parseInspectors() throws FileNotFoundException, SAXException, IOException, ParserConfigurationException
 	{
-		XMLParse.setDoc(XMLParse.getInspectorFilePath());
-		XMLParse.getInspectors(m_inspectors);
+		XMLHandler.setDoc(XMLHandler.getInspectorsFilePath());
+		XMLHandler.getInspectors(m_inspectors);
 	}
 	
-	public static Boolean checkLogin(String uname)
+	//checks if the login is correct
+	public Boolean checkLogin(String uname)
 	{
 		
 		 for(int i =0; i<m_inspectors.size();i++)
@@ -45,11 +47,13 @@ public class LoginControl {
 		return false;
 	}
 	
-	public static Inspector getCurrentInspector()
+	//gets the inspector that is currently logged in
+	public Inspector getCurrentInspector()
 	{
+
 		return m_inspectors.get(m_index);
 	}
-	public static ArrayList<Inspector> getInspectors()
+	public ArrayList<Inspector> getInspectors()
 	{
 		return m_inspectors;
 	}

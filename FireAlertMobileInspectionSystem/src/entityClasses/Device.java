@@ -24,6 +24,7 @@ public abstract class Device {
 		m_inspectionElements = new ArrayList<InspectionElement>();
 	}
 	
+	//Checks if the device has been fully completed, if all inspection elements are complete
 	public Boolean isComplete() {
 		if (m_complete == false) {
 			

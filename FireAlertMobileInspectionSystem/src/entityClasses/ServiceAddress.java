@@ -37,6 +37,7 @@ public class ServiceAddress {
 		m_floors = new ArrayList<Floor>();
 	}
 	
+	//Checks if all floors within the service address have been completed
 	public Boolean isComplete() {
 		if (m_complete == false) {
 			

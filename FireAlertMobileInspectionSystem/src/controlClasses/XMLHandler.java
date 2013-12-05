@@ -4,10 +4,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Scanner;
 
 import org.w3c.dom.*;
+
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.ParserConfigurationException;
@@ -16,7 +19,9 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+
 import org.xml.sax.SAXException;
+
 import android.os.Environment;
 import entityClasses.Client;
 import entityClasses.Device;
@@ -31,7 +36,7 @@ import entityClasses.Inspector;
 import entityClasses.Room;
 import entityClasses.ServiceAddress;
 
-public class XMLParse{
+public class XMLHandler{
 
 	private static Document m_doc;
 	private static Node tempNode;
@@ -42,11 +47,11 @@ public class XMLParse{
 	private static Node tempCabNode;
 	private static Node tempLightNode;
 	
-	private static final String inspectorFilePath = "/Inspectors.xml";
+	private static final String inspectorsFilePath = "/Inspectors.xml";
 	private static final String inspectionDataFilePath = "/InspectionData.xml";
 	
-	public static String getInspectorFilePath() {
-		return inspectorFilePath;
+	public static String getInspectorsFilePath() {
+		return inspectorsFilePath;
 	}
 	
 	public static String getInspectionDataFilePath() {
@@ -67,8 +72,6 @@ public class XMLParse{
     {
     	Franchisee franchisee = new Franchisee(0, null);
     	
-    	//TODO: Inform the user that the XML file could not be found
-    	
     	String id;	
     	String name;
         
@@ -77,7 +80,7 @@ public class XMLParse{
     	Element FranchID = (Element)listOfFranchisees.item(0);;
     	NamedNodeMap Franch = FranchID.getAttributes();
     	Node Franchisee = listOfFranchisees.item(0);
-    	
+    	//Get franchisee nodes and call methods to get nodes bellow them
     	if(Franchisee.getNodeType() == Node.ELEMENT_NODE)
     	{
             Node nodeFranchID = Franch.getNamedItem("id");
@@ -92,7 +95,7 @@ public class XMLParse{
     	clientParse(franchisee);
         return franchisee;
     }
-    
+    //Parse clients and get the attributes of clients
     public static Franchisee clientParse(Franchisee franchisee)
     {
     	String id = "";
@@ -126,7 +129,7 @@ public class XMLParse{
         }
         return franchisee;
     }
-    
+    //Parse nodes of name service address and create instances of service address class
     public static void getServiceAddresses(Client client)
     {
     	String id="";
@@ -200,7 +203,7 @@ public class XMLParse{
 		 	getFloors(client.m_serviceAddress.get(k));
 		}
     }
-    
+    //Parse nodes of name floor and create instances of floor class
     public static void getFloors(ServiceAddress serAdd)
     {
     	String name="";
@@ -225,7 +228,7 @@ public class XMLParse{
 		 	getRooms(serAdd.m_floors.get(k));
 		}
     }
-    
+    //Parse nodes of name room and create instances of room class
     public static void getRooms(Floor floor)
     {
     	String id="";
@@ -253,7 +256,7 @@ public class XMLParse{
 		 	getDevices(floor.m_rooms.get(k));
 		}
     }
-    
+    //Parse device nodes and create instances of the appropriate subclass of device
     public static void getDevices(Room room)
     {
     	String id="";
@@ -392,7 +395,7 @@ public class XMLParse{
 		 	getInspectionElement(tempLightNode, room.m_devices.get(k));
 		}
     }
-    
+    //Parse nodes of name inspection element and create instances of inspection element
     public static void getInspectionElement(Node node, Device device)
     {
     	String name="";
@@ -422,7 +425,7 @@ public class XMLParse{
 		 	device.m_inspectionElements.add(new InspectionElement(name, device.getDeviceType(), testResult, testNote));
 		}
     }
-    
+    //Parse nodes of name Inspector call functions to get sub nodes and create instances of inspector
     public static void getInspectors(ArrayList<Inspector> inspectors)
 	  {
 		  NodeList nList = m_doc.getElementsByTagName("Inspector");
@@ -434,6 +437,7 @@ public class XMLParse{
 					inspectors.add(new Inspector(getId(eElement),getName(eElement),getUsername(eElement),getPassword(eElement),getFranchiseeFlag(eElement)));
 				}
 			}
+		  System.out.println("inspector nodelist size (reading)" + inspectors.size());
 	  }
 	  public static String getId(Element eElement)
 	  {
@@ -465,6 +469,7 @@ public class XMLParse{
 		  Boolean flag = Boolean.parseBoolean(nList.item(0).getFirstChild().getNodeValue());
 		  return flag;
 	  }
+	  //Transfer a new inspector from the system to the xml document
 	  public static void addInspector(Inspector ins)
 	  {  
 		  	Element newInspector = m_doc.createElement("Inspector");
@@ -498,6 +503,7 @@ public class XMLParse{
 			
 			return;
 	  }
+	  //Remove a specified inspector from the xml document
 	  public static void removeInspector(Inspector ins)
 	  {
 		  NodeList nList = m_doc.getElementsByTagName("Inspector");
@@ -517,16 +523,17 @@ public class XMLParse{
 				  }
 			  }
 		  }
-		  XMLParse.updateDocument();
+		  XMLHandler.updateDocument();
 		  return;
 	  }
+	  //Updates any changes made and writes to the xml file on the external storage directory
 	  public static void updateDocument()
 	  {
 		  try{
 			 TransformerFactory transformerFactory = TransformerFactory.newInstance();
 			  Transformer transformer = transformerFactory.newTransformer();
 			  DOMSource source = new DOMSource(m_doc);
-			  StreamResult streamResult =  new StreamResult(new File(Environment.getExternalStorageDirectory(),getInspectorFilePath()));
+			  StreamResult streamResult =  new StreamResult(new File(Environment.getExternalStorageDirectory(),getInspectorsFilePath()));
 			  transformer.transform(source, streamResult);
 			} catch (TransformerException e) {
 				// TODO Auto-generated catch block
@@ -534,6 +541,7 @@ public class XMLParse{
 			}
 	  }
 	  
+	  //Writing the inspection and puttin the time stamp onto it
 	  public static void writeInspection()
 	  {
 		  Node tempLocationNode = null;
@@ -553,7 +561,8 @@ public class XMLParse{
 				    
 				    if(checkID.equals(tempID))
 				    {
-				    	((Element)listOfAddresses.item(k)).setAttribute("InspectorID", LoginControl.getCurrentInspector().getId());
+				    	((Element)listOfAddresses.item(k)).setAttribute("InspectorID", LoginControl.getInstance().getCurrentInspector().getId());
+				    	((Element)listOfAddresses.item(k)).setAttribute("testTimeStamp", getTimeStamp());
 				    	tempLocationNode = ServiceAddressNode;
 				    	break;
 				    }
@@ -562,7 +571,7 @@ public class XMLParse{
 	      writeResults(tempLocationNode);
 		  updateInspectionData();
 	  }
-	  
+	//Updates any changes made and writes to the xml file on the external storage directory
 	  public static void updateInspectionData()
 	  {
 		  try{
@@ -577,7 +586,7 @@ public class XMLParse{
 				e.printStackTrace();
 			}
 	  }
-	  
+	  //Takes the results from the XML file and transfers them into object within the FAMIS system
 	  public static void writeResults(Node addressNode)
 	  {
 		  Element location = (Element)addressNode;
@@ -661,5 +670,13 @@ public class XMLParse{
 			
 			return null;
 		 
+	  }
+	  
+	  public static String getTimeStamp()
+	  {
+		  Date date = new Date();
+		  Timestamp dateString = new Timestamp(date.getTime());
+		  String tempDateString = dateString.toGMTString();
+		  return tempDateString;
 	  }
 }
