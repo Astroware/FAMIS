@@ -29,24 +29,24 @@ public class AccountControl {
 	 public void addInspector(String id, String name, String username, String password, Boolean flag) throws FileNotFoundException, SAXException, IOException, ParserConfigurationException
 	 {
 		 Inspector newInspector = new Inspector(id,name,username,password,flag);
-		 XMLParse.setDoc(XMLParse.getInspectorFilePath());
-		 XMLParse.addInspector(newInspector);
+		 XMLHandler.setDoc(XMLHandler.getInspectorsFilePath());
+		 XMLHandler.addInspector(newInspector);
 		 m_inspectors.add(newInspector);
 	 }
 	 
 	 public void deleteInspector(int index) throws FileNotFoundException, SAXException, IOException, ParserConfigurationException
 	 {
-		 XMLParse.setDoc(XMLParse.getInspectorFilePath());
-		 XMLParse.removeInspector(m_inspectors.get(index));
+		 XMLHandler.setDoc(XMLHandler.getInspectorsFilePath());
+		 XMLHandler.removeInspector(m_inspectors.get(index));
 		 m_inspectors.remove(index);
 	 }
 	 
 	 public void modifyInspector(int index, String id, String name, String username, String password, Boolean flag) throws FileNotFoundException, SAXException, IOException, ParserConfigurationException
 	 {
-		XMLParse.setDoc(XMLParse.getInspectorFilePath());
+		XMLHandler.setDoc(XMLHandler.getInspectorsFilePath());
 		m_inspectors.get(index).setInspector(id, name, username, password, flag);
-		XMLParse.removeInspector(m_inspectors.get(index));
-		XMLParse.addInspector(m_inspectors.get(index)); 
+		XMLHandler.removeInspector(m_inspectors.get(index));
+		XMLHandler.addInspector(m_inspectors.get(index)); 
 	 }
 	 public ArrayList <Inspector> getInspectorList () {
 		 m_inspectors = LoginControl.getInstance().getInspectors();

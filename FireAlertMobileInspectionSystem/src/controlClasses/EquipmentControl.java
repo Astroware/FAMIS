@@ -104,7 +104,7 @@ public class EquipmentControl {
 	
 	public void submitInspection() throws FileNotFoundException, SAXException, IOException, ParserConfigurationException
 	{
-		XMLParse.setDoc(XMLParse.getInspectionDataFilePath());
-		XMLParse.writeInspection();
+		XMLHandler.setDoc(XMLHandler.getInspectionDataFilePath());
+		XMLHandler.writeInspection();
 	}
 }

@@ -36,7 +36,7 @@ import entityClasses.Inspector;
 import entityClasses.Room;
 import entityClasses.ServiceAddress;
 
-public class XMLParse{
+public class XMLHandler{
 
 	private static Document m_doc;
 	private static Node tempNode;
@@ -47,11 +47,11 @@ public class XMLParse{
 	private static Node tempCabNode;
 	private static Node tempLightNode;
 	
-	private static final String inspectorFilePath = "/Inspectors.xml";
+	private static final String inspectorsFilePath = "/Inspectors.xml";
 	private static final String inspectionDataFilePath = "/InspectionData.xml";
 	
-	public static String getInspectorFilePath() {
-		return inspectorFilePath;
+	public static String getInspectorsFilePath() {
+		return inspectorsFilePath;
 	}
 	
 	public static String getInspectionDataFilePath() {
@@ -523,7 +523,7 @@ public class XMLParse{
 				  }
 			  }
 		  }
-		  XMLParse.updateDocument();
+		  XMLHandler.updateDocument();
 		  return;
 	  }
 	  public static void updateDocument()
@@ -532,7 +532,7 @@ public class XMLParse{
 			 TransformerFactory transformerFactory = TransformerFactory.newInstance();
 			  Transformer transformer = transformerFactory.newTransformer();
 			  DOMSource source = new DOMSource(m_doc);
-			  StreamResult streamResult =  new StreamResult(new File(Environment.getExternalStorageDirectory(),getInspectorFilePath()));
+			  StreamResult streamResult =  new StreamResult(new File(Environment.getExternalStorageDirectory(),getInspectorsFilePath()));
 			  transformer.transform(source, streamResult);
 			} catch (TransformerException e) {
 				// TODO Auto-generated catch block

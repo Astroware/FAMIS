@@ -37,9 +37,9 @@ public class ClientControl {
 	}
 	
 	public static void parseXML() throws FileNotFoundException, SAXException, IOException, ParserConfigurationException {
-		XMLParse.setDoc(XMLParse.getInspectionDataFilePath());
+		XMLHandler.setDoc(XMLHandler.getInspectionDataFilePath());
 		System.out.println("Before XML Parsing");
-		franchisee = XMLParse.parseFranchisee();
+		franchisee = XMLHandler.parseFranchisee();
 		System.out.println("After XML Parsing");
 	}
 }

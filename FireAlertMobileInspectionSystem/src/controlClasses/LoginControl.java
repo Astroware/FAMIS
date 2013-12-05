@@ -27,8 +27,8 @@ public class LoginControl {
 	
 	public void parseInspectors() throws FileNotFoundException, SAXException, IOException, ParserConfigurationException
 	{
-		XMLParse.setDoc(XMLParse.getInspectorFilePath());
-		XMLParse.getInspectors(m_inspectors);
+		XMLHandler.setDoc(XMLHandler.getInspectorsFilePath());
+		XMLHandler.getInspectors(m_inspectors);
 	}
 	
 	public Boolean checkLogin(String uname)
@@ -38,9 +38,6 @@ public class LoginControl {
 			 if(uname.equals(m_inspectors.get(i).getUsername()))
 			 {
 				 m_index = i;
-				 System.out.println("Login");
-				 System.out.println("Inspector index number:" + i);
-				 System.out.println("Inspector array size:" + m_inspectors.size());
 				 return true;
 			 }
 		 		
@@ -50,9 +47,7 @@ public class LoginControl {
 	
 	public Inspector getCurrentInspector()
 	{
-		System.out.println("Get current inspector");
-		System.out.println("Inspector index number:" + m_index);
-		System.out.println("Inspector array size:" + m_inspectors.size());
+
 		return m_inspectors.get(m_index);
 	}
 	public ArrayList<Inspector> getInspectors()
