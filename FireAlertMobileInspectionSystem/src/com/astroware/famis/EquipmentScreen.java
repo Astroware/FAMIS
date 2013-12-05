@@ -370,7 +370,7 @@ public class EquipmentScreen extends Activity {
     }
     
     public void openDeviceForm() {
-    	Intent in = new Intent(EquipmentScreen.this, ExtinguisherForm.class);
+    	Intent in = new Intent(EquipmentScreen.this, InspectionForm.class);
 		startActivity(in);
 		overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_left);
     }

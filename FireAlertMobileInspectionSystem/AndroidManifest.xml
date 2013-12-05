@@ -51,7 +51,7 @@
             android:windowSoftInputMode="adjustPan" >
         </activity>
         <activity
-            android:name="com.astroware.famis.ExtinguisherForm"
+            android:name="com.astroware.famis.InspectionForm"
             android:label="@string/title_activity_extinguisher_form"
             android:screenOrientation="portrait" >
         </activity>

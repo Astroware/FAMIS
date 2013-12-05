@@ -33,7 +33,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.TableRow.LayoutParams;
 
-public class ExtinguisherForm extends Activity {
+public class InspectionForm extends Activity {
 	
 	Button check;
     Button fail; 
