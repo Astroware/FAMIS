@@ -3,11 +3,8 @@ package com.astroware.famis;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-
 import javax.xml.parsers.ParserConfigurationException;
-
 import org.xml.sax.SAXException;
-
 import controlClasses.ClientControl;
 import controlClasses.DigitsToPixels;
 import controlClasses.LoginControl;
