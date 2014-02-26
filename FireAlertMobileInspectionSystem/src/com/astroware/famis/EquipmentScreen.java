@@ -243,7 +243,9 @@ public class EquipmentScreen extends Activity {
 		//This function is called when the scanner detects that an item has been scanned, it validates or
 		//rejects the item that has been scanned
 		public void onReceive(Context context, Intent intent) {
+			Toast.makeText(getApplicationContext(), ("ON BEFORE IF"), Toast.LENGTH_SHORT).show();
 			if (intent.getAction().equals(ACTION_CONTENT_NOTIFY)) {
+				Toast.makeText(getApplicationContext(), ("ON IN IF"), Toast.LENGTH_SHORT).show();
 				Bundle bundle = new Bundle();
 				bundle  = intent.getExtras();
 				content = bundle.getString("CONTENT");

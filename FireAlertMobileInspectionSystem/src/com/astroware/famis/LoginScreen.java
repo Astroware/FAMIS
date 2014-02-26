@@ -82,7 +82,7 @@ public class LoginScreen extends Activity {
 								 
 								if(PasswordHash.validatePassword(password, storedPassword) == true)
 								{
-									Toast.makeText(getApplicationContext(), ("Entering "+LoginControl.getInstance().getCurrentInspector().getName()+"'s account"), Toast.LENGTH_SHORT).show();
+									Toast.makeText(getApplicationContext(), ("I Am Entering "+LoginControl.getInstance().getCurrentInspector().getName()+"'s account"), Toast.LENGTH_SHORT).show();
 									//Move into the next screen state (List of Clients) screen
 									startActivity(new Intent (LoginScreen.this, ClientScreen.class));
 									//Current screen will slide to the left
