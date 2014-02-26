@@ -11,6 +11,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.view.Menu;
@@ -29,6 +30,8 @@ public class EquipmentScreen extends Activity {
 
 	private TextView floornum;
 	private int currentfloor=1;
+	private DataScanner scanner = new DataScanner();
+	private String ACTION_CONTENT_NOTIFY = "android.intent.action.CONTENT_NOTIFY";
 	TableLayout MainLayout;
 
 	protected void onCreate(Bundle savedInstanceState) {
@@ -65,8 +68,6 @@ public class EquipmentScreen extends Activity {
         	swiperight.setVisibility(View.GONE);
         	swipeleft.setVisibility(View.GONE);
         }
-        //This scanner object is created so that its listener is running during this activity
-        Scanner scanner = new Scanner();
         
         //When the user manually searches for a device, if the bar code number is found, then the
         //inspection form for that device is brought up. If the bar code number is not found,
@@ -226,10 +227,22 @@ public class EquipmentScreen extends Activity {
 			}
 		});
 	}
-        
+	
+	@Override
+	protected void onResume() {
+    	registerScanner();
+		super.onResume();
+	}
+
+	@Override
+	protected void onDestroy() {
+		unregisterReceiver();
+		super.onDestroy();
+	}
+	
 	protected void onStart() {
 		super.onStart();
-		Scanner scanner = new Scanner();
+		
 		EquipmentControl.getInstance().setFloor(currentfloor-1);
 		//Refresh the screen
         createTables();	
@@ -237,10 +250,8 @@ public class EquipmentScreen extends Activity {
 	
 	//This class is used to retrieve the input from the bar code scanner
 	//content is the actual value of the input (will be the bar code number)
-	public class Scanner extends BroadcastReceiver{
-		private String ACTION_CONTENT_NOTIFY = "android.intent.action.CONTENT_NOTIFY";
+	private class DataScanner extends BroadcastReceiver {
 		private String content = null;
-		
 		//This function is called when the scanner detects that an item has been scanned, it validates or
 		//rejects the item that has been scanned
 		public void onReceive(Context context, Intent intent) {
@@ -260,6 +271,17 @@ public class EquipmentScreen extends Activity {
 				}
 			}
 		}
+	}
+	
+	private void registerScanner() {
+		scanner = new DataScanner();
+		IntentFilter intentFilter = new IntentFilter();
+		intentFilter.addAction(ACTION_CONTENT_NOTIFY);
+		registerReceiver(scanner, intentFilter);
+	}
+	
+	private void unregisterReceiver() {
+		if (scanner != null) unregisterReceiver(scanner);
 	}
 	
 	//This function is used to refresh the view on the screen
