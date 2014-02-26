@@ -7,6 +7,7 @@ import controlClasses.*;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -236,7 +237,7 @@ public class EquipmentScreen extends Activity {
 	
 	//This class is used to retrieve the input from the bar code scanner
 	//content is the actual value of the input (will be the bar code number)
-	public class Scanner {
+	public class Scanner extends BroadcastReceiver{
 		private String ACTION_CONTENT_NOTIFY = "android.intent.action.CONTENT_NOTIFY";
 		private String content = null;
 		
